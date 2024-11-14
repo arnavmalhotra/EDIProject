@@ -1,0 +1,576 @@
+[
+  {
+    "name": "Rosh Hashanah",
+    "date": "Oct. 2, 2024 - Oct. 4, 2024",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Oct. 2, 2024 and ends at nightfall on Oct. 4, 2024."
+  },
+  {
+    "name": "Yom Kippur",
+    "date": "Oct. 11, 2024 - Oct. 12, 2024",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Oct. 11, 2024 and ends at nightfall on Oct. 12, 2024."
+  },
+  {
+    "name": "First Two Days of Sukkot",
+    "date": "Oct. 16, 2024 - Oct. 18, 2024",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Oct. 16, 2024 and the second day ends at nightfall on Oct. 18, 2024."
+  },
+  {
+    "name": "Dussehra",
+    "date": "Oct. 12, 2024",
+    "category": "Hindu",
+    "source": "York University",
+    "description": "Oct. 12, 2024"
+  },
+  {
+    "name": "Shemini Atzeret",
+    "date": "Oct. 23, 2024 - Oct. 24, 2024",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Oct. 23, 2024 and ends at nightfall on Oct. 24, 2024."
+  },
+  {
+    "name": "Simchat Torah",
+    "date": "Oct. 24, 2024 - Oct. 25, 2024",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Oct. 24, 2024 and ends at nightfall on Oct. 25, 2024."
+  },
+  {
+    "name": "Birth of the Báb",
+    "date": "Oct. 26, 2024",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "Oct. 26, 2024"
+  },
+  {
+    "name": "Birth of Bahá'u'lláh",
+    "date": "Oct. 27, 2024",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "Oct. 27, 2024"
+  },
+  {
+    "name": "Diwali",
+    "date": "Nov. 1, 2024",
+    "category": "Hindu-Jain-Sikh",
+    "source": "York University",
+    "description": "Nov. 1, 2024"
+  },
+  {
+    "name": "Bandi Chhor Divas",
+    "date": "Nov. 1, 2024",
+    "category": "Sikh",
+    "source": "York University",
+    "description": "Nov. 1, 2024"
+  },
+  {
+    "name": "Birth of Guru Nanak Dev Ji",
+    "date": "Nov. 15, 2024",
+    "category": "Sikh",
+    "source": "York University",
+    "description": "Nov. 15, 2024"
+  },
+  {
+    "name": "Hanukkah",
+    "date": "Dec. 25, 2024 - Jan. 2, 2025",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on Dec. 25, 2024 and ends at nightfall on Jan. 2, 2025."
+  },
+  {
+    "name": "Christmas Eve",
+    "date": "Dec. 24, 2024",
+    "category": "Christian",
+    "source": "York University",
+    "description": "Dec. 24, 2024"
+  },
+  {
+    "name": "Christmas",
+    "date": "Dec. 25, 2024",
+    "category": "Christian",
+    "source": "York University",
+    "description": "Dec. 25, 2024"
+  },
+  {
+    "name": "Epiphany",
+    "date": "Jan. 6, 2025",
+    "category": "Christian",
+    "source": "York University",
+    "description": "Jan. 6, 2025"
+  },
+  {
+    "name": "Feast of the Nativity",
+    "date": "Jan. 7, 2025",
+    "category": "Orthodox Christian",
+    "source": "York University",
+    "description": "Jan. 7, 2025"
+  },
+  {
+    "name": "Makar Sankranti",
+    "date": "Jan. 14, 2025",
+    "category": "Hindu",
+    "source": "York University",
+    "description": "Jan. 14, 2025"
+  },
+  {
+    "name": "Lunar New Year",
+    "date": "Jan. 29, 2025",
+    "category": "Religious/Cultural",
+    "source": "York University",
+    "description": "Jan. 29, 2025"
+  },
+  {
+    "name": "Māgha Pūjā Day",
+    "date": "Feb. 12, 2025",
+    "category": "Buddhist",
+    "source": "York University",
+    "description": "Feb. 12, 2025"
+  },
+  {
+    "name": "Ash Wednesday",
+    "date": "March 5, 2025",
+    "category": "Christian",
+    "source": "York University",
+    "description": "March 5, 2025"
+  },
+  {
+    "name": "Ramadan",
+    "date": "Begins at sunset March 1, 2025 and ends at nightfall on March 30, 2025. Muslims may fast from dawn to dusk, abstaining from food and drink. Examinations scheduled in the evening may pose a special burden.",
+    "category": "Muslim",
+    "source": "York University",
+    "description": "Begins at sunset March 1, 2025 and ends at nightfall on March 30, 2025. Muslims may fast from dawn to dusk, abstaining from food and drink. Examinations scheduled in the evening may pose a special burden."
+  },
+  {
+    "name": "Purim",
+    "date": "Begins at sunset on March 13, 2025 and ends at nightfall on March 14, 2025.",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on March 13, 2025 and ends at nightfall on March 14, 2025."
+  },
+  {
+    "name": "Nowruz New Year",
+    "date": "March 21, 2025",
+    "category": "Religious/Cultural",
+    "source": "York University",
+    "description": "March 21, 2025"
+  },
+  {
+    "name": "Eid-al-Fitr",
+    "date": "Begins at sunset on March 30, 2025 and ends the evening of March 31, 2025.",
+    "category": "Muslim",
+    "source": "York University",
+    "description": "Begins at sunset on March 30, 2025 and ends the evening of March 31, 2025."
+  },
+  {
+    "name": "Passover - Pesach",
+    "date": "Begins at sunset on April 12, 2025 and ends at nightfall on April 20, 2025. The first and last two days are no work, no class days.",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on April 12, 2025 and ends at nightfall on April 20, 2025. The first and last two days are no work, no class days."
+  },
+  {
+    "name": "Vaisakhi",
+    "date": "April 14, 2025",
+    "category": "Sikh",
+    "source": "York University",
+    "description": "April 14, 2025"
+  },
+  {
+    "name": "Good Friday",
+    "date": "April 18, 2025",
+    "category": "Christian",
+    "source": "York University",
+    "description": "April 18, 2025"
+  },
+  {
+    "name": "Easter Sunday",
+    "date": "April 20, 2025",
+    "category": "Christian",
+    "source": "York University",
+    "description": "April 20, 2025"
+  },
+  {
+    "name": "Ridván Festival",
+    "date": "Begins at sunset on April 20, 2025 and ends on May 2, 2025. The first day (April 20), ninth day (April 28) and twelfth day (May 1) are considered particularly significant.",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "Begins at sunset on April 20, 2025 and ends on May 2, 2025. The first day (April 20), ninth day (April 28) and twelfth day (May 1) are considered particularly significant."
+  },
+  {
+    "name": "Holy Friday",
+    "date": "May 3, 2025",
+    "category": "Orthodox Christian",
+    "source": "York University",
+    "description": "May 3, 2025"
+  },
+  {
+    "name": "Easter",
+    "date": "May 5, 2025",
+    "category": "Orthodox Christian",
+    "source": "York University",
+    "description": "May 5, 2025"
+  },
+  {
+    "name": "Vesak / Wesak",
+    "date": "May 5, 2025",
+    "category": "Buddhist",
+    "source": "York University",
+    "description": "May 5, 2025"
+  },
+  {
+    "name": "Declaration of the Báb",
+    "date": "May 23, 2025",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "May 23, 2025"
+  },
+  {
+    "name": "Ascension of the Bahá'u'lláh",
+    "date": "May 28, 2025",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "May 28, 2025"
+  },
+  {
+    "name": "Shavuot",
+    "date": "Begins at sunset on June 1, 2025 and ends at nightfall on June 3, 2025.",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins at sunset on June 1, 2025 and ends at nightfall on June 3, 2025."
+  },
+  {
+    "name": "Hajj Pilgrimage",
+    "date": "From June 4, 2025 to June 9, 2025 for students participating in the pilgrimage to Makkah.",
+    "category": "Muslim",
+    "source": "York University",
+    "description": "From June 4, 2025 to June 9, 2025 for students participating in the pilgrimage to Makkah."
+  },
+  {
+    "name": "Eid-al-Adha",
+    "date": "Begins at sunset on June 6, 2025 and ends June 10, 2025.",
+    "category": "Muslim",
+    "source": "York University",
+    "description": "Begins at sunset on June 6, 2025 and ends June 10, 2025."
+  },
+  {
+    "name": "Ashura",
+    "date": "July 5, 2025 to July 6, 2025",
+    "category": "Muslim",
+    "source": "York University",
+    "description": "July 5, 2025 to July 6, 2025"
+  },
+  {
+    "name": "Martyrdom of the Báb",
+    "date": "July 9, 2025",
+    "category": "Bahá'í",
+    "source": "York University",
+    "description": "July 9, 2025"
+  },
+  {
+    "name": "Tisha B'av",
+    "date": "Aug. 2, 2025",
+    "category": "Jewish",
+    "source": "York University",
+    "description": "Begins on Aug. 2, 2025 and ends at nightfall on Aug. 3, 2025."
+  },
+  {
+    "name": "Tamil Heritage Month",
+    "date": "January",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Tamil Heritage Month"
+  },
+  {
+    "name": "Lincoln Alexander Day",
+    "date": "January 21",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Lincoln Alexander Day – January 21"
+  },
+  {
+    "name": "Black History Month",
+    "date": "February",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Black History Month"
+  },
+  {
+    "name": "Family Day",
+    "date": "third Monday in February",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Family Day – third Monday in February"
+  },
+  {
+    "name": "Bangladeshi Heritage Month",
+    "date": "March",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Bangladeshi Heritage Month"
+  },
+  {
+    "name": "Hellenic Heritage Month",
+    "date": "March",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Hellenic Heritage Month"
+  },
+  {
+    "name": "Persian Heritage Month",
+    "date": "March",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Persian Heritage Month"
+  },
+  {
+    "name": "Irish Heritage Day",
+    "date": "March 17",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Irish Heritage Day – March 17"
+  },
+  {
+    "name": "Sikh Heritage Month",
+    "date": "April",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Sikh Heritage Month"
+  },
+  {
+    "name": "Pope John Paul II Day",
+    "date": "April 2",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Pope John Paul II Day – April 2"
+  },
+  {
+    "name": "Vimy Ridge Day",
+    "date": "April 9",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Vimy Ridge Day – April 9"
+  },
+  {
+    "name": "Holocaust Memorial Day, Yom ha-Shoah",
+    "date": "April/May (determined by the Jewish lunar calendar)",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Holocaust Memorial Day, Yom ha-Shoah – April/May (determined by the Jewish lunar calendar)"
+  },
+  {
+    "name": "Armenian Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Armenian Heritage Month"
+  },
+  {
+    "name": "Asian Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Asian Heritage Month"
+  },
+  {
+    "name": "Dutch Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Dutch Heritage Month"
+  },
+  {
+    "name": "Jewish Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Jewish Heritage Month"
+  },
+  {
+    "name": "Polish Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Polish Heritage Month"
+  },
+  {
+    "name": "South Asian Heritage Month",
+    "date": "May",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "South Asian Heritage Month"
+  },
+  {
+    "name": "South Asian Arrival Day",
+    "date": "May 5",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "South Asian Arrival Day – May 5"
+  },
+  {
+    "name": "Tamil Genocide Education Week",
+    "date": "May 12–18",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Tamil Genocide Education Week – May 12–18"
+  },
+  {
+    "name": "Ontario Flag Day",
+    "date": "May 21",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Ontario Flag Day – May 21"
+  },
+  {
+    "name": "Filipino Heritage Month",
+    "date": "June",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Filipino Heritage Month"
+  },
+  {
+    "name": "Italian Heritage Month",
+    "date": "June",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Italian Heritage Month"
+  },
+  {
+    "name": "Portuguese History and Heritage Month",
+    "date": "June",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Portuguese History and Heritage Month"
+  },
+  {
+    "name": "Ontario Day",
+    "date": "June 1",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Ontario Day – June 1"
+  },
+  {
+    "name": "Portugal Day",
+    "date": "June 10",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Portugal Day – June 10"
+  },
+  {
+    "name": "United Empire Loyalists’ Day",
+    "date": "June 19",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "United Empire Loyalists’ Day – June 19"
+  },
+  {
+    "name": "Somali Heritage Week",
+    "date": "June 25–July 1",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Somali Heritage Week – June 25–July 1"
+  },
+  {
+    "name": "Egyptian Heritage Month",
+    "date": "July",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Egyptian Heritage Month"
+  },
+  {
+    "name": "Tibetan Heritage Month",
+    "date": "July",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Tibetan Heritage Month"
+  },
+  {
+    "name": "Nikola Tesla Day",
+    "date": "July 10",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Nikola Tesla Day – July 10"
+  },
+  {
+    "name": "Emancipation Month",
+    "date": "August",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Emancipation Month"
+  },
+  {
+    "name": "Emancipation Day",
+    "date": "August 1",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Emancipation Day – August 1"
+  },
+  {
+    "name": "Ukrainian Heritage Day",
+    "date": "September 7",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Ukrainian Heritage Day – September 7"
+  },
+  {
+    "name": "Provincial Day of Service",
+    "date": "September 11",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Provincial Day of Service – September 11"
+  },
+  {
+    "name": "Franco-Ontarian Day",
+    "date": "September 25",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Franco-Ontarian Day – September 25"
+  },
+  {
+    "name": "Hispanic Heritage Month",
+    "date": "October",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Hispanic Heritage Month"
+  },
+  {
+    "name": "Hungarian Heritage Month",
+    "date": "October",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Hungarian Heritage Month"
+  },
+  {
+    "name": "Islamic Heritage Month",
+    "date": "October",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Islamic Heritage Month"
+  },
+  {
+    "name": "Korean Heritage Month",
+    "date": "October",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Korean Heritage Month"
+  },
+  {
+    "name": "German Pioneers Day",
+    "date": "the day following Thanksgiving Day",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "German Pioneers Day – the day following Thanksgiving Day"
+  },
+  {
+    "name": "Major-General Sir Isaac Brock Day",
+    "date": "October 13",
+    "category": "Provincial Celebration/Commemoration",
+    "source": "Ontario Government",
+    "description": "Major-General Sir Isaac Brock Day – October 13"
+  }
+]

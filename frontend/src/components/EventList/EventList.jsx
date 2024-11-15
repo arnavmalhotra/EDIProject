@@ -4,7 +4,7 @@ import './EventList.css';
 
 const EventCard = ({ event }) => {
   const [expanded, setExpanded] = useState(false);
-
+  
   return (
     <div 
       className={`event-card ${expanded ? 'expanded' : ''}`}
@@ -24,12 +24,25 @@ const EventCard = ({ event }) => {
           {event.additional_details && (
             <p>{event.additional_details}</p>
           )}
-          <p>Source: {event.source_url}</p>
-          {event.created_at && (
-            <p className="meta-info">Created: {new Date(event.created_at).toLocaleDateString()}</p>
+          {event.source_url && (
+            <div className="source-links">
+              {Array.isArray(event.source_url) ? (
+                event.source_url.map((url, index) => (
+                  <a key={index} href={url} target="_blank" rel="noopener noreferrer">
+                    Source {index + 1}
+                  </a>
+                ))
+              ) : (
+                <a href={event.source_url} target="_blank" rel="noopener noreferrer">
+                  Source
+                </a>
+              )}
+            </div>
           )}
-          {event.last_updated && (
-            <p className="meta-info">Last Updated: {new Date(event.last_updated).toLocaleDateString()}</p>
+          {event.alternate_names && event.alternate_names.length > 1 && (
+            <div className="alternate-names">
+              <p>Also known as: {event.alternate_names.filter(name => name !== event.name).join(', ')}</p>
+            </div>
           )}
         </div>
       )}
@@ -42,6 +55,29 @@ const EventList = ({ events, selectedDate, loading }) => {
     return <div className="loading">Loading events...</div>;
   }
 
+  // Separate month-long events and regular events
+  const monthLongEvents = events.filter(event => {
+    const start = new Date(event.start_date);
+    const end = new Date(event.end_date);
+    return (
+      start.getDate() === 1 && 
+      end.getDate() >= 28 && 
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    );
+  });
+
+  const regularEvents = events.filter(event => {
+    const start = new Date(event.start_date);
+    const end = new Date(event.end_date);
+    return !(
+      start.getDate() === 1 && 
+      end.getDate() >= 28 &&
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    );
+  });
+
   return (
     <div className="event-list">
       <h2>
@@ -51,15 +87,32 @@ const EventList = ({ events, selectedDate, loading }) => {
           day: 'numeric'
         })}
       </h2>
-      <div className="events-container">
-        {events && events.length > 0 ? (
-          events.map((event) => (
-            <EventCard key={event._id} event={event} />
-          ))
-        ) : (
-          <p className="no-events">No events for this date</p>
-        )}
-      </div>
+      
+      {regularEvents.length > 0 && (
+        <div className="regular-events">
+          <h3>Events</h3>
+          <div className="events-container">
+            {regularEvents.map((event) => (
+              <EventCard key={event._id} event={event} />
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {monthLongEvents.length > 0 && (
+        <div className="month-long-events">
+          <h3>Month-Long Observances</h3>
+          <div className="events-container">
+            {monthLongEvents.map((event) => (
+              <EventCard key={event._id} event={event} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {events.length === 0 && (
+        <p className="no-events">No events for this date</p>
+      )}
     </div>
   );
 };

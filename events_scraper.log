@@ -1,0 +1,6 @@
+2024-11-15 01:42:06,507 - INFO - Starting scrape for: https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025
+2024-11-15 01:42:24,689 - INFO - Successfully processed https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025: 40 events updated/added
+2024-11-15 01:42:26,690 - INFO - Starting scrape for: https://www.canada.ca/en/canadian-heritage/services/important-commemorative-days.html
+2024-11-15 01:42:55,219 - INFO - Successfully processed https://www.canada.ca/en/canadian-heritage/services/important-commemorative-days.html: 67 events updated/added
+2024-11-15 01:42:57,220 - INFO - Starting scrape for: https://www.ontario.ca/page/ontarios-celebrations-and-commemorations
+2024-11-15 01:43:26,489 - INFO - Successfully processed https://www.ontario.ca/page/ontarios-celebrations-and-commemorations: 50 events updated/added

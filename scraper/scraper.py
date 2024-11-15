@@ -10,6 +10,8 @@ import pytz
 import logging
 from dotenv import load_dotenv
 import os
+from fuzzywuzzy import fuzz
+from typing import Set, List, Dict, Any, Optional
 
 # Load environment variables
 load_dotenv()
@@ -23,7 +25,7 @@ class EventsDatabase:
         self.scrape_history = self.db.scrape_history
         self._setup_indexes()
         self._setup_logging()
-    
+
     def _setup_logging(self):
         """Setup logging configuration."""
         logging.basicConfig(
@@ -31,26 +33,133 @@ class EventsDatabase:
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s'
         )
-    
+
     def _setup_indexes(self):
-        """Setup necessary indexes for efficient querying and data consistency."""
+        """Setup necessary indexes for efficient querying."""
         # Event indexes
         self.events.create_index([("name", ASCENDING)])
         self.events.create_index([("start_date", ASCENDING)])
         self.events.create_index([("end_date", ASCENDING)])
         self.events.create_index([("start_date", ASCENDING), ("end_date", ASCENDING)])
+
+    def _get_cultural_terms(self) -> Set[str]:
+        """Get set of cultural and ethnic terms."""
+        return {
+            'albanian', 'lebanese', 'hindu', 'sikh', 'islamic', 'jewish', 'christian',
+            'buddhist', 'jain', 'armenian', 'korean', 'chinese', 'japanese', 'tibetan',
+            'vietnamese', 'filipino', 'polish', 'german', 'irish', 'italian', 'french',
+            'spanish', 'portuguese', 'greek', 'russian', 'ukrainian', 'indian', 'persian',
+            'turkish', 'arab', 'african', 'latin', 'nordic', 'celtic', 'slavic', 'baltic',
+            'mediterranean', 'scandinavian', 'asian', 'european', 'american', 'canadian',
+            'mexican', 'brazilian', 'australian', 'egyptian', 'moroccan', 'thai', 'vietnamese',
+            'indonesian', 'malaysian', 'mongolian', 'kazakh', 'uzbek', 'iranian', 'iraqi',
+            'syrian', 'palestinian', 'israeli', 'saudi', 'yemeni', 'omani', 'emirati',
+            'qatari', 'kuwaiti', 'bahraini'
+        }
+
+    def _normalize_event_name(self, name: str) -> str:
+        """Normalize event names for comparison."""
+        # Convert to lowercase and remove special characters
+        normalized = re.sub(r'[^\w\s]', '', name.lower())
         
-        # Unique compound index for event identification
-        self.events.create_index(
-            [
-                ("name", ASCENDING), 
-                ("start_date", ASCENDING), 
-                ("source_url", ASCENDING)
-            ],
-            unique=True
+        # Get cultural terms
+        cultural_terms = self._get_cultural_terms()
+        
+        # Remove common words that don't affect meaning
+        stop_words = {
+            'the', 'of', 'and', 'birth', 'day', 'feast', 'festival', 'celebration',
+            'holiday', 'month', 'week', 'commemoration', 'anniversary', 'observance'
+        }
+        
+        words = normalized.split()
+        # Keep cultural terms even if they're part of stop words
+        normalized = ' '.join(w for w in words if w not in stop_words or w in cultural_terms)
+        
+        return normalized
+
+    def _is_month_long(self, event: Dict[str, Any]) -> bool:
+        """Check if an event is a month-long observance."""
+        start = event['start_date']
+        end = event['end_date']
+        return (
+            start.day == 1 and
+            end.month == start.month and
+            end.year == start.year and
+            end.day >= 28
         )
+
+    def _are_similar_events(self, event1: Dict[str, Any], event2: Dict[str, Any], threshold: int = 85) -> bool:
+        """Check if two events are similar based on name and date."""
+        # Compare normalized names using fuzzy matching
+        name1 = self._normalize_event_name(event1['name'])
+        name2 = self._normalize_event_name(event2['name'])
+        
+        # Extract cultural terms from both names
+        cultural_terms1 = set(word for word in name1.split() if word in self._get_cultural_terms())
+        cultural_terms2 = set(word for word in name2.split() if word in self._get_cultural_terms())
+        
+        # If both events have cultural terms and they're different, they're not the same
+        if cultural_terms1 and cultural_terms2 and cultural_terms1 != cultural_terms2:
+            return False
+        
+        # Calculate name similarity
+        name_similarity = fuzz.ratio(name1, name2)
+        
+        # Check if dates overlap
+        date_overlap = (
+            event1['start_date'] <= event2['end_date'] and
+            event2['start_date'] <= event1['end_date']
+        )
+        
+        # For month-long observances, be extra careful
+        if self._is_month_long(event1) and self._is_month_long(event2):
+            # Must have exact same month and year
+            same_month = (
+                event1['start_date'].month == event2['start_date'].month and
+                event1['start_date'].year == event2['start_date'].year
+            )
+            return name_similarity >= threshold and same_month
+        
+        return name_similarity >= threshold and date_overlap
+
+    def _merge_event_details(self, existing_event: Dict[str, Any], new_event: Dict[str, Any]) -> Dict[str, Any]:
+        """Merge details from two similar events."""
+        merged_details = []
+        
+        # Combine additional details if they exist and are different
+        if existing_event.get('additional_details'):
+            merged_details.append(existing_event['additional_details'])
+        if new_event.get('additional_details'):
+            if new_event['additional_details'] not in merged_details:
+                merged_details.append(new_event['additional_details'])
+        
+        # Combine source URLs
+        sources = set()
+        if isinstance(existing_event['source_url'], list):
+            sources.update(existing_event['source_url'])
+        else:
+            sources.add(existing_event['source_url'])
+        
+        if isinstance(new_event['source_url'], list):
+            sources.update(new_event['source_url'])
+        else:
+            sources.add(new_event['source_url'])
+        
+        # Create merged event
+        merged_event = {
+            **existing_event,
+            'additional_details': ' | '.join(merged_details) if merged_details else None,
+            'source_url': list(sources),
+            'alternate_names': list(set(
+                existing_event.get('alternate_names', []) + 
+                [existing_event['name'], new_event['name']]
+            )),
+            'last_updated': datetime.now(pytz.utc)
+        }
+        
+        return merged_event
     
-    def record_scrape(self, source_url, success, events_count=0, error=None):
+    def record_scrape(self, source_url: str, success: bool, events_count: int = 0, error: Optional[str] = None):
         """Record scraping attempt in history."""
         record = {
             "source_url": source_url,
@@ -61,8 +170,8 @@ class EventsDatabase:
         }
         self.scrape_history.insert_one(record)
     
-    def insert_events(self, events, source_url):
-        """Insert or update events in MongoDB."""
+    def insert_events(self, events: List[Dict[str, Any]], source_url: str) -> int:
+        """Insert or update events in MongoDB with duplicate detection."""
         successful_updates = 0
         
         for event in events:
@@ -81,72 +190,58 @@ class EventsDatabase:
                     "last_updated": datetime.now(pytz.utc)
                 }
                 
-                # Update or insert the event
-                result = self.events.update_one(
-                    {
-                        "name": event_doc["name"],
-                        "start_date": event_doc["start_date"],
-                        "source_url": source_url
-                    },
-                    {
-                        "$set": event_doc,
-                        "$setOnInsert": {"created_at": datetime.now(pytz.utc)}
-                    },
-                    upsert=True
-                )
+                # Look for similar existing events
+                similar_events = self.events.find({
+                    "start_date": {"$lte": end_date},
+                    "end_date": {"$gte": start_date}
+                })
                 
-                if result.modified_count or result.upserted_id:
-                    successful_updates += 1
+                similar_found = False
+                for existing_event in similar_events:
+                    if self._are_similar_events(existing_event, event_doc):
+                        # Merge the events
+                        merged_event = self._merge_event_details(existing_event, event_doc)
+                        
+                        # Update the existing event with merged details
+                        self.events.update_one(
+                            {"_id": existing_event["_id"]},
+                            {"$set": merged_event}
+                        )
+                        similar_found = True
+                        successful_updates += 1
+                        break
+                
+                # If no similar event found, insert as new
+                if not similar_found:
+                    result = self.events.update_one(
+                        {
+                            "name": event_doc["name"],
+                            "start_date": event_doc["start_date"],
+                            "source_url": source_url
+                        },
+                        {
+                            "$set": event_doc,
+                            "$setOnInsert": {
+                                "created_at": datetime.now(pytz.utc),
+                                "alternate_names": [event_doc["name"]]
+                            }
+                        },
+                        upsert=True
+                    )
+                    
+                    if result.modified_count or result.upserted_id:
+                        successful_updates += 1
                 
             except Exception as e:
                 logging.error(f"Error inserting event {event}: {e}")
         
         return successful_updates
-    
-    def get_all_events(self, sort_by="start_date"):
+
+    def get_all_events(self, sort_by: str = "start_date") -> List[Dict[str, Any]]:
         """Get all events from the database."""
         return list(self.events.find().sort(sort_by, ASCENDING))
-    
-    def get_upcoming_events(self, days=30):
-        """Get events occurring in the next X days."""
-        start_date = datetime.now()
-        end_date = start_date + timedelta(days=days)
-        
-        return list(self.events.find({
-            "start_date": {"$gte": start_date},
-            "end_date": {"$lte": end_date}
-        }).sort("start_date", ASCENDING))
-    
-    def search_events(self, query=None, start_date=None, end_date=None, source_url=None):
-        """Search events with flexible criteria."""
-        search_filter = {}
-        
-        if query:
-            search_filter["$or"] = [
-                {"name": {"$regex": query, "$options": "i"}},
-                {"additional_details": {"$regex": query, "$options": "i"}}
-            ]
-        
-        if start_date:
-            search_filter["start_date"] = {"$gte": start_date}
-        if end_date:
-            search_filter["end_date"] = {"$lte": end_date}
-        if source_url:
-            search_filter["source_url"] = source_url
-            
-        return list(self.events.find(search_filter).sort("start_date", ASCENDING))
-    
-    def get_events_by_year(self, year):
-        """Get all events for a specific year."""
-        start_date = datetime(year, 1, 1)
-        end_date = datetime(year, 12, 31, 23, 59, 59)
-        
-        return list(self.events.find({
-            "start_date": {"$gte": start_date},
-            "end_date": {"$lte": end_date}
-        }).sort("start_date", ASCENDING))
-    
-    def get_events_statistics(self):
+
+    def get_events_statistics(self) -> Dict[str, Any]:
         """Get statistics about the events in the database."""
         stats = {
             "total_events": self.events.count_documents({}),
@@ -159,11 +254,19 @@ class EventsDatabase:
         }
         
         for source in stats["sources"]:
-            stats["events_by_source"][source] = self.events.count_documents({"source_url": source})
+            if isinstance(source, list):
+                for s in source:
+                    stats["events_by_source"][s] = self.events.count_documents(
+                        {"source_url": {"$in": [s]}}
+                    )
+            else:
+                stats["events_by_source"][source] = self.events.count_documents(
+                    {"source_url": source}
+                )
         
         return stats
 
-def get_website_html(url):
+def get_website_html(url: str) -> Optional[str]:
     """Fetch HTML content from a URL."""
     try:
         headers = {
@@ -178,7 +281,7 @@ def get_website_html(url):
         logging.error(f"Error fetching website {url}: {e}")
         return None
 
-def clean_json_response(response_text):
+def clean_json_response(response_text: str) -> Optional[Dict[str, Any]]:
     """Clean and parse JSON response from AI model."""
     cleaned_text = re.sub(r'```json\n', '', response_text)
     cleaned_text = re.sub(r'```', '', cleaned_text)
@@ -189,7 +292,7 @@ def clean_json_response(response_text):
         logging.error(f"Error parsing JSON: {e}")
         return None
 
-def scrape_events(urls, db_connection_string="mongodb://localhost:27017/"):
+def scrape_events(urls: List[str], db_connection_string: str = "mongodb://localhost:27017/") -> None:
     """Main function to scrape events."""
     # Initialize database connection
     db = EventsDatabase(db_connection_string)
@@ -221,7 +324,7 @@ def scrape_events(urls, db_connection_string="mongodb://localhost:27017/"):
             
             {html_content}
             """)
-            print(response.text)
+            
             events_data = clean_json_response(response.text)
             if not events_data:
                 db.record_scrape(url, False, error="No events found")
@@ -248,8 +351,9 @@ def main():
     """Main execution function."""
     # URLs to scrape
     urls = [
-    "https://www.xavier.edu/jesuitresource/online-resources/calendar-religious-holidays-and-observances/index",
-    "https://www.theinterfaithobserver.org/religious-calendar",
+        "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025",
+        "https://www.canada.ca/en/canadian-heritage/services/important-commemorative-days.html",
+        "https://www.ontario.ca/page/ontarios-celebrations-and-commemorations",
     ]
     
     # MongoDB connection string - modify as needed
@@ -267,7 +371,8 @@ def main():
     print("\nEvents by source:")
     for source, count in stats['events_by_source'].items():
         print(f"{source}: {count} events")
-    print(f"\nDate range: {stats['date_range']['earliest']} to {stats['date_range']['latest']}")
+    if 'date_range' in stats:
+        print(f"\nDate range: {stats['date_range']['earliest']} to {stats['date_range']['latest']}")
     
     db.client.close()
 

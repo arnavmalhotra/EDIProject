@@ -1,0 +1,17 @@
+.calendar-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .custom-calendar {
+    width: 100%;
+    border: none !important;
+  }
+  
+  .has-event {
+    background-color: #e8f4f8 !important;
+    color: #0056b3 !important;
+    font-weight: bold;
+  }

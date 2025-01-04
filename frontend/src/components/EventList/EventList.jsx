@@ -23,7 +23,6 @@ const EventCard = ({ event }) => {
           >
             More Information
           </button>
-          <span className="expand-icon">{expanded ? '−' : '+'}</span>
         </div>
       </div>
       <div className="event-dates">

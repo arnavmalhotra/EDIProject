@@ -1,3 +1,4 @@
+#MAKE CHANGES TO ENSURE ACCURACY OF CONTENT IN EVENTDETAILS PAGE
 import google.generativeai as genai
 import requests
 import json

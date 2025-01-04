@@ -12,7 +12,12 @@ const Calendar = ({ value, onChange, events }) => {
       const hasEvent = events?.some(event => {
         const startDate = new Date(event.start_date);
         const endDate = new Date(event.end_date);
-        return date >= startDate && date <= endDate;
+        const isMonthLongEvent =
+          startDate.getDate() === 1 &&
+          endDate.getDate() >= 28 &&
+          startDate.getMonth() === endDate.getMonth() &&
+          startDate.getFullYear() === endDate.getFullYear();
+        return !isMonthLongEvent && date >= startDate && date <= endDate;
       });
       return hasEvent ? 'has-event' : null;
     }

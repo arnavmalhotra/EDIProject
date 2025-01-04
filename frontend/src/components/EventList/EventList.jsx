@@ -12,7 +12,19 @@ const EventCard = ({ event }) => {
     >
       <div className="event-header">
         <h3>{event.name}</h3>
-        <span className="expand-icon">{expanded ? '−' : '+'}</span>
+        <div className="event-actions">
+          <button 
+            className="more-info-btn"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevents the card from expanding when clicking the button
+              // Handle button click here
+              console.log('More information clicked for event:', event.name);
+            }}
+          >
+            More Information
+          </button>
+          <span className="expand-icon">{expanded ? '−' : '+'}</span>
+        </div>
       </div>
       <div className="event-dates">
         <span>Start: {new Date(event.start_date).toLocaleDateString()}</span>
@@ -109,7 +121,7 @@ const EventList = ({ events, selectedDate, loading }) => {
           </div>
         </div>
       )}
-
+      
       {events.length === 0 && (
         <p className="no-events">No events for this date</p>
       )}

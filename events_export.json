@@ -1,0 +1,1255 @@
+[
+  {
+    "start_date": "05-01-25",
+    "name": "Birth Date of Guru Gobind Singh Ji",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "05-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "05-04-25",
+    "name": "Palm Sunday",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "05-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "05-03-25",
+    "name": "Ash Wednesday",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "05-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "20-04-25",
+    "name": "Easter",
+    "additional_details": null,
+    "alternate_names": [
+      "Easter Sunday",
+      "Easter Day",
+      "Resurrection Sunday",
+      "Paschal Sunday"
+    ],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "20-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "14-04-25",
+    "name": "Theravāda New Year",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "14-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Islamic New Year",
+    "start_date": "19-07-25",
+    "additional_details": null,
+    "alternate_names": [
+      "Hijri New Year",
+      "Arabic New Year",
+      "Muharram"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "19-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "07-09-25",
+    "name": "Sri Krishna Jayanti",
+    "additional_details": null,
+    "alternate_names": [
+      "Janmashtami",
+      "Krishna Janmashtami",
+      "Gokulashtami"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "07-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Ramanavami",
+    "start_date": "06-04-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "06-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "10-03-25",
+    "name": "Commonwealth Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "10-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "08-05-25",
+    "name": "Nirvana Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "08-05-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "17-02-25",
+    "name": "Laylat al-Mi'rāj",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "17-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "07-06-25",
+    "name": "ʻĪd al-'Aḍḥá",
+    "additional_details": null,
+    "alternate_names": [
+      "Eid ul-Adha",
+      "Eid al-Adha",
+      "Bakrid",
+      "Greater Eid"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "10-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-11-24",
+    "name": "Diwali",
+    "additional_details": null,
+    "alternate_names": [
+      "Deepavali",
+      "Festival of Lights",
+      "Deepawali"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "29-09-25",
+    "name": "Mawlid al-Nabīy",
+    "additional_details": null,
+    "alternate_names": [
+      "Mawlid",
+      "Milad un Nabi",
+      "Prophet's Birthday"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "30-09-25",
+    "name": "National Day for Truth and Reconciliation",
+    "additional_details": null,
+    "alternate_names": [
+      "Orange Shirt Day"
+    ],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "30-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "06-01-25",
+    "name": "Epiphany",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "06-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "10-02-25",
+    "name": "Family Day",
+    "additional_details": null,
+    "alternate_names": [
+      "Ontario Family Day",
+      "Provincial Family Day"
+    ],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "10-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "21-02-25",
+    "name": "Mahashivaratri",
+    "additional_details": null,
+    "alternate_names": [
+      "Maha Shivaratri",
+      "Great Night of Shiva"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "20-04-25",
+    "name": "Spring Ohigan",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "26-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Vasanta Panchami",
+    "start_date": "29-01-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-03-25",
+    "name": "Ramadan",
+    "additional_details": null,
+    "alternate_names": [
+      "Ramazan",
+      "Ramzan",
+      "Month of Fasting"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "30-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "12-10-24",
+    "name": "Pavarana Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "12-10-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "27-06-25",
+    "name": "Pride Weekend",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "28-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "05-05-25",
+    "name": "Wesak",
+    "additional_details": null,
+    "alternate_names": [
+      "Vesak",
+      "Buddha Day",
+      "Buddha Purnima",
+      "Buddha Jayanti"
+    ],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "05-05-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "02-09-25",
+    "name": "Ganesh Chaturthi",
+    "additional_details": null,
+    "alternate_names": [
+      "Vinayaka Chaturthi",
+      "Ganeshotsav"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "02-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "08-06-25",
+    "name": "Pentecost",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "08-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "11-11-24",
+    "name": "Martyrdom of Guru Tegh Bahadur Ji",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "11-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "21-03-25",
+    "name": "Nowruz",
+    "additional_details": null,
+    "alternate_names": [
+      "Norooz",
+      "Persian New Year",
+      "Iranian New Year"
+    ],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "03-08-25",
+    "name": "Raksha Bandhan",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "03-08-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-06-25",
+    "name": "Sir John A. Macdonald Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-11-24",
+    "name": "Bandhi Chhor Divas",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "30-11-24",
+    "name": "Advent",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "05-07-25",
+    "name": "Āshūrā",
+    "additional_details": null,
+    "alternate_names": [
+      "Ashura",
+      "Yawm Ashura",
+      "Day of Ashura"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "06-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Lunar New Year",
+    "start_date": "29-01-25",
+    "additional_details": null,
+    "alternate_names": [
+      "Chinese New Year",
+      "Spring Festival",
+      "Tết"
+    ],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "25-12-24",
+    "name": "Christmas",
+    "additional_details": null,
+    "alternate_names": [
+      "Christmas Day",
+      "Christmas Eve",
+      "Nativity of Jesus",
+      "Nativity of the Lord"
+    ],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "25-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Emancipation Day",
+    "start_date": "01-08-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-08-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "13-12-24",
+    "name": "Birth Date of the Aga Khan",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "13-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-09-25",
+    "name": "Installation of the Sri Guru Granth Sahib Ji",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "24-12-24",
+    "name": "Le Réveillon de Noël",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "08-11-24",
+    "name": "Indigenous Veterans Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "08-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "22-03-25",
+    "name": "Saka New Year",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "22-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "14-04-25",
+    "name": "Vaisakhi",
+    "additional_details": null,
+    "alternate_names": [
+      "Baisakhi",
+      "Vaisakhdi",
+      "Khalsa Day"
+    ],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "14-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "06-12-24",
+    "name": "National Day for Remembrance and Action on Violence Against Women",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "06-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Vassa",
+    "start_date": "18-07-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "17-10-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "30-03-25",
+    "name": "ʻĪd al-Fiṭr",
+    "additional_details": null,
+    "alternate_names": [
+      "Eid ul-Fitr",
+      "Eid al-Fitr",
+      "Ramadan Eid",
+      "Lesser Eid"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "31-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Makar Sankranti",
+    "start_date": "14-01-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "14-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "19-03-25",
+    "name": "4shanbe Souri",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "19-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "13-10-24",
+    "name": "Thanksgiving",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "13-10-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Day of Ḥajj",
+    "start_date": "08-06-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "08-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "21-12-24",
+    "name": "Yalda",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "12-02-25",
+    "name": "Magha Puja",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "12-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "24-04-25",
+    "name": "Hanuman Jayanti",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "17-10-24",
+    "name": "Navaratri",
+    "additional_details": null,
+    "alternate_names": [
+      "Navratri",
+      "Durga Puja",
+      "Dussehra"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "25-10-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "28-02-25",
+    "name": "Laylat al Baraat",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "28-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "21-02-25",
+    "name": "Persons Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Festival of Ksitigarbha",
+    "start_date": "29-07-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "22-03-25",
+    "name": "Navvarsha",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "22-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "12-10-24",
+    "name": "Navaratri",
+    "additional_details": null,
+    "alternate_names": [
+      "Navratri",
+      "Durga Puja",
+      "Dussehra"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "12-10-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "24-03-25",
+    "name": "Hola Mohalla",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "29-09-25",
+    "name": "Mid-Autumn Festival",
+    "additional_details": null,
+    "alternate_names": [
+      "Moon Festival",
+      "Mooncake Festival"
+    ],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "13-12-24",
+    "name": "Lucia",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "13-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Labour Day",
+    "start_date": "01-09-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "13-01-25",
+    "name": "Lohri",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "13-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "22-03-25",
+    "name": "Vikram New Year",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "22-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-11-24",
+    "name": "All Saints Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "08-12-24",
+    "name": "Bodhi Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "08-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "11-11-24",
+    "name": "Remembrance Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "11-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "20-07-25",
+    "name": "Islamic New Year",
+    "additional_details": null,
+    "alternate_names": [
+      "Hijri New Year",
+      "Arabic New Year",
+      "Muharram"
+    ],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "20-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "24-06-25",
+    "name": "Saint-Jean-Baptiste Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "19-05-25",
+    "name": "Victoria Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "19-05-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "16-05-25",
+    "name": "Martyrdom of Guru Arjan Dev Ji",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "16-05-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "26-04-25",
+    "name": "Laylat al-Qadr",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "26-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "02-07-25",
+    "name": "Asalha Puja",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "02-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "04-03-25",
+    "name": "Shrove Tuesday",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "04-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "18-04-25",
+    "name": "Good Friday",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "18-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "22-05-25",
+    "name": "Ascension",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "22-05-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "St. Patrick's Day",
+    "start_date": "17-03-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "17-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "29-09-25",
+    "name": "Navaratri",
+    "additional_details": null,
+    "alternate_names": [
+      "Navratri",
+      "Durga Puja",
+      "Dussehra"
+    ],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-09-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "National Indigenous Peoples Day",
+    "start_date": "21-06-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "17-10-24",
+    "name": "Arbaeen",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Islam",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "17-10-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "15-02-25",
+    "name": "National Flag of Canada Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "15-02-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "06-01-25",
+    "name": "Theophany",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "06-01-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "22-03-25",
+    "name": "Mahāyāna New Year",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "22-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "15-11-24",
+    "name": "Birth Date of Guru Nanak Dev Ji",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Sikhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "15-11-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Festival of Higan-e",
+    "start_date": "20-04-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Buddhism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "26-04-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "29-03-25",
+    "name": "Holi",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Hinduism",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "29-03-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "01-07-25",
+    "name": "Canada Day",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "National Commemorative Days",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "01-07-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "name": "Midsummer",
+    "start_date": "21-06-25",
+    "additional_details": null,
+    "alternate_names": [],
+    "category": "Additional Observances",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "21-06-25",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  },
+  {
+    "start_date": "24-12-24",
+    "name": "Christmas",
+    "additional_details": null,
+    "alternate_names": [
+      "Christmas Day",
+      "Christmas Eve",
+      "Nativity of Jesus",
+      "Nativity of the Lord"
+    ],
+    "category": "Christianity",
+    "created_at": "2025-01-04 07:59:56 UTC",
+    "end_date": "24-12-24",
+    "last_updated": "2025-01-04 07:59:56 UTC",
+    "source_urls": [
+      "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+    ]
+  }
+]

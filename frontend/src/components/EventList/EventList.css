@@ -1,159 +1,64 @@
 /* src/components/EventList/EventList.css */
 .event-list {
-  background: white;
   padding: 20px;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .event-list h2 {
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #dc3545;
-}
-
-.regular-events,
-.month-long-events {
-  margin-bottom: 30px;
-}
-
-.regular-events h3,
-.month-long-events h3 {
-  font-size: 1.2em;
+  margin-bottom: 20px;
   color: #333;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid;
-}
-
-.regular-events h3 {
-  border-color: #dc3545;
-}
-
-.month-long-events h3 {
-  border-color: #0056b3;
-}
-
-.events-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .event-card {
-  border-left: 4px solid;
   padding: 15px;
+  margin-bottom: 15px;
+  border-left: 4px solid #DC3545;
   background-color: #f8f9fa;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.event-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.more-info-btn {
-  padding: 5px 10px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.3s ease;
-}
-
-.more-info-btn:hover {
-  background-color: #c82333;
-}
-.regular-events .event-card {
-  border-left-color: #dc3545;
-}
-
-.month-long-events .event-card {
-  border-left-color: #0056b3;
-}
-
-.event-card:hover {
-  transform: translateX(5px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.event-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 0 4px 4px 0;
 }
 
 .event-header h3 {
-  margin: 0;
-  border: none;
-  padding: 0;
-  font-size: 1.1em;
-}
-
-.expand-icon {
-  font-size: 20px;
-  color: #666;
-  font-weight: bold;
-  padding: 0 8px;
+  margin: 0 0 10px 0;
+  color: #000000;
 }
 
 .event-dates {
   font-size: 0.9em;
   color: #666;
-  margin-top: 8px;
+  margin-bottom: 12px;
 }
 
-.event-details {
+.event-actions {
   margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #dee2e6;
 }
 
-.source-links {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.source-links a {
-  color: inherit;
+.more-info-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #DC3545;
+  color: white;
   text-decoration: none;
-  font-size: 0.9em;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
-.regular-events .source-links a {
-  color: #dc3545;
+.more-info-button:hover {
+  background-color: black;
+   /* Red text on hover */
 }
 
-.month-long-events .source-links a {
-  color: #0056b3;
+.regular-events, .month-long-events {
+  margin-top: 20px;
 }
 
-.source-links a:hover {
-  text-decoration: underline;
-}
-
-.alternate-names {
+.events-container {
   margin-top: 10px;
-  font-size: 0.9em;
-  color: #666;
-  font-style: italic;
 }
 
 .no-events {
   color: #666;
-  font-style: italic;
   text-align: center;
   padding: 20px;
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #666;
 }

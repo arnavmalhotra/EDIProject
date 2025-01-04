@@ -15,3 +15,21 @@
   color: #0056b3 !important;
   font-weight: bold;
 }
+
+/* Override weekend colors */
+.react-calendar__month-view__days__day--weekend {
+  color: inherit !important;
+}
+
+/* Ensure the hover state is consistent */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6;
+  color: inherit;
+}
+
+/* Maintain event styling even on weekends */
+.react-calendar__tile.has-event {
+  background-color: #e8f4f8 !important;
+  color: #0056b3 !important;
+}

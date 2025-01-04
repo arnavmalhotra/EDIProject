@@ -1,0 +1,192 @@
+/* src/pages/EventDetail/EventDetail.css */
+.event-detail-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 80px;
+}
+
+.floating-button-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.floating-return-button {
+  padding: 12px 24px;
+  background-color: #DC3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.floating-return-button:hover {
+  background-color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.event-detail-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.event-detail-header h1 {
+  margin: 0;
+  color: #000000;
+  font-size: 2rem;
+}
+
+.event-card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 4px solid #DC3545;
+  background-color: #f8f9fa;
+  border-radius: 0 4px 4px 0;
+}
+
+.event-header-extra {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-header h2 {
+  margin: 0;
+  color: #000000;
+}
+
+.event-category {
+  background-color: #f8f9fa;
+  padding: 4px 12px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.event-content {
+  padding: 20px;
+}
+
+.event-dates {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.date-item {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.date-item:last-child {
+  margin-bottom: 0;
+}
+
+.event-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.event-section h3 {
+  color: #000000;
+  margin: 0 0 10px 0;
+}
+
+.event-section p {
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+.source-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.source-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #DC3545;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.source-link:hover {
+  background-color: black;
+}
+
+.error-card {
+  padding: 20px;
+  text-align: center;
+}
+
+.error-card .error {
+  color: #DC3545;
+  margin-bottom: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.facts-list {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.facts-list li {
+  margin-bottom: 8px;
+}
+
+.resources-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.resources-list li {
+  margin-bottom: 12px;
+}
+
+.resource-description {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .event-detail-page {
+    padding: 15px;
+    padding-top: 80px;
+  }
+
+  .floating-button-container {
+    top: 10px;
+    right: 10px;
+  }
+
+  .floating-return-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .event-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}

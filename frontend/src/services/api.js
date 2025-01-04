@@ -57,6 +57,19 @@ export const api = {
     }
   },
 
+  getEventById: async (id) => {
+    try {
+      console.log('Fetching event details for ID:', id);
+      const response = await axios.get(`${API_BASE_URL}/events/${id}`);
+      console.log('Event details received:', response.data);
+      return response.data.event || null;
+    } catch (error) {
+      console.error('Error fetching event details:', error);
+      console.log('Error response:', error.response);
+      throw error;
+    }
+  },
+
   checkAPIStatus: async () => {
     try {
       const response = await axios.get('http://localhost:8080/');

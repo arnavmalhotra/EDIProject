@@ -20,6 +20,7 @@ load_dotenv()
 class EventDefinitions:
     """Class to maintain the list of events we want to track."""
     
+    # Your existing EVENTS_BY_CATEGORY dictionary here
     EVENTS_BY_CATEGORY = {
         "Christianity": [
             "Epiphany", "Theophany", "Christmas", "Shrove Tuesday", "Ash Wednesday",
@@ -65,6 +66,7 @@ class EventDefinitions:
         ]
     }
 
+    # Your existing ALTERNATE_NAMES dictionary here
     ALTERNATE_NAMES = {
         "Christmas": ["Christmas Day", "Christmas Eve", "Nativity of Jesus", "Nativity of the Lord"],
         "Easter": ["Easter Sunday", "Easter Day", "Resurrection Sunday", "Paschal Sunday"],
@@ -95,7 +97,6 @@ class EventDefinitions:
             event for events in cls.EVENTS_BY_CATEGORY.values() 
             for event in events
         }
-        # Add alternate names
         for main_name, alternates in cls.ALTERNATE_NAMES.items():
             events.add(main_name)
             events.update(alternates)
@@ -103,44 +104,29 @@ class EventDefinitions:
 
     @classmethod
     def get_event_category(cls, event_name: str) -> Optional[str]:
-        """Get the category of a given event."""
-        # First normalize the event name
         normalized_name = cls.normalize_event_name(event_name)
-        
-        # Check direct matches first
         for category, events in cls.EVENTS_BY_CATEGORY.items():
             if normalized_name in events:
                 return category
-            
-            # Check for fuzzy matches if no direct match found
             if any(fuzz.ratio(normalized_name.lower(), e.lower()) > 85 for e in events):
                 return category
-        
         return None
 
     @classmethod
     def normalize_event_name(cls, name: str) -> str:
-        """Normalize event name using the alternate names dictionary."""
         name = name.strip()
-        
-        # Check for exact matches in alternate names
         for main_name, alternates in cls.ALTERNATE_NAMES.items():
             if name.lower() == main_name.lower() or name.lower() in [alt.lower() for alt in alternates]:
                 return main_name
 
-        # If no exact match, try fuzzy matching
         best_match = None
         highest_ratio = 0
-        
-        # Check main names and alternates
         for main_name, alternates in cls.ALTERNATE_NAMES.items():
-            # Check main name
             ratio = fuzz.ratio(name.lower(), main_name.lower())
             if ratio > highest_ratio and ratio > 85:
                 highest_ratio = ratio
                 best_match = main_name
             
-            # Check alternates
             for alt in alternates:
                 ratio = fuzz.ratio(name.lower(), alt.lower())
                 if ratio > highest_ratio and ratio > 85:
@@ -149,9 +135,34 @@ class EventDefinitions:
         
         return best_match if best_match else name
 
+def generate_additional_information(event_name: str, model: Any) -> Dict[str, str]:
+    """Generate additional information about an event using Gemini."""
+    prompt = f"""
+    Generate detailed information about the event: {event_name}
+    
+    Provide the information in JSON format with these exact fields:
+    {{
+        "historical_background": "Brief history and origin of the event (2-3 sentences)",
+        "significance": "Cultural and social significance (2-3 sentences)",
+        "observance_details": "How the event is traditionally observed (2-3 sentences)",
+        "modern_celebration": "How it's celebrated in modern times (2-3 sentences)",
+        "impact_and_legacy": "Impact on society and lasting legacy (2-3 sentences)"
+    }}
+    
+    Keep each section concise but informative. Return only the JSON object, no additional text.
+    """
+    
+    try:
+        response = model.generate_content(prompt)
+        additional_info = clean_json_response(response.text)
+        time.sleep(1)  # Rate limiting
+        return additional_info if additional_info else {}
+    except Exception as e:
+        logging.error(f"Error generating additional information for {event_name}: {e}")
+        return {}
+
 class EventsDatabase:
     def __init__(self, connection_string="mongodb://localhost:27017/"):
-        """Initialize MongoDB connection and setup database."""
         self.client = MongoClient(connection_string)
         self.db = self.client.events_db
         self.events = self.db.events
@@ -161,7 +172,6 @@ class EventsDatabase:
         self._setup_logging()
 
     def _setup_logging(self):
-        """Setup logging configuration."""
         logging.basicConfig(
             filename='events_scraper.log',
             level=logging.INFO,
@@ -169,7 +179,6 @@ class EventsDatabase:
         )
 
     def _setup_indexes(self):
-        """Setup necessary indexes for efficient querying."""
         self.events.create_index([("name", ASCENDING)])
         self.events.create_index([("category", ASCENDING)])
         self.events.create_index([("start_date", ASCENDING)])
@@ -178,7 +187,6 @@ class EventsDatabase:
         self.events.create_index([("last_updated", ASCENDING)])
 
     def record_scrape(self, source_url: str, success: bool, events_count: int = 0, error: Optional[str] = None):
-        """Record scraping attempt in history."""
         record = {
             "source_url": source_url,
             "scrape_date": datetime.now(pytz.utc),
@@ -188,18 +196,16 @@ class EventsDatabase:
         }
         self.scrape_history.insert_one(record)
 
-    def insert_events(self, events: List[Dict[str, Any]], source_url: str) -> int:
-        """Insert or update events in MongoDB."""
+    def insert_events(self, events: List[Dict[str, Any]], source_url: str, model: Any = None) -> int:
+        """Insert or update events in MongoDB with optional additional information."""
         successful_updates = 0
         
         for event in events:
             try:
-                # Skip if not a tracked event
                 if not self._is_tracked_event(event.get('Name')):
                     logging.info(f"Skipping untracked event: {event.get('Name')}")
                     continue
                 
-                # Parse dates
                 try:
                     start_date = datetime.strptime(event.get('Start Date'), '%d-%m-%y')
                     end_date = datetime.strptime(event.get('End Date'), '%d-%m-%y')
@@ -207,16 +213,14 @@ class EventsDatabase:
                     logging.error(f"Date parsing error for event {event.get('Name')}: {e}")
                     continue
                 
-                # Normalize the event name
                 normalized_name = EventDefinitions.normalize_event_name(event.get('Name'))
-                
-                # Get event category
                 category = EventDefinitions.get_event_category(normalized_name)
+                
                 if not category:
                     logging.warning(f"Could not determine category for event: {normalized_name}")
                     continue
-                
-                # Create document
+
+                # Create base document
                 event_doc = {
                     "name": normalized_name,
                     "category": category,
@@ -225,7 +229,20 @@ class EventsDatabase:
                     "additional_details": event.get('Additional Details'),
                     "last_updated": datetime.now(pytz.utc)
                 }
-                
+
+                # Generate additional information if model is provided
+                if model:
+                    existing_event = self.events.find_one({
+                        "name": normalized_name,
+                        "start_date": start_date
+                    })
+                    
+                    if not existing_event or not existing_event.get('additional_information'):
+                        logging.info(f"Generating additional information for: {normalized_name}")
+                        additional_info = generate_additional_information(normalized_name, model)
+                        if additional_info:
+                            event_doc["additional_information"] = additional_info
+
                 # Update or insert the event
                 result = self.events.update_one(
                     {
@@ -253,10 +270,8 @@ class EventsDatabase:
         return successful_updates
 
     def _is_tracked_event(self, event_name: str) -> bool:
-        """Check if an event is in our tracking list using fuzzy matching."""
         if not event_name:
             return False
-            
         normalized_name = EventDefinitions.normalize_event_name(event_name)
         return normalized_name in self.tracked_events or any(
             fuzz.ratio(event_name.lower(), tracked.lower()) > 85
@@ -264,11 +279,9 @@ class EventsDatabase:
         )
 
     def get_events_by_category(self, category: str) -> List[Dict[str, Any]]:
-        """Get all events for a specific category."""
         return list(self.events.find({"category": category}).sort("start_date", ASCENDING))
 
     def get_events_by_date_range(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Get all events within a date range."""
         return list(self.events.find({
             "$or": [
                 {
@@ -281,7 +294,6 @@ class EventsDatabase:
         }).sort("start_date", ASCENDING))
 
     def get_events_statistics(self) -> Dict[str, Any]:
-        """Get statistics about the events in the database."""
         stats = {
             "total_events": self.events.count_documents({}),
             "events_by_category": {},
@@ -293,33 +305,26 @@ class EventsDatabase:
             "last_update": None
         }
         
-        # Get counts by category
         for category in EventDefinitions.EVENTS_BY_CATEGORY.keys():
             stats["events_by_category"][category] = self.events.count_documents(
                 {"category": category}
             )
         
-        # Get date range if there are events
         if stats["total_events"] > 0:
             earliest = self.events.find_one({}, sort=[("start_date", ASCENDING)])
             latest = self.events.find_one({}, sort=[("end_date", DESCENDING)])
             stats["date_range"]["earliest"] = earliest["start_date"] if earliest else None
             stats["date_range"]["latest"] = latest["end_date"] if latest else None
             
-            # Get last update
             last_updated = self.events.find_one({}, sort=[("last_updated", DESCENDING)])
             stats["last_update"] = last_updated["last_updated"] if last_updated else None
         
         return stats
 
 def get_website_html(url: str) -> Optional[str]:
-    """Fetch HTML content from a URL."""
     try:
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
         
         response = requests.get(url, headers=headers, timeout=30)
@@ -331,29 +336,20 @@ def get_website_html(url: str) -> Optional[str]:
         return None
 
 def clean_json_response(response_text: str) -> Optional[Dict[str, Any]]:
-    """Clean and parse JSON response from AI model."""
     try:
-        # Remove markdown code block indicators if present
         cleaned_text = re.sub(r'```json\n?', '', response_text)
         cleaned_text = re.sub(r'```\n?', '', cleaned_text)
         
-        # Try to find JSON content if there's other text
         json_match = re.search(r'\{[\s\S]*\}|\[[\s\S]*\]', cleaned_text)
         if json_match:
             cleaned_text = json_match.group(0)
         
-        # Parse the JSON
         return json.loads(cleaned_text)
-    except json.JSONDecodeError as e:
-        logging.error(f"Error parsing JSON: {e}")
-        logging.error(f"Problematic text: {response_text}")
-        return None
     except Exception as e:
-        logging.error(f"Unexpected error parsing response: {e}")
+        logging.error(f"Error parsing JSON: {e}")
         return None
 
 def process_single_url(url: str, model: Any, db: EventsDatabase) -> None:
-    """Process a single URL for event extraction."""
     try:
         logging.info(f"Starting scrape for: {url}")
         
@@ -362,11 +358,10 @@ def process_single_url(url: str, model: Any, db: EventsDatabase) -> None:
             db.record_scrape(url, False, error="Failed to fetch HTML")
             return
         
-        # Get list of tracked events for the prompt
         tracked_events_str = "\n".join(EventDefinitions.get_all_events())
         
-        # Create prompt for Gemini AI
-        prompt = f"""
+        # First prompt for event extraction
+        date_extraction_prompt = f"""
         From the following HTML content, extract ONLY the dates for these specific events:
 
         {tracked_events_str}
@@ -387,19 +382,17 @@ def process_single_url(url: str, model: Any, db: EventsDatabase) -> None:
         5. The current date is {date.today()}
         6. Return dates for the next occurrence of each event
         7. Include the year in the dates (YY part of DD-MM-YY)
-
-        Return only the JSON array, no additional text.
         """
         
-        response = model.generate_content(prompt + "\n\n" + html_content)
-        
+        response = model.generate_content(date_extraction_prompt + "\n\n" + html_content)
         events_data = clean_json_response(response.text)
+        
         if not events_data:
             db.record_scrape(url, False, error="No tracked events found")
             return
         
         events_list = events_data if isinstance(events_data, list) else [events_data]
-        updated_count = db.insert_events(events_list, url)
+        updated_count = db.insert_events(events_list, url, model)
         
         db.record_scrape(url, True, events_count=updated_count)
         logging.info(f"Successfully processed {url}: {updated_count} events updated/added")
@@ -409,14 +402,11 @@ def process_single_url(url: str, model: Any, db: EventsDatabase) -> None:
         db.record_scrape(url, False, error=str(e))
 
 def scrape_events(urls: List[str], db_connection_string: str = "mongodb://localhost:27017/") -> None:
-    """Main function to scrape events with parallel processing."""
     db = EventsDatabase(db_connection_string)
     
-    # Configure Gemini AI
     genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
     model = genai.GenerativeModel("gemini-1.5-flash")
     
-    # Process URLs in parallel
     with ThreadPoolExecutor(max_workers=4) as executor:
         future_to_url = {
             executor.submit(process_single_url, url, model, db): url
@@ -430,7 +420,6 @@ def scrape_events(urls: List[str], db_connection_string: str = "mongodb://localh
             except Exception as e:
                 logging.error(f"Error processing {url}: {e}")
             
-            # Add delay between requests
             time.sleep(2)
     
     db.client.close()
@@ -460,15 +449,12 @@ def export_events_to_json(db: EventsDatabase, output_file: str = "events_export.
 
 def main():
     """Main execution function."""
-    # URLs to scrape - add more as needed
     urls = [
         "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025",
         "https://www.canada.ca/en/canadian-heritage/services/important-commemorative-days.html",
         "https://www.ontario.ca/page/ontarios-celebrations-and-commemorations",
-        # Add more URLs that contain event information
     ]
     
-    # Get MongoDB connection string from environment variable
     connection_string = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
     
     try:

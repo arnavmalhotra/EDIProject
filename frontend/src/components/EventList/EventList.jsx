@@ -1,51 +1,27 @@
 // src/components/EventList/EventList.jsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './EventList.css';
 
 const EventCard = ({ event }) => {
-  const [expanded, setExpanded] = useState(false);
-  
   return (
-    <div 
-      className={`event-card ${expanded ? 'expanded' : ''}`}
-      onClick={() => setExpanded(!expanded)}
-    >
+    <div className="event-card">
       <div className="event-header">
         <h3>{event.name}</h3>
-        <span className="expand-icon">{expanded ? '−' : '+'}</span>
       </div>
       <div className="event-dates">
         <span>Start: {new Date(event.start_date).toLocaleDateString()}</span>
         <br />
         <span>End: {new Date(event.end_date).toLocaleDateString()}</span>
       </div>
-      {expanded && (
-        <div className="event-details">
-          {event.additional_details && (
-            <p>{event.additional_details}</p>
-          )}
-          {event.source_url && (
-            <div className="source-links">
-              {Array.isArray(event.source_url) ? (
-                event.source_url.map((url, index) => (
-                  <a key={index} href={url} target="_blank" rel="noopener noreferrer">
-                    Source {index + 1}
-                  </a>
-                ))
-              ) : (
-                <a href={event.source_url} target="_blank" rel="noopener noreferrer">
-                  Source
-                </a>
-              )}
-            </div>
-          )}
-          {event.alternate_names && event.alternate_names.length > 1 && (
-            <div className="alternate-names">
-              <p>Also known as: {event.alternate_names.filter(name => name !== event.name).join(', ')}</p>
-            </div>
-          )}
-        </div>
-      )}
+      <div className="event-actions">
+<Link 
+  to={`/event/${event._id}`} 
+  className="more-info-button"
+>
+  More Information
+</Link>
+      </div>
     </div>
   );
 };

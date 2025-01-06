@@ -1,4 +1,5 @@
 // src/pages/EventDetail/EventDetail.jsx
+// Add images next to event names, description stays static every year. Implement manual scraping, only thing that changes is the date.
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';

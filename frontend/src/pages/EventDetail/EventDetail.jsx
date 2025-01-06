@@ -1,5 +1,6 @@
 // src/pages/EventDetail/EventDetail.jsx
-// Add images next to event names, description (written manually) stays static every year. Implement manual scraping, only thing that changes is the date.
+// Add images next to event names, description (written manually) stays static every year. Implement manual scraping, only thing that changes is the date. This entire page should remain same every year other than the date.
+// potentially remove categorization to avoid offending anyone.
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';

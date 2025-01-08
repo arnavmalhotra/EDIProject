@@ -1,0 +1,883 @@
+{
+  "metadata": {
+    "total_events": 128,
+    "dated_events": 50,
+    "undated_events": 78,
+    "generated_at": "2025-01-04T12:01:18.396101",
+    "sources": [
+      "Ontario Government",
+      "Interfaith Calendar",
+      "York University"
+    ]
+  },
+  "events": [
+    {
+      "name": "Christian – Twelfth Night",
+      "date_details": "January 5, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-05",
+      "end_date": "2025-01-05"
+    },
+    {
+      "name": "Christian – Epiphany",
+      "date_details": "January 6, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-06",
+      "end_date": "2025-01-06"
+    },
+    {
+      "name": "Christian – Dia de los Reyes (Three Kings Day)",
+      "date_details": "January 6, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-06",
+      "end_date": "2025-01-06"
+    },
+    {
+      "name": "Orthodox Christian – Feast of the Epiphany (Theophany)",
+      "date_details": "January 6, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-06",
+      "end_date": "2025-01-06"
+    },
+    {
+      "name": "Orthodox Christian – Feast of the Nativity",
+      "date_details": "January 7, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-07",
+      "end_date": "2025-01-07"
+    },
+    {
+      "name": "Orthodox Christian – Christmas Day",
+      "date_details": "January 7, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-07",
+      "end_date": "2025-01-07"
+    },
+    {
+      "name": "Orthodox Christian – Christmas Day observed",
+      "date_details": "January 8, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-08",
+      "end_date": "2025-01-08"
+    },
+    {
+      "name": "Catholic Christian – Feast of the Holy Family",
+      "date_details": "January 8, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-08",
+      "end_date": "2025-01-08"
+    },
+    {
+      "name": "Hindu – Swami Vivekananda Jiyanti",
+      "date_details": "January 12, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-12",
+      "end_date": "2025-01-12"
+    },
+    {
+      "name": "Hindu – Lohri",
+      "date_details": "January 13, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-13",
+      "end_date": "2025-01-13"
+    },
+    {
+      "name": "Buddhist – Mahayana New Year",
+      "date_details": "January 14, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-14",
+      "end_date": "2025-01-14"
+    },
+    {
+      "name": "Hindu – Makar Sankranti (New Year)",
+      "date_details": "January 14, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-14",
+      "end_date": "2025-01-14"
+    },
+    {
+      "name": "Orthodox Christian – New Years Day",
+      "date_details": "January 14, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-14",
+      "end_date": "2025-01-14"
+    },
+    {
+      "name": "Buddhist – Mahayana New Year",
+      "date_details": "January 15, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-15",
+      "end_date": "2025-01-15"
+    },
+    {
+      "name": "Buddhist – Mahayana New Year",
+      "date_details": "January 16, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-16",
+      "end_date": "2025-01-16"
+    },
+    {
+      "name": "Catholic Christian – Blessing of the Animals (Hispanic)",
+      "date_details": "January 17, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-17",
+      "end_date": "2025-01-17"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 18, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-18",
+      "end_date": "2025-01-18"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 19, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-19",
+      "end_date": "2025-01-19"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 20, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-20",
+      "end_date": "2025-01-20"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 21, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-21",
+      "end_date": "2025-01-21"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 22, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-22",
+      "end_date": "2025-01-22"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 23, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-23",
+      "end_date": "2025-01-23"
+    },
+    {
+      "name": "Christian – Week of Prayer for Christian Unity",
+      "date_details": "January 24, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-24",
+      "end_date": "2025-01-24"
+    },
+    {
+      "name": "Christian – Conversion of St. Paul",
+      "date_details": "January 25, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-25",
+      "end_date": "2025-01-25"
+    },
+    {
+      "name": "Buddhist – Chinese New Year",
+      "date_details": "January 29, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-01-29",
+      "end_date": "2025-01-29"
+    },
+    {
+      "name": "Buddhist – Imbolc (Candlemas)",
+      "date_details": "February 1, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-01",
+      "end_date": "2025-02-01"
+    },
+    {
+      "name": "Christian – Candlemas, A Presentation of Christ in the Temple",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Buddhist – Imbolc (Candlemas)",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Christian – Saint Brighid of Kildare",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Wicca/NeoPagan – Imbolc (Northern Hemisphere)",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Wicca/NeoPagan – Lughnasadh (Southern Hemisphere)",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Christian – Candlemas – Presentation of Christ in the Temple",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Christian – Saint Brighid of Kildare",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Hindu – Vasant Panchami",
+      "date_details": "February 2, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-02",
+      "end_date": "2025-02-02"
+    },
+    {
+      "name": "Christian – St. Blaze Day",
+      "date_details": "February 3, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-03",
+      "end_date": "2025-02-03"
+    },
+    {
+      "name": "Shinto – Setsebun (beginning of spring)",
+      "date_details": "February 3, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-03",
+      "end_date": "2025-02-03"
+    },
+    {
+      "name": "Christian – St. Blaze Day",
+      "date_details": "February 3, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-03",
+      "end_date": "2025-02-03"
+    },
+    {
+      "name": "Shinto – Setsebun (beginning of spring)",
+      "date_details": "February 3, 2025",
+      "source": "Interfaith Calendar",
+      "source_url": "interfaith-calendar.org",
+      "start_date": "2025-02-03",
+      "end_date": "2025-02-03"
+    },
+    {
+      "name": "Ash Wednesday (Christian)",
+      "date_details": "March 5, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-03-05",
+      "end_date": "2025-03-05"
+    },
+    {
+      "name": "Nowruz New Year",
+      "date_details": "March 21, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-03-21",
+      "end_date": "2025-03-21"
+    },
+    {
+      "name": "Vaisakhi (Sikh)*",
+      "date_details": "April 14, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-04-14",
+      "end_date": "2025-04-14"
+    },
+    {
+      "name": "Good Friday (Christian)",
+      "date_details": "April 18, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-04-18",
+      "end_date": "2025-04-18"
+    },
+    {
+      "name": "Easter Sunday (Christian)",
+      "date_details": "April 20, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-04-20",
+      "end_date": "2025-04-20"
+    },
+    {
+      "name": "Holy Friday (Orthodox Christian)",
+      "date_details": "May 3, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-05-03",
+      "end_date": "2025-05-03"
+    },
+    {
+      "name": "Easter (Orthodox Christian)",
+      "date_details": "May 5, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-05-05",
+      "end_date": "2025-05-05"
+    },
+    {
+      "name": "Vesak / Wesak (Buddhist)*",
+      "date_details": "May 5, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-05-05",
+      "end_date": "2025-05-05"
+    },
+    {
+      "name": "Declaration of the Báb (Bahá'í)",
+      "date_details": "May 23, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-05-23",
+      "end_date": "2025-05-23"
+    },
+    {
+      "name": "Ascension of the Bahá'u'lláh (Bahá'í)",
+      "date_details": "May 28, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-05-28",
+      "end_date": "2025-05-28"
+    },
+    {
+      "name": "Ashura (Muslim)*",
+      "date_details": "July 5, 2025 to July 6, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-07-05",
+      "end_date": "2025-07-06"
+    },
+    {
+      "name": "Martyrdom of the Báb (Bahá'í)",
+      "date_details": "July 9, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca",
+      "start_date": "2025-07-09",
+      "end_date": "2025-07-09"
+    },
+    {
+      "name": "Rosh Hashanah (Jewish)",
+      "date_details": "Begins at sunset on Oct. 2, 2024 and ends at nightfall on Oct. 4, 2024.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Yom Kippur (Jewish)",
+      "date_details": "Begins at sunset on Oct. 11, 2024 and ends at nightfall on Oct. 12, 2024.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "First Two Days of Sukkot (Jewish)",
+      "date_details": "Begins at sunset on Oct. 16, 2024 and the second day ends at nightfall on Oct. 18, 2024.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Dussehra (Hindu)*",
+      "date_details": "Oct. 12, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Shemini Atzeret (Jewish)",
+      "date_details": "Begins at sunset on Oct. 23, 2024 and ends at nightfall on Oct. 24, 2024.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Simchat Torah (Jewish)",
+      "date_details": "Begins at sunset on Oct. 24, 2024 and ends at nightfall on Oct. 25, 2024.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Birth of the Báb (Bahá'í)",
+      "date_details": "Oct. 26, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Birth of Bahá'u'lláh (Bahá'í)",
+      "date_details": "Oct. 27, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Diwali (Hindu-Jain-Sikh)",
+      "date_details": "Nov. 1, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Bandi Chhor Divas (Sikh)",
+      "date_details": "Nov. 1, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Birth of Guru Nanak Dev Ji (Sikh)*",
+      "date_details": "Nov. 15, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Hanukkah (Jewish)",
+      "date_details": "Begins at sunset on Dec. 25, 2024 and ends at nightfall on Jan. 2, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Christmas Eve (Christian)",
+      "date_details": "Dec. 24, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Christmas (Christian)",
+      "date_details": "Dec. 25, 2024",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Epiphany (Christian)",
+      "date_details": "Jan. 6, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Feast of the Nativity (Orthodox Christian)",
+      "date_details": "Jan. 7, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Makar Sankranti (Hindu)",
+      "date_details": "Jan. 14, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Lunar New Year",
+      "date_details": "Jan. 29, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Māgha Pūjā Day (Buddhist)*",
+      "date_details": "Feb. 12, 2025",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Ramadan (Muslim)*",
+      "date_details": "Begins at sunset March 1, 2025 and ends at nightfall on March 30, 2025. Muslims may fast from dawn to dusk, abstaining from food and drink. Examinations scheduled in the evening may pose a special burden.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Purim (Jewish)",
+      "date_details": "Begins at sunset on March 13, 2025 and ends at nightfall on March 14, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Eid-al-Fitr (Muslim)*",
+      "date_details": "Begins at sunset on March 30, 2025 and ends the evening of March 31, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Passover - Pesach (Jewish)",
+      "date_details": "Begins at sunset on April 12, 2025 and ends at nightfall on April 20, 2025. The first and last two days are no work, no class days.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Ridván Festival (Bahá'í)",
+      "date_details": "Begins at sunset on April 20, 2025 and ends on May 2, 2025. The first day (April 20), ninth day (April 28) and twelfth day (May 1) are considered particularly significant.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Shavuot (Jewish)",
+      "date_details": "Begins at sunset on June 1, 2025 and ends at nightfall on June 3, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Hajj Pilgrimage (Muslim)*",
+      "date_details": "From June 4, 2025 to June 9, 2025 for students participating in the pilgrimage to Makkah.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Eid-al-Adha (Muslim)*",
+      "date_details": "Begins at sunset on June 6, 2025 and ends June 10, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Tisha B'av (Jewish)",
+      "date_details": "Begins on Aug. 2, 2025 and ends at nightfall on Aug. 3, 2025.",
+      "source": "York University",
+      "source_url": "yorku.ca"
+    },
+    {
+      "name": "Tamil Heritage Month",
+      "date_details": "January",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Lincoln Alexander Day",
+      "date_details": "January 21 (January)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Black History Month",
+      "date_details": "February",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Family Day",
+      "date_details": "third Monday in February (February)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Bangladeshi Heritage Month",
+      "date_details": "March",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Hellenic Heritage Month",
+      "date_details": "March",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Persian Heritage Month",
+      "date_details": "March",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Irish Heritage Day",
+      "date_details": "March 17 (March)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Sikh Heritage Month",
+      "date_details": "April",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Pope John Paul II Day",
+      "date_details": "April 2 (April)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Vimy Ridge Day",
+      "date_details": "April 9 (April)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Holocaust Memorial Day, Yom ha-Shoah",
+      "date_details": "Shoah (April)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Armenian Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Asian Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Croatian Heritage Day",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Dutch Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Jewish Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Polish Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "South Asian Heritage Month",
+      "date_details": "May",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "South Asian Arrival Day",
+      "date_details": "May 5 (May)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Tamil Genocide Education Week",
+      "date_details": "May 12 (May)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Ontario Flag Day",
+      "date_details": "May 21 (May)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Filipino Heritage Month",
+      "date_details": "June",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Italian Heritage Month",
+      "date_details": "June",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Portuguese History and Heritage Month",
+      "date_details": "June",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Ontario Day",
+      "date_details": "June 1 (June)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Portugal Day",
+      "date_details": "June 10 (June)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "United Empire Loyalists’ Day",
+      "date_details": "June 19 (June)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Somali Heritage Week",
+      "date_details": "June 25 (June)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Egyptian Heritage Month",
+      "date_details": "July",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Tibetan Heritage Month",
+      "date_details": "July",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Nikola Tesla Day",
+      "date_details": "July 10 (July)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Emancipation Month",
+      "date_details": "August",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Emancipation Day",
+      "date_details": "August 1 (August)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Ukrainian Heritage Day",
+      "date_details": "September 7 (September)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Provincial Day of Service",
+      "date_details": "September 11 (September)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Franco-Ontarian Day",
+      "date_details": "Ontarian Day (September)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Hispanic Heritage Month",
+      "date_details": "October",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Hungarian Heritage Month",
+      "date_details": "October",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Islamic Heritage Month",
+      "date_details": "October",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Korean Heritage Month",
+      "date_details": "October",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Ontario Cadets Week",
+      "date_details": "starting on the first Saturday in October (October)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "German Pioneers Day",
+      "date_details": "the day following Thanksgiving Day (October)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Major-General Sir Isaac Brock Day",
+      "date_details": "General Sir Isaac Brock Day (October)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Albanian Heritage Month",
+      "date_details": "November",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Hindu Heritage Month",
+      "date_details": "November",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Lebanese Heritage Month",
+      "date_details": "November",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Holodomor Memorial Day",
+      "date_details": "fourth Saturday in November (November)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Trans Day of Remembrance",
+      "date_details": "November 20 (November)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    },
+    {
+      "name": "Scottish Heritage Day",
+      "date_details": "November 30 (November)",
+      "source": "Ontario Government",
+      "source_url": "ontario.ca"
+    }
+  ]
+}

@@ -387,45 +387,59 @@ def scrape_canada_commemorative() -> Dict[str, Tuple[Optional[date], Optional[da
                 
                 events = event_list.find_all("li", class_="mrgn-bttm-md")
                 for event in events:
-                    text = event.get_text(strip=True)
+                    # Extract the date and event name separately
+                    strong_tag = event.find("strong")
+                    a_tag = event.find("a")
                     
-                    # Handle month-long events (no specific date mentioned)
-                    if not any(char.isdigit() for char in text):
-                        # Create start and end dates for the whole month
-                        start_dt = date(current_year, month_num, 1)
-                        if month_num == 12:
-                            next_month = date(current_year + 1, 1, 1)
-                        else:
-                            next_month = date(current_year, month_num + 1, 1)
-                        end_dt = next_month - timedelta(days=1)
+                    if strong_tag and a_tag:
+                        date_text = strong_tag.get_text(strip=True)
+                        event_name = a_tag.get_text(strip=True)
                         
-                        # Extract event name (usually before any parentheses)
-                        event_name = text.split('(')[0].strip()
+                        # Handle date ranges with hyphens or en dashes
+                        date_range_match = re.match(r"(\w+)\s+(\d{1,2})\s*[-–]\s*(\d{1,2})", date_text)
+                        if date_range_match:
+                            month_str, start_day, end_day = date_range_match.groups()
+                            start_dt = date(current_year, month_num, int(start_day))
+                            end_dt = date(current_year, month_num, int(end_day))
+                        else:
+                            # Handle single dates or other patterns
+                            single_date = parse_month_day_year(date_text)
+                            if single_date:
+                                start_dt = end_dt = single_date
+                            else:
+                                # Handle patterns like "Second Wednesday of November"
+                                nth_pattern_result = parse_nth_weekday_pattern(date_text)
+                                if nth_pattern_result:
+                                    start_dt, end_dt = nth_pattern_result
+                                else:
+                                    print(f"[CANADA] Could not parse date: {date_text}")
+                                    continue
+                        
                         accommodations[event_name.lower()] = (start_dt, end_dt)
-                        continue
                     
-                    # Handle specific dates
-                    date_match = re.search(r'(\w+\s+\d{1,2})', text)
-                    if date_match:
-                        day_str = date_match.group(1)
-                        try:
-                            # Parse the specific date
-                            day_dt = datetime.strptime(f"{day_str} {current_year}", "%B %d %Y").date()
-                            # Extract event name (everything after the date)
-                            name_parts = text.split(day_str)
-                            if len(name_parts) > 1:
-                                event_name = name_parts[1].split('(')[0].strip()
-                                # Remove leading/trailing punctuation
-                                event_name = re.sub(r'^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$', '', event_name)
-                                accommodations[event_name.lower()] = (day_dt, day_dt)
-                        except ValueError:
-                            print(f"[CANADA] Could not parse date: {day_str}")
+                    else:
+                        # Handle month-long events or events without specific dates
+                        text = event.get_text(strip=True)
+                        if 'Month' in text or not any(char.isdigit() for char in text):
+                            # Extract event name by removing any trailing descriptions
+                            event_name = text.split('(')[0].strip()
+                            start_dt = date(current_year, month_num, 1)
+                            if month_num == 12:
+                                next_month = date(current_year + 1, 1, 1)
+                            else:
+                                next_month = date(current_year, month_num + 1, 1)
+                            end_dt = next_month - timedelta(days=1)
+                            accommodations[event_name.lower()] = (start_dt, end_dt)
                             continue
-
+                        
+                        # Additional parsing if needed
+                        print(f"[CANADA] Unhandled event format: {text}")
+        
     except Exception as e:
         print(f"[CANADA] Error scraping commemorative days: {e}")
         
     return accommodations
+
 
 def scrape_xavier_calendar() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
@@ -591,7 +605,7 @@ def update_missing_events(not_found_events: List[Dict], api_key: str):
         # Try with main name and alternates
         start_dt = end_dt = None
         for name in [db_raw_name] + event.get("alternate_names", []):
-            start_dt, end_dt = fetch_from_calendarific(name, api_key)
+            #start_dt, end_dt = fetch_from_calendarific(name, api_key)
             if start_dt and end_dt:
                 print(f"   Found date via Calendarific: {start_dt} to {end_dt}")
                 break
@@ -748,7 +762,7 @@ def update_remaining_events(remaining_events: List[Dict], api_keys: Dict[str, st
         # Try with main name and alternates
         start_dt = end_dt = None
         for name in [db_raw_name] + event.get("alternate_names", []):
-            start_dt, end_dt = fetch_from_apininjas(name, api_keys["apininjas"])
+            #start_dt, end_dt = fetch_from_apininjas(name, api_keys["apininjas"])
             if start_dt and end_dt:
                 print(f"   Found date via API Ninjas: {start_dt} to {end_dt}")
                 try:

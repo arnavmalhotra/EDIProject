@@ -29,11 +29,29 @@ def find_events_without_date_fields():
     print(f"Total events without start_date or end_date: {len(events_list)}")
     
     for event in events_list:
-        print(f"{event['name']}")
+        print(f"Event without date fields: {event.get('name', 'Unnamed Event')}")
+
+def find_events_without_additional_details():
+    """
+    Find events in the database that don't have the additional_details field.
+    """
+    # Find events where additional_details field is missing
+    events_without_descriptions = events_collection.find({
+        "additional_details": {"$exists": False}
+    })
+    
+    # Convert to list and print results
+    events_list = list(events_without_descriptions)
+    
+    print(f"Total events without additional_details: {len(events_list)}")
+    
+    for event in events_list:
+        print(f"Event without additional_details: {event.get('name', 'Unnamed Event')}")
 
 def main():
     try:
         find_events_without_date_fields()
+        find_events_without_additional_details()
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:

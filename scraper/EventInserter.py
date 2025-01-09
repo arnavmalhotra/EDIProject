@@ -25,12 +25,11 @@ EVENTS_DATA = {
         "events": [
             "Asalha Puja", "Bodhi Day", "Festival of Higan-e", 
             "Festival of Ksitigarbha (Jizo) Bodhisattva", "Full Moon Days", 
-            "Magha Puja", "Māgha Pūjā Day", "Mahāyāna New Year", 
+            "Magha Puja", "Mahāyāna New Year", 
             "Nirvana Day", "Pavarana Day", "Saka New Year", 
             "Spring Ohigan", "Theravāda New Year", "Vassa", 
             "Vesak", "Wesak"
         ],
-        "default_description": "An important Buddhist observance that promotes spiritual growth and mindfulness."
     },
     "Christianity": {
         "events": [
@@ -42,7 +41,6 @@ EVENTS_DATA = {
             "Orthodox Good Friday", "Palm Sunday", "Pentecost", 
             "Shrove Tuesday", "Theophany"
         ],
-        "default_description": "A significant Christian observance that holds deep spiritual meaning for followers of the faith."
     },
     "Hinduism": {
         "events": [
@@ -50,9 +48,8 @@ EVENTS_DATA = {
             "Holi", "Krishna Janmashtami", "Lohri", "Makar Sankranti", 
             "Mahashivaratri", "Navaratri", "Navvarsha", "Raksha Bandhan", 
             "Ramanavami", "Sri Krishna Jayanti", "Vasanta Panchami", 
-            "Vikram New Year"
+            
         ],
-        "default_description": "A Hindu festival that celebrates spiritual traditions and cultural heritage."
     },
     "Islam": {
         "events": [
@@ -61,7 +58,6 @@ EVENTS_DATA = {
             "Laylat al-Baraat", "Laylat al-Mi'rāj", "Laylat al-Qadr", 
             "Mawlid al-Nabīy", "Mawlid al-Nabi", "Ramadan"
         ],
-        "default_description": "An Islamic observance that holds special significance in the Muslim faith."
     },
     "Judaism": {
         "events": [
@@ -69,7 +65,6 @@ EVENTS_DATA = {
             "Shavuot", "Shemini Atzeret", "Simchat Torah", 
             "Sukkot", "Tisha B'av", "Tu BiShvat", "Yom Kippur"
         ],
-        "default_description": "A Jewish holiday that commemorates important events and traditions in Jewish history and faith."
     },
     "Sikhism": {
         "events": [
@@ -79,13 +74,11 @@ EVENTS_DATA = {
             "Lohri", "Martyrdom of Guru Arjan Dev Sahib",
             "Martyrdom of Guru Tegh Bahadur Sahib", "Vaisakhi"
         ],
-        "default_description": "A Sikh observance that commemorates important events and figures in Sikh history."
     },
     "Zoroastrianism": {
         "events": [
             "Jashne Sadeh"
         ],
-        "default_description": "A Zoroastrian observance that celebrates ancient Persian traditions and spiritual beliefs."
     },
     "Month-Long Observances": {
         "events": [
@@ -99,7 +92,6 @@ EVENTS_DATA = {
             "Pride Season", "Sikh Heritage Month", "Tamil Heritage Month",
             "Women's History Month"
         ],
-        "default_description": "A month dedicated to celebrating and recognizing the contributions and heritage of various communities."
     },
     "Week-Long Observances": {
         "events": [
@@ -107,7 +99,6 @@ EVENTS_DATA = {
             "Gender Equality Week", "Mennonite Heritage Week",
             "Public Service Pride Week", "Veterans' Week"
         ],
-        "default_description": "A week dedicated to raising awareness and taking action on specific issues."
     },
     "International Days": {
         "events": [
@@ -122,7 +113,6 @@ EVENTS_DATA = {
             "International Transgender Day of Visibility",
             "International Women's Day"
         ],
-        "default_description": "An international observance that promotes awareness and action on global issues."
     },
     "National Days": {
         "events": [
@@ -144,7 +134,6 @@ EVENTS_DATA = {
             "Saint-Jean-Baptiste Day", "Sir John A. Macdonald Day",
             "Victoria Day"
         ],
-        "default_description": "A national observance that commemorates significant events and people in Canadian history."
     },
     "Cultural Observances": {
         "events": [
@@ -154,7 +143,6 @@ EVENTS_DATA = {
             "Pride Weekend", "Shogatsu/Gantan-sai", "St. Patrick's Day", 
             "Thanksgiving", "Yalda"
         ],
-        "default_description": "A cultural celebration that reflects community traditions and heritage."
     }
 }
 
@@ -187,7 +175,8 @@ ALTERNATE_NAMES = {
     "Dassehra": ["Dussehra", "Vijayadashami", "Dasara", "Dashain"],
     "Makar Sankranti": ["Pongal", "Lohri", "Magh Bihu", "Maghi"],
     "Holi": ["Festival of Colors", "Spring Festival", "Phagwah"],
-    
+    "Navvarsha":["Vikram New Year"],
+        
     # Islamic
     "Eid al-Fitr": ["ʻĪd al-Fiṭr", "Eid ul-Fitr", "Ramadan Eid", "Lesser Eid", "Sweet Eid"],
     "Eid al-Adha": ["ʻĪd al-'Aḍḥá", "Eid ul-Adha", "Bakrid", "Greater Eid", "Sacrifice Feast"],
@@ -258,7 +247,6 @@ def initialize_events():
             event_doc = {
                 "name": event_name,
                 "category": category,
-                "additional_details": data["default_description"],
                 "image_url": f"/images/{event_name.lower().replace(' ', '_')}.jpg",
                 "alternate_names": ALTERNATE_NAMES.get(event_name, []),
                 "created_at": datetime.now(pytz.utc),

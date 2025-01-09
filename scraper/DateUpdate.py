@@ -1,3 +1,12 @@
+"""
+Add Support for 
+https://www.interfaith-calendar.org/
+https://www.xavier.edu/jesuitresource/online-resources/calendar-religious-holidays-and-observances/index
+https://www.theinterfaithobserver.org/religious-calendar
+
+to ensure complete coverage of events
+
+"""
 import os
 import re
 import time
@@ -605,7 +614,7 @@ def update_missing_events(not_found_events: List[Dict], api_key: str):
                         "end_date": end_date,
                         "last_updated": datetime.now().replace(microsecond=0)
                     },
-                    "$addToSet": {"source_urls": "https://calendarific.com/api/v2"}
+                    "$addToSet": {"source_urls": "https://calendarific.com/"}
                 }
             )
             
@@ -754,7 +763,7 @@ def update_remaining_events(remaining_events: List[Dict], api_keys: Dict[str, st
                                 "end_date": end_date,
                                 "last_updated": datetime.now().replace(microsecond=0)
                             },
-                            "$addToSet": {"source_urls": "https://api.api-ninjas.com/v1/holidays"}
+                            "$addToSet": {"source_urls": "https://www.api-ninjas.com/api/holidays"}
                         }
                     )
                     

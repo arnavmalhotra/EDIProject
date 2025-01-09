@@ -1,4 +1,4 @@
-// src/pages/EventDetail/EventDetail.jsx.
+// src/pages/EventDetail/EventDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
@@ -71,8 +71,23 @@ const EventDetail = () => {
           className="event-card"
         >
           <div className="event-header-extra">
-            <h2>{event.name}</h2>
-            <div className="event-category">{event.category}</div>
+            <div className="event-title-section">
+              <h2>{event.name}</h2>
+              <div className="event-category">{event.category}</div>
+            </div>
+            {event.image_url && (
+              <div className="event-image-container">
+                <img
+                  src={event.image_url}
+                  alt={event.name}
+                  className="event-image"
+                  onError={(e) => {
+                    e.target.src = '/placeholder-image.jpg';
+                    e.target.classList.add('image-error');
+                  }}
+                />
+              </div>
+            )}
           </div>
           
           <div className="event-content">

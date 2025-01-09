@@ -1,11 +1,8 @@
-#Add support for all the websites other than York, add images on the eventdetails page
 import os
 import re
 import time
-import pytz
+from datetime import datetime, date, timedelta
 import requests
-
-from datetime import datetime, date
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -28,8 +25,9 @@ HEADERS = {
     )
 }
 
-# Define source URL as a constant
+# Define source URLs as constants
 YORK_URL = "https://registrar.yorku.ca/enrol/dates/religious-accommodation-resource-2024-2025"
+CANADA_URL = "https://www.canada.ca/en/canadian-heritage/services/important-commemorative-days.html"
 
 def strip_parentheses(raw_name: str) -> str:
     """
@@ -43,17 +41,18 @@ def strip_parentheses(raw_name: str) -> str:
 def parse_month_day_year(date_str: str) -> Optional[date]:
     """
     Attempt to parse a standard date like "Oct. 12, 2024".
-    Returns a date or None if parsing fails.
+    Returns a date object (without time components) or None if parsing fails.
     """
     possible_formats = [
         "%b. %d, %Y",  # e.g. "Oct. 12, 2024"
-        "%b %d, %Y",    # e.g. "Oct 12, 2024"
-        "%B %d, %Y"     # e.g. "October 12, 2024"
+        "%b %d, %Y",   # e.g. "Oct 12, 2024"
+        "%B %d, %Y"    # e.g. "October 12, 2024"
     ]
     for fmt in possible_formats:
         try:
-            dt = datetime.strptime(date_str.strip(), fmt).date()
-            return dt
+            parsed_date = datetime.strptime(date_str.strip(), fmt)
+            # Return only the date component
+            return date(parsed_date.year, parsed_date.month, parsed_date.day)
         except ValueError:
             pass
     return None
@@ -70,12 +69,10 @@ def get_nth_weekday(year: int, month: int, weekday: int, nth: int) -> Optional[d
     try:
         first_day = date(year, month, 1)
     except ValueError:
-        return None  # invalid date
+        return None
 
-    # Day of week for the 1st of that month
-    first_dow = first_day.weekday()  # Monday=0, Sunday=6
-    # offset: how many days from day 1 to get to the desired weekday
-    offset = (weekday - first_dow) % 7  # e.g., if first_dow=2, weekday=0 => offset=5
+    first_dow = first_day.weekday()
+    offset = (weekday - first_dow) % 7
     day_num = 1 + offset + 7*(nth-1)
 
     try:
@@ -88,18 +85,11 @@ def parse_nth_weekday_pattern(raw_text: str) -> Optional[Tuple[date, date]]:
     """
     Attempt to parse something like: "Third Monday in January 2025"
     or "Fourth Saturday of November" (with or without a year).
-
-    If no year is given, default to 2025 (arbitrary - adjust as needed).
-    Returns (start_date, end_date) or None if we cannot parse.
     """
-    # Regex capturing something like:
-    # "Third Monday in January 2025" or
-    # "Fourth Saturday of November"
-    # group(1)=first/second/third/fourth, group(2)=weekday, group(3)=month, group(4)=year (optional)
     pattern = re.compile(r"\b(first|second|third|fourth)\s+"
-                         r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+"
-                         r"(?:in|of)\s+([A-Za-z]+)(?:\s+(\d{4}))?\b",
-                         flags=re.IGNORECASE)
+                        r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+"
+                        r"(?:in|of)\s+([A-Za-z]+)(?:\s+(\d{4}))?\b",
+                        flags=re.IGNORECASE)
     match = pattern.search(raw_text)
     if not match:
         return None
@@ -154,21 +144,15 @@ def parse_nth_weekday_pattern(raw_text: str) -> Optional[Tuple[date, date]]:
 
 def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     """
-    Attempts to parse the date info from a string using multiple patterns:
-      1) "Begins ... on Mar. 1, 2025 ... ends ... on Mar. 30, 2025"
-      2) "From June 4, 2025 to June 9, 2025"
-      3) "July 5, 2025 to July 6, 2025"
-      4) Single date: "Oct. 12, 2024"
-      5) Two single dates in the string
-      6) "Third Monday in January 2025" (custom nth-weekday logic)
-      7) If none matched => (None, None)
+    Attempts to parse the date info from a string using multiple patterns.
+    Returns tuple of date objects (without time components).
     """
-    # 6) Check for "Third Monday in January" style patterns first
+    # Check for nth weekday patterns first
     nth_pattern_result = parse_nth_weekday_pattern(raw_text)
     if nth_pattern_result:
         return nth_pattern_result
 
-    # 1) "Begins ... on Mar. 1, 2025 ... ends ... on Mar. 30, 2025"
+    # "Begins ... on Mar. 1, 2025 ... ends ... on Mar. 30, 2025"
     pattern_begins_ends = re.compile(
         r"[Bb]egins.*on\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4}).*ends.*on\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})"
     )
@@ -176,11 +160,11 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     if match:
         start_str, end_str = match.groups()
         start_dt = parse_month_day_year(start_str)
-        end_dt   = parse_month_day_year(end_str)
+        end_dt = parse_month_day_year(end_str)
         if start_dt and end_dt:
             return (start_dt, end_dt)
 
-    # 2) "From June 4, 2025 to June 9, 2025"
+    # "From June 4, 2025 to June 9, 2025"
     pattern_from_to = re.compile(
         r"[Ff]rom\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})\s+to\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})"
     )
@@ -188,11 +172,11 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     if match:
         start_str, end_str = match.groups()
         start_dt = parse_month_day_year(start_str)
-        end_dt   = parse_month_day_year(end_str)
+        end_dt = parse_month_day_year(end_str)
         if start_dt and end_dt:
             return (start_dt, end_dt)
 
-    # 3) "July 5, 2025 to July 6, 2025"
+    # "July 5, 2025 to July 6, 2025"
     pattern_simple_to = re.compile(
         r"([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})\s+to\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})"
     )
@@ -200,11 +184,11 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     if match:
         start_str, end_str = match.groups()
         start_dt = parse_month_day_year(start_str)
-        end_dt   = parse_month_day_year(end_str)
+        end_dt = parse_month_day_year(end_str)
         if start_dt and end_dt:
             return (start_dt, end_dt)
 
-    # 4) Single date e.g. "Oct. 12, 2024"
+    # Single date e.g. "Oct. 12, 2024"
     pattern_single_date = re.compile(r"\b([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})\b")
     single_dates = pattern_single_date.findall(raw_text)
 
@@ -213,14 +197,13 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
         if dt:
             return (dt, dt)
 
-    # 5) Possibly 2 separate single-dates with no 'from/to':
+    # Two separate single-dates with no 'from/to'
     if len(single_dates) == 2:
         start_dt = parse_month_day_year(single_dates[0])
-        end_dt   = parse_month_day_year(single_dates[1])
+        end_dt = parse_month_day_year(single_dates[1])
         if start_dt and end_dt:
             return (start_dt, end_dt)
 
-    # 7) Could not parse
     return (None, None)
 
 def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
@@ -263,20 +246,101 @@ def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[dat
 
     return accommodations
 
+def scrape_canada_commemorative() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
+    """
+    Scrape the Important and commemorative days from Canada.ca.
+    Returns { event_name.lower() -> (start_date, end_date) }
+    """
+    accommodations = {}
+    
+    try:
+        resp = requests.get(CANADA_URL)
+        if resp.status_code != 200:
+            print(f"[CANADA] Failed to retrieve page (status {resp.status_code}).")
+            return accommodations
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+        
+        # Find all month sections (they're in columns)
+        month_columns = soup.find_all("div", class_="col-md-4")
+        
+        current_year = 2025  # Default to 2025 for the academic year
+        
+        for column in month_columns:
+            # Each column contains multiple month sections
+            month_sections = column.find_all("h2")
+            
+            for month_section in month_sections:
+                month_name = month_section.get_text(strip=True)
+                month_num = {
+                    'January': 1, 'February': 2, 'March': 3, 'April': 4,
+                    'May': 5, 'June': 6, 'July': 7, 'August': 8,
+                    'September': 9, 'October': 10, 'November': 11, 'December': 12
+                }.get(month_name)
+                
+                if not month_num:
+                    continue
+                
+                # Get the list of events for this month
+                event_list = month_section.find_next("ul", class_="list-unstyled")
+                if not event_list:
+                    continue
+                
+                events = event_list.find_all("li", class_="mrgn-bttm-md")
+                for event in events:
+                    text = event.get_text(strip=True)
+                    
+                    # Handle month-long events (no specific date mentioned)
+                    if not any(char.isdigit() for char in text):
+                        # Create start and end dates for the whole month
+                        start_dt = date(current_year, month_num, 1)
+                        # Find last day of month
+                        if month_num == 12:
+                            next_month = date(current_year + 1, 1, 1)
+                        else:
+                            next_month = date(current_year, month_num + 1, 1)
+                        end_dt = next_month - timedelta(days=1)
+                        
+                        # Extract event name (usually before any parentheses)
+                        event_name = text.split('(')[0].strip()
+                        accommodations[event_name.lower()] = (start_dt, end_dt)
+                        continue
+                    
+                    # Handle specific dates
+                    date_match = re.search(r'(\w+\s+\d{1,2})', text)
+                    if date_match:
+                        day_str = date_match.group(1)
+                        try:
+                            # Parse the specific date
+                            day_dt = datetime.strptime(f"{day_str} {current_year}", "%B %d %Y").date()
+                            # Extract event name (everything after the date)
+                            name_parts = text.split(day_str)
+                            if len(name_parts) > 1:
+                                event_name = name_parts[1].split('(')[0].strip()
+                                # Remove leading/trailing punctuation
+                                event_name = re.sub(r'^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$', '', event_name)
+                                accommodations[event_name.lower()] = (day_dt, day_dt)
+                        except ValueError:
+                            print(f"[CANADA] Could not parse date: {day_str}")
+                            continue
+
+    except Exception as e:
+        print(f"[CANADA] Error scraping commemorative days: {e}")
+        
+    return accommodations
+
 def update_event_dates():
     """
-    1) Scrape York University data.
-    2) For each event in DB, match name (stripped, lowercase) and alternate names:
-       - Use York data if found.
-    3) If found, parse & update. If not, skip.
-    4) Summarize counts.
+    Update event dates in the database from multiple sources.
     """
-    print("Scraping data from York University (primary) ...")
+    print("Scraping data from York University (primary)...")
     york_dict = scrape_york_accommodations()
+
+    print("\nScraping data from Canada.ca...")
+    canada_dict = scrape_canada_commemorative()
 
     print("\nStarting database update...")
 
-    # Counters for summary
     total_events = 0
     updated_events = 0
     parse_failed = 0
@@ -288,72 +352,74 @@ def update_event_dates():
         total_events += 1
         db_raw_name = event.get("name", "").strip()
         alternate_names = event.get("alternate_names", [])
-        # Prepare a list of all possible names: primary and alternate
-        possible_names = [strip_parentheses(db_raw_name).lower()] + [strip_parentheses(name).lower() for name in alternate_names]
+        possible_names = [strip_parentheses(db_raw_name).lower()] + [
+            strip_parentheses(name).lower() for name in alternate_names
+        ]
 
         print(f"\nChecking DB event: '{db_raw_name}' (Possible names: {possible_names})")
 
-        # Initialize variables
         start_dt, end_dt = None, None
         source_url = None
 
-        # 1) Check York: iterate through all possible names
+        # Try York data first
         for name in possible_names:
             if name in york_dict:
                 start_dt, end_dt = york_dict[name]
                 source_url = YORK_URL
                 print(f"   Found in York data using name: '{name}'")
-                break  # Prefer first match in York
+                break
 
-        # If not found in York, skip
+        # If not found in York data, try Canada.ca data
         if start_dt is None and end_dt is None:
-            print("   No match in York data.")
+            for name in possible_names:
+                if name in canada_dict:
+                    start_dt, end_dt = canada_dict[name]
+                    source_url = CANADA_URL
+                    print(f"   Found in Canada.ca data using name: '{name}'")
+                    break
+
+        if start_dt is None and end_dt is None:
+            print("   No match found in any source.")
             not_found += 1
             continue
 
-        # If the name was found but the date(s) could not be parsed => skip
         if not start_dt or not end_dt:
             print(f"   Could not parse dates for '{db_raw_name}'. Skipping update.")
             parse_failed += 1
             continue
 
-        # Convert date -> datetime at midnight UTC
-        start_date = datetime.combine(start_dt, datetime.min.time()).replace(tzinfo=pytz.utc)
-        end_date = datetime.combine(end_dt, datetime.min.time()).replace(tzinfo=pytz.utc)
-
         try:
+            # Store dates as datetime objects at midnight (00:00:00)
+            start_date = datetime(start_dt.year, start_dt.month, start_dt.day)
+            end_date = datetime(end_dt.year, end_dt.month, end_dt.day)
+
             update_fields = {
                 "start_date": start_date,
                 "end_date": end_date,
-                "last_updated": datetime.now(pytz.utc)
+                "last_updated": datetime.now().replace(microsecond=0)
             }
 
-            # Update source_urls using $addToSet to avoid duplicates
             if source_url:
                 events_collection.update_one(
                     {"_id": event["_id"]},
                     {
                         "$set": update_fields,
-                        "$addToSet": {
-                            "source_urls": source_url
-                        }
+                        "$addToSet": {"source_urls": source_url}
                     }
                 )
             else:
                 events_collection.update_one(
                     {"_id": event["_id"]},
-                    {
-                        "$set": update_fields
-                    }
+                    {"$set": update_fields}
                 )
 
             print(f"   ✓ Updated '{db_raw_name}' with {start_dt} to {end_dt}")
             updated_events += 1
+
         except Exception as e:
             print(f"   ✗ Error updating DB: {e}")
 
-        # Be nice to servers
-        time.sleep(1)
+        time.sleep(1)  # Rate limiting
 
     print("\n=== UPDATE SUMMARY ===")
     print(f"Total events processed: {total_events}")

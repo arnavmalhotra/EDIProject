@@ -3,6 +3,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './EventList.css';
 
+// Helper function to format date ignoring timezone
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  ).toLocaleDateString();
+};
+
+// Helper function to calculate days between dates
+const getDaysBetween = (startDate, endDate) => {
+  const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+  const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+  return Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+};
+
 const EventCard = ({ event }) => {
   return (
     <div className="event-card">
@@ -10,17 +27,17 @@ const EventCard = ({ event }) => {
         <h3>{event.name}</h3>
       </div>
       <div className="event-dates">
-        <span>Start: {new Date(event.start_date).toLocaleDateString()}</span>
+        <span>Start: {formatDate(event.start_date)}</span>
         <br />
-        <span>End: {new Date(event.end_date).toLocaleDateString()}</span>
+        <span>End: {formatDate(event.end_date)}</span>
       </div>
       <div className="event-actions">
-<Link 
-  to={`/event/${event._id}`} 
-  className="more-info-button"
->
-  More Information
-</Link>
+        <Link 
+          to={`/event/${event._id}`} 
+          className="more-info-button"
+        >
+          More Information
+        </Link>
       </div>
     </div>
   );
@@ -31,55 +48,55 @@ const EventList = ({ events, selectedDate, loading }) => {
     return <div className="loading">Loading events...</div>;
   }
 
-  // Separate month-long events and regular events
-  const monthLongEvents = events.filter(event => {
-    const start = new Date(event.start_date);
-    const end = new Date(event.end_date);
-    return (
-      start.getDate() === 1 && 
-      end.getDate() >= 28 && 
-      start.getMonth() === end.getMonth() &&
-      start.getFullYear() === end.getFullYear()
-    );
-  });
+  // Separate events into different categories based on duration
+  const categorizedEvents = events.reduce((acc, event) => {
+    const startDate = new Date(event.start_date);
+    const endDate = new Date(event.end_date);
+    const duration = getDaysBetween(startDate, endDate);
 
-  const regularEvents = events.filter(event => {
-    const start = new Date(event.start_date);
-    const end = new Date(event.end_date);
-    return !(
-      start.getDate() === 1 && 
-      end.getDate() >= 28 &&
-      start.getMonth() === end.getMonth() &&
-      start.getFullYear() === end.getFullYear()
-    );
+    // Regular events (less than 6 days)
+    if (duration < 6) {
+      acc.regular.push(event);
+    }
+    // Extended events (6 days or more)
+    else {
+      acc.extended.push(event);
+    }
+
+    return acc;
+  }, { regular: [], extended: [] });
+
+  // Format the date without timezone considerations
+  const formattedDate = new Date(
+    selectedDate.getFullYear(),
+    selectedDate.getMonth(),
+    selectedDate.getDate()
+  ).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
 
   return (
     <div className="event-list">
-      <h2>
-        Events for {selectedDate.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
-      </h2>
+      <h2>Events for {formattedDate}</h2>
       
-      {regularEvents.length > 0 && (
+      {categorizedEvents.regular.length > 0 && (
         <div className="regular-events">
           <h3>Events</h3>
           <div className="events-container">
-            {regularEvents.map((event) => (
+            {categorizedEvents.regular.map((event) => (
               <EventCard key={event._id} event={event} />
             ))}
           </div>
         </div>
       )}
       
-      {monthLongEvents.length > 0 && (
-        <div className="month-long-events">
-          <h3>Month-Long Observances</h3>
+      {categorizedEvents.extended.length > 0 && (
+        <div className="extended-events">
+          <h3>Extended Observances</h3>
           <div className="events-container">
-            {monthLongEvents.map((event) => (
+            {categorizedEvents.extended.map((event) => (
               <EventCard key={event._id} event={event} />
             ))}
           </div>

@@ -1,4 +1,4 @@
-#Find sources to get all the dates whos dates have not been found yet
+#Find sources to get all the dates whos dates have not been found yet, try to use google search (has almost all dates), look into serp api
 import os
 import re
 import time
@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from fuzzywuzzy import fuzz
 from pymongo import MongoClient
+
+
 
 # Load environment variables
 load_dotenv()

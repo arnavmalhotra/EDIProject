@@ -16,7 +16,7 @@ events_collection = db.events
 EVENTS_DATA = {
     "Bahá'í Faith": {
         "events": [
-            "Ascension of Bahá'u'lláh", "Declaration of the Báb", 
+            "Ascension of the Bahá'u'lláh", "Declaration of the Báb", 
             "Martyrdom of the Báb", "Ridván Festival"
         ],
         "default_description": "A Bahá'í observance that marks significant events in the history of the faith."
@@ -53,8 +53,8 @@ EVENTS_DATA = {
     },
     "Islam": {
         "events": [
-            "Arbaeen", "Āshūrā", "Day of Ḥajj", "Eid al-Fitr", 
-            "Eid al-Adha", "Hajj Pilgrimage", "Islamic New Year", 
+            "Arbaeen", "Āshūrā", "Day of Ḥajj", "Eid-al-Fitr", 
+            "Eid-al-Adha", "Hajj Pilgrimage", "Islamic New Year", 
             "Laylat al-Baraat", "Laylat al-Mi'rāj", "Laylat al-Qadr", 
             "Mawlid al-Nabīy", "Mawlid al-Nabi", "Ramadan"
         ],
@@ -173,10 +173,9 @@ ALTERNATE_NAMES = {
     "Ganesh Chaturthi": ["Vinayaka Chaturthi", "Ganeshotsav", "Vinayaka Chavithi"],
     "Navaratri": ["Navratri", "Durga Puja", "Navratra", "Nine Nights"],
     "Dassehra": ["Dussehra", "Vijayadashami", "Dasara", "Dashain"],
-    "Makar Sankranti": ["Pongal", "Lohri", "Magh Bihu", "Maghi"],
     "Holi": ["Festival of Colors", "Spring Festival", "Phagwah"],
     "Navvarsha":["Vikram New Year"],
-        
+
     # Islamic
     "Eid al-Fitr": ["ʻĪd al-Fiṭr", "Eid ul-Fitr", "Ramadan Eid", "Lesser Eid", "Sweet Eid"],
     "Eid al-Adha": ["ʻĪd al-'Aḍḥá", "Eid ul-Adha", "Bakrid", "Greater Eid", "Sacrifice Feast"],
@@ -200,7 +199,7 @@ ALTERNATE_NAMES = {
     # Sikh
     "Vaisakhi": ["Baisakhi", "Vaisakhdi", "Khalsa Day", "Sikh New Year"],
     "Bandi Chhor Divas": ["Bandi Shor Divas", "Prison Release Day", "Day of Liberation"],
-    "Birth of Guru Nanak Dev Ji": ["Guru Nanak Gurpurab", "Guru Nanak's Prakash Utsav"],
+    "Birth of Guru Nanak Dev Ji": ["Guru Nanak Gurpurab", "Guru Nanak's Prakash Utsav","Birth of Guru Nanak Dev Ji "],
     "Martyrdom of Guru Tegh Bahadur Sahib": ["Shaheedi Guru Tegh Bahadur", "Martyrdom Day of Ninth Guru"],
     "Martyrdom of Guru Arjan Dev Sahib": ["Shaheedi Guru Arjan Dev Ji", "Martyrdom Day of Fifth Guru"],
     

@@ -1,4 +1,3 @@
-#Find sources to get all the dates whos dates have not been found yet, try to use google search (has almost all dates), look into serp api
 import os
 import re
 import time
@@ -179,7 +178,24 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     Attempts to parse the date info from a string using multiple patterns.
     Returns tuple of date objects (without time components).
     """
-    # Check for nth weekday patterns first
+    # First try to parse simple single-day format (e.g. "May 23, 2025")
+    try:
+        # Clean the text first
+        cleaned_text = raw_text.strip()
+        # Try parsing as a simple date
+        parsed_date = datetime.strptime(cleaned_text, "%b %d, %Y").date()
+        return (parsed_date, parsed_date)  # Return same date for start and end
+    except ValueError:
+        pass
+    
+    try:
+        # Try alternate format without period (e.g. "May 23, 2025")
+        parsed_date = datetime.strptime(cleaned_text, "%B %d, %Y").date()
+        return (parsed_date, parsed_date)
+    except ValueError:
+        pass
+
+    # Check for nth weekday patterns
     nth_pattern_result = parse_nth_weekday_pattern(raw_text)
     if nth_pattern_result:
         return nth_pattern_result
@@ -195,10 +211,77 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
         end_dt = parse_month_day_year(end_str)
         if start_dt and end_dt:
             return (start_dt, end_dt)
+            
+    # Pattern: "July 9, 2025" (simple date)
+    date_pattern = re.compile(r"([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})")
+    match = date_pattern.search(raw_text)
+    if match:
+        month_str, day_str, year_str = match.groups()
+        try:
+            month_num = {
+                'january': 1, 'february': 2, 'march': 3, 'april': 4,
+                'may': 5, 'june': 6, 'july': 7, 'august': 8,
+                'september': 9, 'october': 10, 'november': 11, 'december': 12
+            }[month_str.lower()]
+            day = int(day_str)
+            year = int(year_str)
+            parsed_date = date(year, month_num, day)
+            return (parsed_date, parsed_date)  # Single day event
+        except (ValueError, KeyError):
+            pass
 
-    # Add more parsing patterns as needed
+    # Pattern: "Begins at sunset on Mar. 30, 2025 and ends the evening of Mar. 31, 2025"
+    sunset_pattern = re.compile(
+        r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\.?\s+\d{1,2},\s*\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|on\s+)?([A-Za-z]+\.?\s+\d{1,2},\s*\d{4}))"
+    )
+    match = sunset_pattern.search(raw_text)
+    if match:
+        start_str, end_str = match.groups()
+        start_dt = parse_month_day_year(start_str)
+        end_dt = parse_month_day_year(end_str)
+        if start_dt and end_dt:
+            return (start_dt, end_dt)
 
     return (None, None)
+
+def parse_month_day_year(date_str: str) -> Optional[date]:
+    """
+    Attempt to parse a standard date like "Oct. 12, 2024".
+    Returns a date object (without time components) or None if parsing fails.
+    """
+    possible_formats = [
+        "%b. %d, %Y",   # e.g. "Oct. 12, 2024"
+        "%b %d, %Y",    # e.g. "Oct 12, 2024"
+        "%B %d, %Y",    # e.g. "October 12, 2024"
+        "%B. %d, %Y"    # e.g. "October. 12, 2024"
+    ]
+    
+    # Clean the input string
+    cleaned_str = date_str.strip()
+    
+    for fmt in possible_formats:
+        try:
+            parsed_date = datetime.strptime(cleaned_str, fmt)
+            return date(parsed_date.year, parsed_date.month, parsed_date.day)
+        except ValueError:
+            continue
+            
+    # If standard formats fail, try manual parsing
+    pattern = re.compile(r"([A-Za-z]+)\.?\s+(\d{1,2}),\s*(\d{4})")
+    match = pattern.match(cleaned_str)
+    if match:
+        month_str, day_str, year_str = match.groups()
+        try:
+            month_num = {
+                'january': 1, 'february': 2, 'march': 3, 'april': 4,
+                'may': 5, 'june': 6, 'july': 7, 'august': 8,
+                'september': 9, 'october': 10, 'november': 11, 'december': 12
+            }[month_str.lower()]
+            return date(int(year_str), month_num, int(day_str))
+        except (ValueError, KeyError):
+            pass
+            
+    return None
 
 def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
@@ -228,16 +311,39 @@ def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[dat
             cols = row.find_all("td")
             if len(cols) < 2:
                 continue
+                
             raw_name = cols[0].get_text(strip=True)
             raw_date_str = cols[1].get_text(strip=True)
-
+            
+            # Store both the full name and stripped version
+            event_name_full = raw_name
             event_name_stripped = strip_parentheses(raw_name)
+            
+            # Print for debugging
+            print(f"[YORK] Processing event: '{event_name_full}' (Stripped: '{event_name_stripped}')")
+            
+            # Parse dates
             start_dt, end_dt = parse_date_range(raw_date_str)
+            
+            # Store under both full and stripped versions to increase matching chances
+            accommodations[event_name_full.lower()] = (start_dt, end_dt)
             accommodations[event_name_stripped.lower()] = (start_dt, end_dt)
+            
+            # Also store without diacritical marks for Bahá'í events
+            if "bahá'í" in event_name_full.lower():
+                plain_name = raw_name.replace("á", "a").replace("'", "").replace("'", "")
+                print(f"[YORK] Adding plain version: '{plain_name}'")
+                accommodations[plain_name.lower()] = (start_dt, end_dt)
+                accommodations[strip_parentheses(plain_name).lower()] = (start_dt, end_dt)
 
     except Exception as e:
         print(f"[YORK] Error scraping accommodations: {e}")
 
+    # Debug print of all stored events
+    print("\n[YORK] All stored events:")
+    for name, dates in accommodations.items():
+        print(f"- '{name}': {dates}")
+        
     return accommodations
 
 def scrape_canada_commemorative() -> Dict[str, Tuple[Optional[date], Optional[date]]]:

@@ -27,7 +27,7 @@ EVENTS_DATA = {
             "Festival of Ksitigarbha", 
             "Magha Puja", "Mahāyāna New Year", 
             "Nirvana Day", "Pavarana", "Nyepi", 
-            "Spring Ohigan", "Theravada New Year", 
+            "Theravada New Year", 
             "Vesak",
         ],
     },
@@ -138,7 +138,7 @@ EVENTS_DATA = {
     "Cultural Observances": {
         "events": [
             "4shanbe Souri", "Chinese New Year", "Kwanzaa", 
-            "Le Réveillon de Noël", "Lucia Day", "Lunar New Year", 
+            "Le Réveillon de Noël", "Saint Lucy's Day", "Lunar New Year", 
             "Mid-Autumn Festival", "Midsummer", "Nowruz", 
             "Pride Weekend", "Shogatsu/Gantan-sai", "St. Patrick's Day", 
             "Thanksgiving", "Yalda"
@@ -246,7 +246,7 @@ ALTERNATE_NAMES = {
     "Nowruz": ["Norooz", "Persian New Year", "Iranian New Year", "Spring Festival", "nowruz"],
     "Lunar New Year": ["Chinese New Year", "Spring Festival", "Tết", "Seollal", "lunar new year"],
     "Shogatsu/Gantan-sai": ["Japanese New Year", "shogatsu", "gantan sai"],
-    "4shanbe Souri": ["Chaharshanbe Suri", "Festival of Fire", "4shanbe souri"],
+    "Chaharshanbe Suri": ["Festival of Fire", "4shanbe Souri"],
     "Mid-Autumn Festival": ["Moon Festival", "Mooncake Festival", "mid autumn festival"],
     "Kwanzaa": ["kwanzaa"],
     "Pride Weekend": ["Pride Festival", "pride weekend", "pride"],

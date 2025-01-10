@@ -142,156 +142,109 @@ def normalize_event_name(name):
 # =========================
 
 def search_event_with_selenium(driver, event_name, alternate_names):
-    """Search for event dates using Google Search with improved accuracy"""
+    """Search for event dates using Google Search with improved selectors"""
     try:
-        # Construct search terms
-        search_terms = [f'"{event_name}"', event_name]
-        
-        words = event_name.split()
-        if len(words) > 2:
-            for i in range(len(words)-1):
-                search_terms.append(f'"{words[i]} {words[i+1]}"')
-        
-        if alternate_names:
-            for alt_name in alternate_names[:2]:
-                search_terms.extend([f'"{alt_name}"', alt_name])
-        
-        # Date-related terms
-        date_terms = [
-            "2025 date",
-            "2025 calendar",
-            "2025 observed",
-            "when is celebrated 2025",
-            "official date 2025",
-            "2025 festival",
-            "2025 holiday",
-            "2025"
-        ]
-        
-        # Site restrictions
-        site_terms = [
-            'site:*.edu',
-            'site:*.gov',
-            'site:interfaith-calendar.org',
-            'site:timeanddate.com',
-            'site:officeholidays.com'
-        ]
-        
-        # Combine search terms
-        base_query = f"({' OR '.join(search_terms)}) AND ({' OR '.join(date_terms)})"
-        site_query = f"({' OR '.join(site_terms)})"
-        full_query = f"{base_query} {site_query} -wikipedia -pinterest"
-        
-        # URL encode the search query
+        search_terms = [event_name, "date 2025"]
+        full_query = ' '.join(search_terms)
         encoded_query = quote(full_query)
         url = f"https://www.google.com/search?q={encoded_query}"
         
-        logging.debug(f"Constructed Search URL: {url}")
-        
         driver.get(url)
+        time.sleep(random.uniform(3, 6))
         
-        # Randomized delay to mimic human behavior
-        delay = random.uniform(3, 6)
-        logging.debug(f"Sleeping for {delay:.2f} seconds to mimic human behavior.")
-        time.sleep(delay)
-        
-        # Capture screenshot for debugging
-        screenshot_path = f"screenshots/{event_name.replace(' ', '_')}_search.png"
-        os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
-        driver.save_screenshot(screenshot_path)
-        logging.debug(f"Search results screenshot saved to {screenshot_path}")
-        
-        # Wait for search results
-        try:
-            WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.ID, "search"))
-            )
-        except TimeoutException:
-            logging.warning(f"Search results did not load in time for event: {event_name}")
-            return None
-        
-        # Extract search results
+        # Expanded selectors to catch more result types
         search_results = []
         
-        # Attempt to get featured snippet
-        try:
-            featured = driver.find_element(By.CSS_SELECTOR, "div.kp-wholepage")
-            featured_text = featured.text
-            search_results.append(f"FEATURED_SNIPPET: {featured_text}")
-            logging.debug("Featured snippet extracted.")
-        except NoSuchElementException:
-            logging.debug("No featured snippet found.")
+        # Featured snippet (expanded selectors)
+        featured_selectors = [
+            "div.kp-wholepage",
+            "div[data-featured-snippet-id]",
+            "div.V3FYCf",  # New Google featured snippet class
+            "div.IZ6rdc"   # Alternative featured snippet class
+        ]
         
-        # Attempt to get knowledge panel
-        try:
-            knowledge_panel = driver.find_element(By.CSS_SELECTOR, "div.kp-blk")
-            knowledge_text = knowledge_panel.text
-            search_results.append(f"KNOWLEDGE_PANEL: {knowledge_text}")
-            logging.debug("Knowledge panel extracted.")
-        except NoSuchElementException:
-            logging.debug("No knowledge panel found.")
-        
-        # Extract main search results
-        results = driver.find_elements(By.CSS_SELECTOR, "div.g")
-        for idx, result in enumerate(results[:5]):  # Top 5 results
+        for selector in featured_selectors:
             try:
-                title_element = result.find_element(By.TAG_NAME, "h3")
-                snippet_element = result.find_element(By.CSS_SELECTOR, ".VwiC3b")
-                title = title_element.text
-                snippet = snippet_element.text
-                search_results.append(f"RESULT_{idx + 1}: {title} {snippet}")
-                logging.debug(f"Result {idx + 1} extracted.")
+                featured = driver.find_element(By.CSS_SELECTOR, selector)
+                featured_text = featured.text
+                search_results.append(f"FEATURED_SNIPPET: {featured_text}")
+                break
             except NoSuchElementException:
-                logging.debug(f"Result {idx + 1} has missing elements; skipping.")
                 continue
         
-        if not search_results:
-            logging.info(f"No search results found for event: {event_name}")
-            return None
+        # Main search results (expanded selectors)
+        result_selectors = [
+            "div.g",
+            "div.MjjYud",  # New Google result container
+            "div.kvH3mc"   # Alternative result container
+        ]
         
-        combined_results = "\n".join(search_results)
-        logging.debug(f"Combined Search Results: {combined_results}")
-        return combined_results
-    
+        for selector in result_selectors:
+            results = driver.find_elements(By.CSS_SELECTOR, selector)
+            if results:
+                for idx, result in enumerate(results[:5]):
+                    try:
+                        # Try multiple possible title/snippet selectors
+                        title = None
+                        for title_selector in ["h3", "div.vvjwJb", "div.yuRUbf"]:
+                            try:
+                                title_element = result.find_element(By.CSS_SELECTOR, title_selector)
+                                title = title_element.text
+                                break
+                            except NoSuchElementException:
+                                continue
+                        
+                        snippet = None
+                        for snippet_selector in [".VwiC3b", ".yXK7lf", ".w8qArf"]:
+                            try:
+                                snippet_element = result.find_element(By.CSS_SELECTOR, snippet_selector)
+                                snippet = snippet_element.text
+                                break
+                            except NoSuchElementException:
+                                continue
+                        
+                        if title or snippet:
+                            search_results.append(f"RESULT_{idx + 1}: {title or ''} {snippet or ''}")
+                    except Exception as e:
+                        logging.debug(f"Failed to extract result {idx + 1}: {e}")
+                break
+        
+        if search_results:
+            return "\n".join(search_results)
+        return None
+        
     except Exception as e:
         logging.error(f"Error during search for {event_name}: {e}")
         return None
 
-# =========================
-# Gemini API Integration
-# =========================
-
 def get_dates_from_gemini(event_name, search_text):
-    """Extract dates using Gemini API with improved accuracy"""
+    """Extract dates using Gemini API with improved date handling"""
     try:
-        # Configure Gemini
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel("gemini-1.5-flash")
-
-        current_time = datetime.now(pytz.UTC)
         
         prompt = f"""
-        Current datetime: {current_time.strftime('%Y-%m-%d %H:%M:%S %Z')}
+        Current datetime: {datetime.now(pytz.UTC).strftime('%Y-%m-%d %H:%M:%S %Z')}
 
         Task: Extract the 2025 date(s) for "{event_name}" from the following search results.
 
         Rules:
-        1. ONLY extract dates explicitly mentioned for 2025
-        2. Prioritize dates from FEATURED_SNIPPET and KNOWLEDGE_PANEL
-        3. If multiple 2025 dates are found, choose the primary celebration date
-        4. If no 2025 dates are found but there are 2024 dates with clear annual patterns, extrapolate to 2025
-        5. For annually recurring events, verify the day and month match historical patterns
-        6. For religious observances that span multiple days, include both start and end dates
-        7. Format dates exactly as: {{"start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD"}}
-        8. If unsure, return null dates: {{"start_date": null, "end_date": null}}
-        9. For single-day events, use the same date for both start and end
+        1. For annual events that occur on fixed dates each year:
+           - If 2024 dates are mentioned and it's clearly an annual event, extrapolate to 2025
+           - Example: If "November 25 to December 10" is mentioned for 2024, use those same dates for 2025
+        2. For events tied to specific calendar systems (e.g., Hindu, Islamic):
+           - Use explicitly mentioned 2025 dates
+           - If calculating dates based on calendar conversions, include them
+        3. For international observances and UN days:
+           - These typically occur on the same dates annually
+           - Use the standard dates if they are well-established
+        4. Format dates as: {{"start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD"}}
+        5. For single-day events, use the same date for both start and end
 
-        Verification steps:
-        1. Check if the date is explicitly given for 2025
-        2. If extrapolating from 2024, verify it's an annual event on the same date
-        3. Confirm the dates are from reliable sources
-        4. Check for consistency across multiple results
-        5. Ensure dates follow logical patterns (start_date ≤ end_date)
+        Verification:
+        1. For annual events, confirm they follow a consistent pattern
+        2. For religious/cultural events, verify dates against calendar systems
+        3. For international days, check against official sources
 
         Search results:
         {search_text}
@@ -299,67 +252,38 @@ def get_dates_from_gemini(event_name, search_text):
         Return ONLY the JSON object with the dates, no other text.
         """
 
-        logging.debug(f"Gemini Prompt for '{event_name}': {prompt}")
-
         response = model.generate_content(prompt)
         result = response.text.strip()
-        
-        # Clean up the response
         result = result.replace('```json', '').replace('```', '').strip()
         
-        logging.debug(f"Raw Gemini Response: {result}")
-        
-        # Parse and validate the JSON response
         dates = json.loads(result)
         
-        # Additional validation
+        # Validate and standardize dates
         if dates.get('start_date') or dates.get('end_date'):
-            if dates.get('start_date') and dates.get('end_date'):
-                try:
-                    start = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
-                    end = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
-                    
-                    # Validate date logic
-                    if end < start:
-                        logging.warning(f"End date {end} is before start date {start} for event: {event_name}")
-                        return {"start_date": None, "end_date": None}
-                        
-                    # Validate year
-                    if start.year != 2025 or end.year != 2025:
-                        logging.warning(f"Dates not in 2025 (start: {start.year}, end: {end.year}) for event: {event_name}")
-                        return {"start_date": None, "end_date": None}
-                except Exception as parse_e:
-                    logging.error(f"Error parsing dates for event '{event_name}': {parse_e}")
-                    return {"start_date": None, "end_date": None}
-            elif dates.get('start_date') and not dates.get('end_date'):
-                try:
+            try:
+                if dates.get('start_date'):
                     start = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
                     if start.year != 2025:
-                        logging.warning(f"Start date not in 2025 (start: {start.year}) for event: {event_name}")
-                        dates['start_date'] = None
-                except Exception as parse_e:
-                    logging.error(f"Error parsing start date for event '{event_name}': {parse_e}")
-                    dates['start_date'] = None
-            elif dates.get('end_date') and not dates.get('start_date'):
-                try:
+                        # For annual events, adjust to 2025
+                        start = start.replace(year=2025)
+                    dates['start_date'] = start.strftime('%Y-%m-%d')
+                
+                if dates.get('end_date'):
                     end = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
                     if end.year != 2025:
-                        logging.warning(f"End date not in 2025 (end: {end.year}) for event: {event_name}")
-                        dates['end_date'] = None
-                except Exception as parse_e:
-                    logging.error(f"Error parsing end date for event '{event_name}': {parse_e}")
-                    dates['end_date'] = None
+                        # For annual events, adjust to 2025
+                        end = end.replace(year=2025)
+                    dates['end_date'] = end.strftime('%Y-%m-%d')
+            except Exception as parse_e:
+                logging.error(f"Error parsing dates for event '{event_name}': {parse_e}")
+                return {"start_date": None, "end_date": None}
         
-        logging.debug(f"Extracted Dates for '{event_name}': {dates}")
         return dates
         
-    except json.JSONDecodeError:
-        logging.error(f"Failed to parse JSON from Gemini response for event: {event_name}")
-        return {"start_date": None, "end_date": None}
     except Exception as e:
         logging.error(f"Error getting dates from Gemini for {event_name}: {e}")
         return {"start_date": None, "end_date": None}
-
+    
 # =========================
 # Update Functionality
 # =========================
@@ -440,7 +364,7 @@ def update_missing_dates():
                         {"_id": event["_id"]},
                         {
                             "$set": update_dict,
-                            "$addToSet": {"source_urls": "selenium_gemini_search"}
+                            "$addToSet": {"source_urls": "Found through Google Search"}
                         }
                     )
                     

@@ -1,75 +1,64 @@
-2025-01-10 13:18:38,517 [INFO] Selenium WebDriver initialized successfully.
-2025-01-10 13:18:38,518 [INFO] Processing event: 16 days of activism against gender violence
-2025-01-10 13:18:38,519 [INFO] Performing Google search: https://www.google.com/search?q=%2216%20days%20of%20activism%20against%20gender%20violence%22%20date%202025
-2025-01-10 13:18:45,373 [INFO] No featured snippet found.
-2025-01-10 13:18:45,377 [INFO] No knowledge panel found.
-2025-01-10 13:18:45,406 [INFO] No 2025 dates found for 16 days of activism against gender violence.
-2025-01-10 13:18:45,406 [INFO] No dates found for '16 days of activism against gender violence'.
-2025-01-10 13:18:49,104 [INFO] Processing event: gender equality week
-2025-01-10 13:18:49,104 [INFO] Performing Google search: https://www.google.com/search?q=%22gender%20equality%20week%22%20date%202025
-2025-01-10 13:18:53,767 [INFO] No featured snippet found.
-2025-01-10 13:18:53,770 [INFO] No knowledge panel found.
-2025-01-10 13:18:53,790 [INFO] No 2025 dates found for gender equality week.
-2025-01-10 13:18:53,790 [INFO] No dates found for 'gender equality week'.
-2025-01-10 13:18:56,667 [INFO] Processing event: hindu new year
-2025-01-10 13:18:56,667 [INFO] Performing Google search: https://www.google.com/search?q=%22hindu%20new%20year%22%20date%202025
-2025-01-10 13:19:01,710 [INFO] No featured snippet found.
-2025-01-10 13:19:01,714 [INFO] No knowledge panel found.
-2025-01-10 13:19:01,732 [INFO] No results extracted for: hindu new year
-2025-01-10 13:19:01,732 [WARNING] No search results found for: hindu new year
-2025-01-10 13:19:03,821 [INFO] Selenium WebDriver closed.
-2025-01-10 13:19:43,227 [INFO] Connected to MongoDB successfully.
-2025-01-10 13:19:43,227 [INFO] Starting date update process...
-2025-01-10 13:19:43,227 [INFO] Fetching events missing dates...
-2025-01-10 13:19:43,251 [INFO] Found 5 events missing dates.
-2025-01-10 13:19:44,367 [INFO] Selenium WebDriver initialized successfully.
-2025-01-10 13:19:44,367 [INFO] Processing: 'spring ohigan'
-2025-01-10 13:19:45,721 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)': /session/de91c332efb47ca68d5128190b79fba9
-2025-01-10 13:19:49,825 [INFO] Database connection closed.
-2025-01-10 13:19:52,906 [INFO] Connected to MongoDB successfully.
-2025-01-10 13:19:52,906 [INFO] Starting date update process...
-2025-01-10 13:19:52,906 [INFO] Fetching events missing dates...
-2025-01-10 13:19:52,909 [INFO] Found 5 events missing dates.
-2025-01-10 13:19:54,000 [INFO] Selenium WebDriver initialized successfully.
-2025-01-10 13:19:54,001 [INFO] Processing: 'spring ohigan'
-2025-01-10 13:20:00,997 [INFO] No valid dates found for 'spring ohigan'.
-2025-01-10 13:20:05,562 [INFO] Processing: 'hindu new year'
-2025-01-10 13:20:09,921 [INFO] No search results found for event: hindu new year
-2025-01-10 13:20:09,921 [INFO] No search results found for 'hindu new year'.
-2025-01-10 13:20:09,921 [INFO] Processing: '16 days of activism against gender violence'
-2025-01-10 13:20:18,602 [INFO] No valid dates found for '16 days of activism against gender violence'.
-2025-01-10 13:20:22,029 [INFO] Processing: 'gender equality week'
-2025-01-10 13:20:27,595 [INFO] No search results found for event: gender equality week
-2025-01-10 13:20:27,595 [INFO] No search results found for 'gender equality week'.
-2025-01-10 13:20:27,595 [INFO] Processing: 'le rveillon de nol'
-2025-01-10 13:20:31,513 [INFO] No search results found for event: le rveillon de nol
-2025-01-10 13:20:31,513 [INFO] No search results found for 'le rveillon de nol'.
-2025-01-10 13:20:33,588 [INFO] Selenium WebDriver closed.
-2025-01-10 13:20:33,588 [INFO] 
+2025-01-10 13:41:02,453 [INFO] Connected to MongoDB successfully.
+2025-01-10 13:41:02,453 [INFO] Starting date update process...
+2025-01-10 13:41:02,453 [INFO] Fetching events missing dates...
+2025-01-10 13:41:02,456 [INFO] Found 36 events missing dates.
+2025-01-10 13:41:03,719 [INFO] Selenium WebDriver initialized successfully.
+2025-01-10 13:41:03,719 [INFO] Processing: 'asalha puja'
+2025-01-10 13:41:15,411 [INFO] Processing: 'festival of ksitigarbha'
+2025-01-10 13:41:24,431 [INFO] Processing: 'magha puja'
+2025-01-10 13:41:36,900 [INFO] Processing: 'nirvana day'
+2025-01-10 13:41:47,052 [INFO] Processing: 'pavarana'
+2025-01-10 13:41:58,966 [INFO] Processing: 'new years evepi'
+2025-01-10 13:42:08,197 [INFO] Processing: 'theravada new year'
+2025-01-10 13:42:18,519 [INFO] Processing: 'feast of st basil'
+2025-01-10 13:42:29,294 [INFO] Processing: 'theophany'
+2025-01-10 13:42:39,144 [INFO] Processing: 'hanuman jayanti'
+2025-01-10 13:42:49,569 [INFO] Processing: 'hindu new year'
+2025-01-10 13:42:59,618 [INFO] Processing: 'ramanavami'
+2025-01-10 13:43:10,902 [INFO] Processing: 'vasant panchami'
+2025-01-10 13:43:22,127 [INFO] Processing: 'arbaeen'
+2025-01-10 13:43:32,243 [INFO] Processing: 'day of ajj'
+2025-01-10 13:43:40,420 [ERROR] Error getting dates from Gemini for day of ajj: Extra data: line 1 column 55 (char 54)
+2025-01-10 13:43:40,420 [INFO] No valid dates found for 'day of ajj'.
+2025-01-10 13:43:44,950 [INFO] Processing: 'laylat albaraat'
+2025-01-10 13:43:56,374 [INFO] Processing: 'laylat almirj'
+2025-01-10 13:44:06,479 [INFO] Processing: 'mawlid alnabi'
+2025-01-10 13:44:18,661 [INFO] Processing: 'guru har rai jayanti'
+2025-01-10 13:44:33,439 [INFO] Processing: 'guru nanak jayanti'
+2025-01-10 13:44:45,390 [INFO] Processing: 'guru gobind singh ji jayanti'
+2025-01-10 13:44:56,478 [INFO] Processing: '16 days of activism against gender violence'
+2025-01-10 13:45:06,102 [INFO] Processing: 'gender equality week'
+2025-01-10 13:45:18,139 [INFO] Processing: 'mennonite heritage week'
+2025-01-10 13:45:29,212 [INFO] Processing: 'public service pride week'
+2025-01-10 13:45:37,358 [INFO] Processing: 'veterans week'
+2025-01-10 13:45:47,021 [INFO] Processing: 'international day for african and afrodescendant culture'
+2025-01-10 13:45:56,364 [INFO] Processing: 'battle of vimy ridge anniversary'
+2025-01-10 13:46:07,391 [INFO] Processing: 'national child day'
+2025-01-10 13:46:16,642 [INFO] Processing: 'national day of remembrance of quebec city mosque attack'
+2025-01-10 13:46:27,475 [INFO] Processing: '4shanbe souri'
+2025-01-10 13:46:37,871 [INFO] Processing: 'le rveillon de nol'
+2025-01-10 13:46:47,106 [INFO] Processing: 'saint lucys day'
+2025-01-10 13:46:59,285 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)': /session/6403cfedae55b877d14516ed60105434
+2025-01-10 13:47:03,349 [INFO] Database connection closed.
+2025-01-10 13:47:09,598 [INFO] Connected to MongoDB successfully.
+2025-01-10 13:47:09,598 [INFO] Starting date update process...
+2025-01-10 13:47:09,598 [INFO] Fetching events missing dates...
+2025-01-10 13:47:09,613 [INFO] Found 4 events missing dates.
+2025-01-10 13:47:10,730 [INFO] Selenium WebDriver initialized successfully.
+2025-01-10 13:47:10,730 [INFO] Processing: 'day of ajj'
+2025-01-10 13:47:18,155 [INFO]   Source URL: https://www.google.com/search?q=day%20of%20ajj%20date%202025
+2025-01-10 13:47:20,766 [INFO] Processing: 'midautumn festival'
+2025-01-10 13:47:28,014 [INFO]   Source URL: https://www.google.com/search?q=midautumn%20festival%20date%202025
+2025-01-10 13:47:30,635 [INFO] Processing: 'midsummer'
+2025-01-10 13:47:38,783 [INFO]   Source URL: https://www.google.com/search?q=midsummer%20date%202025
+2025-01-10 13:47:43,293 [INFO] Processing: 'yalda'
+2025-01-10 13:47:50,404 [INFO]   Source URL: https://www.google.com/search?q=yalda%20date%202025
+2025-01-10 13:47:55,262 [INFO] Selenium WebDriver closed.
+2025-01-10 13:47:55,262 [INFO] 
 === UPDATE RESULTS ===
-2025-01-10 13:20:33,589 [INFO] Total events processed: 5
-2025-01-10 13:20:33,589 [INFO] Successfully updated:   0
-2025-01-10 13:20:33,589 [INFO] Failed attempts:       5
-2025-01-10 13:20:33,589 [INFO] Success rate:          0.0%
-2025-01-10 13:20:33,589 [INFO] Update process completed!
-2025-01-10 13:20:33,590 [INFO] Database connection closed.
-2025-01-10 13:22:53,975 [INFO] Connected to MongoDB successfully.
-2025-01-10 13:22:53,976 [INFO] Starting date update process...
-2025-01-10 13:22:53,976 [INFO] Fetching events missing dates...
-2025-01-10 13:22:53,996 [INFO] Found 5 events missing dates.
-2025-01-10 13:22:55,118 [INFO] Selenium WebDriver initialized successfully.
-2025-01-10 13:22:55,118 [INFO] Processing: 'spring ohigan'
-2025-01-10 13:23:03,683 [INFO] No valid dates found for 'spring ohigan'.
-2025-01-10 13:23:07,017 [INFO] Processing: 'hindu new year'
-2025-01-10 13:23:17,557 [INFO] Processing: '16 days of activism against gender violence'
-2025-01-10 13:23:28,755 [INFO] Processing: 'gender equality week'
-2025-01-10 13:23:38,492 [INFO] Processing: 'le rveillon de nol'
-2025-01-10 13:23:50,159 [INFO] Selenium WebDriver closed.
-2025-01-10 13:23:50,159 [INFO] 
-=== UPDATE RESULTS ===
-2025-01-10 13:23:50,159 [INFO] Total events processed: 5
-2025-01-10 13:23:50,159 [INFO] Successfully updated:   4
-2025-01-10 13:23:50,159 [INFO] Failed attempts:       1
-2025-01-10 13:23:50,159 [INFO] Success rate:          80.0%
-2025-01-10 13:23:50,159 [INFO] Update process completed!
-2025-01-10 13:23:50,160 [INFO] Database connection closed.
+2025-01-10 13:47:55,262 [INFO] Total events processed: 4
+2025-01-10 13:47:55,262 [INFO] Successfully updated:   4
+2025-01-10 13:47:55,262 [INFO] Failed attempts:       0
+2025-01-10 13:47:55,262 [INFO] Success rate:          100.0%
+2025-01-10 13:47:55,262 [INFO] Update process completed!
+2025-01-10 13:47:55,263 [INFO] Database connection closed.

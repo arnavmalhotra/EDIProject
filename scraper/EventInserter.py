@@ -53,7 +53,7 @@ EVENTS_DATA = {
     },
     "Islam": {
         "events": [
-            "Arbaeen", "Āshūrā", "Day of Ḥajj", "Eid-al-Fitr", 
+            "Arbaeen", "Āshūrā", "Day of Hajj", "Eid-al-Fitr", 
             "Eid-al-Adha", "Hajj Pilgrimage", "Islamic New Year", 
             "Laylat al-Baraat", "Laylat al-Mi'rāj", "Laylat al-Qadr", 
             "Mawlid al-Nabīy", "Mawlid al-Nabi", "Ramadan"
@@ -137,7 +137,7 @@ EVENTS_DATA = {
     },
     "Cultural Observances": {
         "events": [
-            "4shanbe Souri", "Chinese New Year", "Kwanzaa", 
+            "Chaharshanbe Suri", "Kwanzaa", 
             "Le Réveillon de Noël", "Saint Lucy's Day", "Lunar New Year", 
             "Mid-Autumn Festival", "Midsummer", "Nowruz", 
             "Pride Weekend", "Shogatsu/Gantan-sai", "St. Patrick's Day", 

@@ -1,5 +1,3 @@
 Automated image download and description generation
 
-change names in the database to more common names for the events that were not found / delete some irrelevant events
-
 Gemini scraping results need to be double checked

@@ -121,6 +121,8 @@ def normalize_event_name(name):
     synonyms = {
         "nye": "new year's eve",
         "valentine's": "valentines day",
+        "intl": "international",
+        "womens": "women's",
         # Add more synonyms as needed
     }
     for key, value in synonyms.items():
@@ -210,7 +212,10 @@ def search_event_with_selenium(driver, event_name, alternate_names):
                 break
         
         if search_results:
-            return "\n".join(search_results)
+            return {
+                'results': "\n".join(search_results),
+                'url': url
+            }
         return None
         
     except Exception as e:
@@ -240,11 +245,13 @@ def get_dates_from_gemini(event_name, search_text):
            - Use the standard dates if they are well-established
         4. Format dates as: {{"start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD"}}
         5. For single-day events, use the same date for both start and end
+        6. For religious observances, use officially announced dates when available
 
         Verification:
         1. For annual events, confirm they follow a consistent pattern
         2. For religious/cultural events, verify dates against calendar systems
         3. For international days, check against official sources
+        4. For multi-day events, ensure start_date comes before end_date
 
         Search results:
         {search_text}
@@ -283,7 +290,7 @@ def get_dates_from_gemini(event_name, search_text):
     except Exception as e:
         logging.error(f"Error getting dates from Gemini for {event_name}: {e}")
         return {"start_date": None, "end_date": None}
-    
+
 # =========================
 # Update Functionality
 # =========================
@@ -337,14 +344,14 @@ def update_missing_dates():
             logging.info(f"Processing: '{event_name}'")
             
             # Search Google using Selenium
-            search_result = search_event_with_selenium(driver, event_name, alternate_names)
-            if not search_result:
+            search_data = search_event_with_selenium(driver, event_name, alternate_names)
+            if not search_data:
                 logging.info(f"No search results found for '{event_name}'.")
                 results["failed_attempts"] += 1
                 continue
             
             # Get dates from Gemini
-            dates = get_dates_from_gemini(event_name, search_result)
+            dates = get_dates_from_gemini(event_name, search_data['results'])
             
             if dates.get('start_date') or dates.get('end_date'):
                 try:
@@ -359,16 +366,17 @@ def update_missing_dates():
                         end_date = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
                         update_dict['end_date'] = end_date
                     
-                    # Update the event in MongoDB
+                    # Update the event in MongoDB with the actual search URL
                     events_collection.update_one(
                         {"_id": event["_id"]},
                         {
                             "$set": update_dict,
-                            "$addToSet": {"source_urls": "Found through Google Search"}
+                            "$addToSet": {"source_urls": search_data['url']}
                         }
                     )
                     
                     logging.info(f"✓ Updated '{event_name}': {dates['start_date']} to {dates['end_date']}")
+                    logging.info(f"  Source URL: {search_data['url']}")
                     results["successfully_updated"] += 1
                     
                 except Exception as e:

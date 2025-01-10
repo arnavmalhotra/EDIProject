@@ -9,8 +9,9 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from fuzzywuzzy import fuzz
 from pymongo import MongoClient
-
-
+import unicodedata
+import calendar
+from dateutil import parser
 
 # Load environment variables
 load_dotenv()
@@ -39,24 +40,40 @@ INTERFAITH_URL = "https://www.interfaith-calendar.org/"
 INTERFAITH_OBSERVER_URL = "https://www.theinterfaithobserver.org/religious-calendar"
 
 
+def normalize_event_name(name: str) -> str:
+    """
+    Normalize event name: lowercase, remove diacritics, remove special characters.
+    """
+    normalized = name.lower()
+    normalized = ''.join(
+        c for c in unicodedata.normalize('NFKD', normalized) if not unicodedata.combining(c)
+    )
+    normalized = re.sub(r'[^\w\s]', '', normalized).strip()
+    return normalized
+
 
 def parse_month_day_year(date_str: str) -> Optional[date]:
     """
-    Attempt to parse a standard date like "Oct. 12, 2024".
+    Attempt to parse a standard date like "Oct. 12, 2024" or "October 12, 2024".
     Returns a date object (without time components) or None if parsing fails.
     """
     possible_formats = [
-        "%b. %d, %Y",  # e.g. "Oct. 12, 2024"
         "%b %d, %Y",    # e.g. "Oct 12, 2024"
-        "%B %d, %Y"     # e.g. "October 12, 2024"
+        "%B %d, %Y",    # e.g. "October 12, 2024"
     ]
+    
+    # Remove periods from month abbreviations
+    cleaned_str = date_str.replace('.', '').strip()
+    
     for fmt in possible_formats:
         try:
-            parsed_date = datetime.strptime(date_str.strip(), fmt)
-            return date(parsed_date.year, parsed_date.month, parsed_date.day)
+            parsed_date = datetime.strptime(cleaned_str, fmt).date()
+            return parsed_date
         except ValueError:
-            pass
+            continue
+            
     return None
+
 
 def get_nth_weekday(year: int, month: int, weekday: int, nth: int) -> Optional[date]:
     """
@@ -81,6 +98,7 @@ def get_nth_weekday(year: int, month: int, weekday: int, nth: int) -> Optional[d
     except ValueError:
         return None
     return result
+
 
 def parse_nth_weekday_pattern(raw_text: str) -> Optional[Tuple[date, date]]:
     """
@@ -135,86 +153,43 @@ def parse_nth_weekday_pattern(raw_text: str) -> Optional[Tuple[date, date]]:
 
     return (possible_date, possible_date)  # Single-day event
 
-def parse_simple_date(date_str: str, year: int) -> Optional[date]:
-    """Parse simple date strings like 'January 8' into a date object."""
-    try:
-        date_str = re.sub(r'\s+', ' ', date_str.strip())
-        
-        # Simple month day pattern
-        match = re.match(r'([A-Za-z]+)\s+(\d{1,2})', date_str)
-        if match:
-            month_name, day = match.groups()
-            month_map = {
-                'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                'september': 9, 'october': 10, 'november': 11, 'december': 12
-            }
-            month = month_map.get(month_name.lower())
-            if month:
-                return date(year, month, int(day))
-                
-        # Handle date ranges like "November 25 - December 10"
-        range_match = re.match(r'([A-Za-z]+)\s+(\d{1,2})\s*-\s*([A-Za-z]+)\s+(\d{1,2})', date_str)
-        if range_match:
-            start_month, start_day, end_month, end_day = range_match.groups()
-            month_map = {
-                'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                'september': 9, 'october': 10, 'november': 11, 'december': 12
-            }
-            start_month_num = month_map.get(start_month.lower())
-            end_month_num = month_map.get(end_month.lower())
-            if start_month_num and end_month_num:
-                start_dt = date(year, start_month_num, int(start_day))
-                # For ranges, you might want to handle end_dt differently
-                return start_dt  # Returning start date for simplicity
-                
-    except (ValueError, AttributeError):
-        pass
-    return None
 
 def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
     """
     Attempts to parse the date info from a string using multiple patterns.
     Returns tuple of date objects (without time components).
     """
-    # First try to parse simple single-day format (e.g. "May 23, 2025")
-    try:
-        # Clean the text first
-        cleaned_text = raw_text.strip()
-        # Try parsing as a simple date
-        parsed_date = datetime.strptime(cleaned_text, "%b %d, %Y").date()
-        return (parsed_date, parsed_date)  # Return same date for start and end
-    except ValueError:
-        pass
-    
-    try:
-        # Try alternate format without period (e.g. "May 23, 2025")
-        parsed_date = datetime.strptime(cleaned_text, "%B %d, %Y").date()
-        return (parsed_date, parsed_date)
-    except ValueError:
-        pass
+    # Remove periods from the text
+    cleaned_text = raw_text.replace('.', '').strip()
+
+    # First try to parse simple single-day format (e.g. "Oct 12, 2024" or "October 12, 2024")
+    for fmt in ["%b %d, %Y", "%B %d, %Y"]:
+        try:
+            parsed_date = datetime.strptime(cleaned_text, fmt).date()
+            return (parsed_date, parsed_date)  # Single day event
+        except ValueError:
+            continue
 
     # Check for nth weekday patterns
-    nth_pattern_result = parse_nth_weekday_pattern(raw_text)
+    nth_pattern_result = parse_nth_weekday_pattern(cleaned_text)
     if nth_pattern_result:
         return nth_pattern_result
 
-    # Pattern: "Begins ... on Mar. 1, 2025 ... ends ... on Mar. 30, 2025"
+    # Pattern: "Begins ... on Mar 1, 2025 ... ends ... on Mar 30, 2025"
     pattern_begins_ends = re.compile(
-        r"[Bb]egins.*on\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4}).*ends.*on\s+([A-Za-z]+\.*\s+\d{1,2},\s*\d{4})"
+        r"[Bb]egins.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4}).*ends.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4})"
     )
-    match = pattern_begins_ends.search(raw_text)
+    match = pattern_begins_ends.search(cleaned_text)
     if match:
         start_str, end_str = match.groups()
         start_dt = parse_month_day_year(start_str)
         end_dt = parse_month_day_year(end_str)
         if start_dt and end_dt:
             return (start_dt, end_dt)
-            
+
     # Pattern: "July 9, 2025" (simple date)
     date_pattern = re.compile(r"([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})")
-    match = date_pattern.search(raw_text)
+    match = date_pattern.search(cleaned_text)
     if match:
         month_str, day_str, year_str = match.groups()
         try:
@@ -223,18 +198,15 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
                 'may': 5, 'june': 6, 'july': 7, 'august': 8,
                 'september': 9, 'october': 10, 'november': 11, 'december': 12
             }[month_str.lower()]
-            day = int(day_str)
-            year = int(year_str)
-            parsed_date = date(year, month_num, day)
-            return (parsed_date, parsed_date)  # Single day event
+            return (date(int(year_str), month_num, int(day_str)), date(int(year_str), month_num, int(day_str)))
         except (ValueError, KeyError):
             pass
 
-    # Pattern: "Begins at sunset on Mar. 30, 2025 and ends the evening of Mar. 31, 2025"
+    # Pattern: "Begins at sunset on Mar 30, 2025 and ends the evening of Mar 31, 2025"
     sunset_pattern = re.compile(
-        r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\.?\s+\d{1,2},\s*\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|on\s+)?([A-Za-z]+\.?\s+\d{1,2},\s*\d{4}))"
+        r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\s+\d{1,2},\s*\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|on\s+)?([A-Za-z]+\s+\d{1,2},\s*\d{4}))"
     )
-    match = sunset_pattern.search(raw_text)
+    match = sunset_pattern.search(cleaned_text)
     if match:
         start_str, end_str = match.groups()
         start_dt = parse_month_day_year(start_str)
@@ -244,115 +216,151 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
 
     return (None, None)
 
-def parse_month_day_year(date_str: str) -> Optional[date]:
-    """
-    Attempt to parse a standard date like "Oct. 12, 2024".
-    Returns a date object (without time components) or None if parsing fails.
-    """
-    possible_formats = [
-        "%b. %d, %Y",   # e.g. "Oct. 12, 2024"
-        "%b %d, %Y",    # e.g. "Oct 12, 2024"
-        "%B %d, %Y",    # e.g. "October 12, 2024"
-        "%B. %d, %Y"    # e.g. "October. 12, 2024"
-    ]
-    
-    # Clean the input string
-    cleaned_str = date_str.strip()
-    
-    for fmt in possible_formats:
-        try:
-            parsed_date = datetime.strptime(cleaned_str, fmt)
-            return date(parsed_date.year, parsed_date.month, parsed_date.day)
-        except ValueError:
-            continue
-            
-    # If standard formats fail, try manual parsing
-    pattern = re.compile(r"([A-Za-z]+)\.?\s+(\d{1,2}),\s*(\d{4})")
-    match = pattern.match(cleaned_str)
-    if match:
-        month_str, day_str, year_str = match.groups()
-        try:
-            month_num = {
-                'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                'september': 9, 'october': 10, 'november': 11, 'december': 12
-            }[month_str.lower()]
-            return date(int(year_str), month_num, int(day_str))
-        except (ValueError, KeyError):
-            pass
-            
-    return None
 
 def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
-    Scrape the Religious Accommodation Resource (2024-2025) from York.
-    Returns { stripped_event_name.lower() -> (start_date, end_date) }
+    Scrape the Religious Accommodation Resource (2024-2025) from York University.
+    Parses events and their date ranges into a dictionary, handling multiple names.
     """
     accommodations = {}
+    HEADERS = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    def split_event_names(exact_name: str) -> List[str]:
+        """
+        Split the exact event name into individual names based on delimiters.
+        Returns a list of individual names.
+        """
+        # Define possible delimiters
+        delimiters = ["/", ",", "&"]
+        pattern = '|'.join(map(re.escape, delimiters))
+        # Split the name and strip whitespace
+        individual_names = re.split(pattern, exact_name)
+        individual_names = [name.strip() for name in individual_names if name.strip()]
+        return individual_names
+
     try:
+        # Fetch the page
         resp = requests.get(YORK_URL, headers=HEADERS, timeout=10)
         if resp.status_code != 200:
             print(f"[YORK] Failed to retrieve page (status {resp.status_code}).")
             return accommodations
 
+        # Parse HTML
         soup = BeautifulSoup(resp.text, "html.parser")
         table = soup.find("table")
-        if not table:
-            print("[YORK] Could not find table on the page.")
+        if not table or not table.find("tbody"):
+            print("[YORK] Could not find table/tbody on the page.")
             return accommodations
 
-        tbody = table.find("tbody")
-        if not tbody:
-            print("[YORK] Could not find <tbody> in the table.")
-            return accommodations
-
-        rows = tbody.find_all("tr")
-        for row in rows:
+        # Process each row
+        for row in table.find("tbody").find_all("tr"):
             cols = row.find_all("td")
             if len(cols) < 2:
                 continue
-                
+
             raw_name = cols[0].get_text(strip=True)
             raw_date_str = cols[1].get_text(strip=True)
-            
-            # Store both the full name and stripped version
-            event_name_full = raw_name
-            event_name_stripped = strip_parentheses(raw_name)
-            
-            # Print for debugging
-            print(f"[YORK] Processing event: '{event_name_full}' (Stripped: '{event_name_stripped}')")
-            
-            # Parse dates
+
+            # Parse the date string
             start_dt, end_dt = parse_date_range(raw_date_str)
-            
-            # Store under both full and stripped versions to increase matching chances
-            accommodations[event_name_full.lower()] = (start_dt, end_dt)
-            accommodations[event_name_stripped.lower()] = (start_dt, end_dt)
-            
-            # Also store without diacritical marks for Bahá'í events
-            if "bahá'í" in event_name_full.lower():
-                plain_name = raw_name.replace("á", "a").replace("'", "").replace("'", "")
-                print(f"[YORK] Adding plain version: '{plain_name}'")
-                accommodations[plain_name.lower()] = (start_dt, end_dt)
-                accommodations[strip_parentheses(plain_name).lower()] = (start_dt, end_dt)
+            if not start_dt or not end_dt:
+                print(f"[YORK] Warning: Could not parse dates for '{raw_name}' from '{raw_date_str}'")
+                continue
+
+            # Remove parenthetical text for exact version
+            exact_name = re.sub(r'\s*\([^)]*\)', '', raw_name).strip()
+
+            # Store the exact combined name
+            accommodations[exact_name] = (start_dt, end_dt)
+
+            # Normalize the combined name
+            normalized_combined = normalize_event_name(exact_name)
+            accommodations[normalized_combined] = (start_dt, end_dt)
+
+            # Split into individual names
+            individual_names = split_event_names(exact_name)
+            for name in individual_names:
+                accommodations[name] = (start_dt, end_dt)
+                normalized_individual = normalize_event_name(name)
+                accommodations[normalized_individual] = (start_dt, end_dt)
+
+            print(f"[YORK] Processed: '{exact_name}' ({start_dt} to {end_dt})")
+            if len(individual_names) > 1:
+                print(f"          Individual Names: {individual_names}")
+                print(f"          Normalized Names: {[normalize_event_name(name) for name in individual_names]}")
 
     except Exception as e:
         print(f"[YORK] Error scraping accommodations: {e}")
 
-    # Debug print of all stored events
-    print("\n[YORK] All stored events:")
-    for name, dates in accommodations.items():
-        print(f"- '{name}': {dates}")
-        
     return accommodations
+
 
 def scrape_canada_commemorative() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
     Scrape the Important and commemorative days from Canada.ca.
-    Returns { event_name.lower() -> (start_date, end_date) }
+    Returns dictionary with two versions of each event:
+    1. Exact name (as appears on website): "Black History Month"
+    2. Normalized version: "black history month"
+    Both map to (start_date, end_date) tuple
     """
     accommodations = {}
-    
+    current_year = 2025
+
+    def normalize_name_local(name: str) -> str:
+        """Normalize event name: lowercase, remove special chars, normalize whitespace"""
+        # Remove accents but preserve base letters
+        text = ''.join(c for c in unicodedata.normalize('NFKD', name)
+                      if not unicodedata.combining(c))
+        # Remove special characters and normalize whitespace
+        text = re.sub(r'[^\w\s]', '', text)
+        text = ' '.join(text.lower().split())
+        return text
+
+    def parse_date_range_inner(text: str, month: Optional[int] = None) -> Tuple[Optional[date], Optional[date]]:
+        """Parse date or date range from text, optionally with known month"""
+        
+        # Handle special week patterns
+        week_patterns = {
+            "second wednesday": (4, 10),
+            "second week": (8, 14),
+            "third week": (15, 21),
+            "fourth week": (22, 28),
+            "fourth saturday": (22, 22)
+        }
+        
+        for pattern, (start_day, end_day) in week_patterns.items():
+            if pattern in text.lower() and month:
+                return (date(current_year, month, start_day),
+                        date(current_year, month, end_day))
+        
+        # Handle date ranges with "to" or "-"
+        if " to " in text or " - " in text:
+            parts = re.split(r'\s+(?:to|-)\s+', text)
+            if len(parts) == 2:
+                start_str, end_str = parts
+                try:
+                    start_date = datetime.strptime(f"{start_str} {current_year}", "%B %d %Y").date()
+                    end_date = datetime.strptime(f"{end_str} {current_year}", "%B %d %Y").date()
+                    return start_date, end_date
+                except ValueError:
+                    pass
+
+        # Handle single dates
+        try:
+            if month:
+                day = int(re.search(r'\d+', text).group())
+                return (date(current_year, month, day),
+                        date(current_year, month, day))
+            else:
+                parsed = datetime.strptime(f"{text} {current_year}", "%B %d %Y").date()
+                return parsed, parsed
+        except (ValueError, AttributeError):
+            pass
+
+        return (None, None)
+
     try:
         resp = requests.get(CANADA_URL, timeout=10)
         if resp.status_code != 200:
@@ -360,146 +368,156 @@ def scrape_canada_commemorative() -> Dict[str, Tuple[Optional[date], Optional[da
             return accommodations
 
         soup = BeautifulSoup(resp.text, "html.parser")
-        current_year = 2025  # Default to 2025 for consistency
         
-        # Find all relevant list items
-        list_items = soup.find_all('li', class_='mrgn-bttm-md')
-        
-        for item in list_items:
+        # Process each month's section
+        for month_header in soup.find_all('h2', attrs={'id': re.compile(r'^m\d+')}):
+            month_name = month_header.text.strip()
             try:
+                month_num = datetime.strptime(month_name, '%B').month
+            except ValueError:
+                continue
+            
+            # Get the list following the month header
+            month_list = month_header.find_next('ul', class_='list-unstyled')
+            if not month_list:
+                continue
+                
+            for item in month_list.find_all('li', class_='mrgn-bttm-md'):
                 text = item.get_text(strip=True)
                 
-                # Look for date pattern at start of text
-                date_match = re.match(r'^([A-Za-z]+\s+\d{1,2})(?:,\s*\d{4})?', text)
-                if date_match:
-                    date_str = date_match.group(1)
-                    event_name = text[date_match.end():].strip(' -').strip()
+                # Skip items without text
+                if not text:
+                    continue
+                
+                # Handle month-long events (no specific date mentioned)
+                if 'Month' in text and not re.match(r'^[A-Za-z]+ \d{1,2}', text):
+                    start_dt = date(current_year, month_num, 1)
+                    if month_num == 12:
+                        end_dt = date(current_year + 1, 1, 1) - timedelta(days=1)
+                    else:
+                        end_dt = date(current_year, month_num + 1, 1) - timedelta(days=1)
                     
-                    event_date = parse_simple_date(date_str, current_year)
-                    if event_date:
-                        accommodations[event_name.lower()] = (event_date, event_date)
-                else:
-                    # Handle month-long events
-                    if 'month' in text.lower():
-                        event_name = text
-                        month_pattern = r'([A-Za-z]+)\s+(?:is\s+)?(?:the\s+)?.*?month'
-                        month_match = re.search(month_pattern, text, re.IGNORECASE)
-                        if month_match:
-                            month_name = month_match.group(1)
-                            month_map = {
-                                'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                                'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                                'september': 9, 'october': 10, 'november': 11, 'december': 12
-                            }
-                            month_num = month_map.get(month_name.lower())
-                            if month_num:
-                                start_dt = date(current_year, month_num, 1)
-                                if month_num == 12:
-                                    next_month = date(current_year + 1, 1, 1)
-                                else:
-                                    next_month = date(current_year, month_num + 1, 1)
-                                end_dt = next_month - timedelta(days=1)
-                                accommodations[event_name.lower()] = (start_dt, end_dt)
+                    exact_name = text.strip()
+                    normalized_name = normalize_event_name(exact_name)
+                    
+                    accommodations[exact_name] = (start_dt, end_dt)
+                    accommodations[normalized_name] = (start_dt, end_dt)
+                    continue
 
-            except Exception as e:
-                print(f"[CANADA] Error processing item: {e}")
-                continue
+                # Handle specific dates
+                date_match = re.match(r'^([A-Za-z]+ \d+|\w+ week|\w+ \w+ of [A-Za-z]+)(.*)', text)
+                if date_match:
+                    date_str, name_str = date_match.groups()
+                    name_str = name_str.strip(' -').strip()
+                    
+                    start_dt, end_dt = parse_date_range_inner(date_str, month_num)
+                    if start_dt and end_dt and name_str:
+                        exact_name = name_str
+                        normalized_name = normalize_event_name(exact_name)
+                        
+                        accommodations[exact_name] = (start_dt, end_dt)
+                        accommodations[normalized_name] = (start_dt, end_dt)
 
     except Exception as e:
         print(f"[CANADA] Error scraping commemorative days: {e}")
-        
+
     return accommodations
+
 
 def scrape_ontario_commemorative() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
     Scrape the Important and commemorative days from Ontario.ca.
-    Returns { event_name.lower() -> (start_date, end_date) }
+    Returns { event_name -> (start_date, end_date) } with both exact and normalized versions
     """
     accommodations = {}
-    
+    current_year = 2025
+
     try:
-        resp = requests.get(ONTARIO_URL, headers=HEADERS, timeout=10)
+        resp = requests.get(ONTARIO_URL, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
         if resp.status_code != 200:
             print(f"[ONTARIO] Failed to retrieve page (status {resp.status_code}).")
             return accommodations
 
         soup = BeautifulSoup(resp.text, "html.parser")
-        current_year = 2025  # Default to 2025 for consistency
-
-        # The content is organized in columns by month
-        month_columns = soup.find_all("div", class_="medium-4")
-        if not month_columns:
-            print("[ONTARIO] Could not find month columns.")
-            return accommodations
-
-        for column in month_columns:
-            # Find month headers (h3)
-            month_headers = column.find_all("h3")
-            
-            for month_header in month_headers:
-                month_name = month_header.text.strip()
-                month_map = {
-                    'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                    'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                    'september': 9, 'october': 10, 'november': 11, 'december': 12
-                }
-                month_num = month_map.get(month_name.lower())
-
-                if not month_num:
-                    continue
-
-                # Get list of events for this month
-                event_list = month_header.find_next("ul")
-                if not event_list:
-                    continue
-
-                events = event_list.find_all("li")
-                for event in events:
+        current_month = None
+        
+        for section in soup.find_all(['h3', 'ul']):
+            if section.name == 'h3':
+                # Get current month number
+                month_name = section.text.strip()
+                try:
+                    current_month = datetime.strptime(month_name, '%B').month
+                except ValueError:
+                    current_month = None
+                continue
+            elif section.name == 'ul' and current_month:
+                for item in section.find_all('li'):
                     try:
-                        text = event.get_text(strip=True)
-                        # Split on common separators
-                        parts = re.split(r'[–-]', text, maxsplit=1)
-                        if len(parts) > 1:
-                            event_name = parts[0].strip()
-                            date_part = parts[1].strip()
-                        else:
-                            event_name = text
-                            date_part = ""
-                        
-                        # Handle month-long events
-                        if 'month' in event_name.lower() or not any(char.isdigit() for char in text):
-                            start_dt = date(current_year, month_num, 1)
-                            if month_num == 12:
-                                next_month = date(current_year + 1, 1, 1)
-                            else:
-                                next_month = date(current_year, month_num + 1, 1)
-                            end_dt = next_month - timedelta(days=1)
-                            accommodations[event_name.lower()] = (start_dt, end_dt)
+                        text = item.get_text(strip=True)
+                        if not text:
                             continue
+
+                        # Clean up the event name
+                        text = re.sub(r'\s*\[.*?\]', '', text)  # Remove link text
+                        name = re.split(r'\s+[-–]\s+', text)[0].strip()  # Remove text after dash
                         
-                        # Handle special date patterns
-                        if 'third monday' in date_part.lower():
-                            third_monday = get_nth_weekday(current_year, month_num, 0, 3)
-                            if third_monday:
-                                accommodations[event_name.lower()] = (third_monday, third_monday)
-                                continue
+                        # Store both versions of the name
+                        exact_name = re.sub(r'\s*\([^)]*\)', '', name).strip()
+                        norm_name = normalize_event_name(exact_name)
+                        
+                        # Match various date patterns
+                        start_dt = end_dt = None
+                        
+                        # Month-long events
+                        if 'Month' in text and not re.search(r'\d+', text):
+                            start_dt = date(current_year, current_month, 1)
+                            if current_month == 12:
+                                end_dt = date(current_year + 1, 1, 1) - timedelta(days=1)
+                            else:
+                                end_dt = date(current_year, current_month + 1, 1) - timedelta(days=1)
 
-                        if 'fourth saturday' in date_part.lower():
-                            fourth_saturday = get_nth_weekday(current_year, month_num, 5, 4)
-                            if fourth_saturday:
-                                accommodations[event_name.lower()] = (fourth_saturday, fourth_saturday)
-                                continue
-
+                        # Handle specific weekday patterns (e.g., "third Monday")
+                        elif 'third monday' in text.lower():
+                            # Find the third Monday
+                            c = calendar.monthcalendar(current_year, current_month)
+                            mondays = [week[0] for week in c if week[0] != 0]
+                            if len(mondays) >= 3:
+                                start_dt = end_dt = date(current_year, current_month, mondays[2])
+                        
                         # Handle specific dates
-                        day_match = re.search(r'(\d{1,2})', date_part)
-                        if day_match:
-                            day = int(day_match.group(1))
-                            try:
-                                event_date = date(current_year, month_num, day)
-                                accommodations[event_name.lower()] = (event_date, event_date)
-                            except ValueError as e:
-                                print(f"[ONTARIO] Invalid date: {month_name} {day}: {e}")
-                                continue
+                        elif re.search(r'\d+', text):
+                            # Try date range pattern first
+                            range_match = re.search(r'([A-Za-z]+\s+\d+)\s*[-to]+\s*([A-Za-z]+\s+\d+)', text)
+                            if range_match:
+                                try:
+                                    start_str = f"{range_match.group(1)} {current_year}"
+                                    end_str = f"{range_match.group(2)} {current_year}"
+                                    start_dt = datetime.strptime(start_str, "%B %d %Y").date()
+                                    end_dt = datetime.strptime(end_str, "%B %d %Y").date()
+                                except ValueError:
+                                    pass
+                            else:
+                                # Try single date pattern
+                                date_match = re.search(r'([A-Za-z]+\s+\d+)', text)
+                                if date_match:
+                                    try:
+                                        date_str = f"{date_match.group(1)} {current_year}"
+                                        start_dt = end_dt = datetime.strptime(date_str, "%B %d %Y").date()
+                                    except ValueError:
+                                        pass
+                        
+                        # Default to month-long for any remaining Day/Week events
+                        elif any(word in text for word in ['Day', 'Week']):
+                            start_dt = date(current_year, current_month, 1)
+                            if current_month == 12:
+                                end_dt = date(current_year + 1, 1, 1) - timedelta(days=1)
+                            else:
+                                end_dt = date(current_year, current_month + 1, 1) - timedelta(days=1)
+
+                        # Store the event if we found valid dates
+                        if start_dt and end_dt and exact_name:
+                            accommodations[exact_name] = (start_dt, end_dt)
+                            accommodations[norm_name] = (start_dt, end_dt)
 
                     except Exception as e:
                         print(f"[ONTARIO] Error processing event: {e}")
@@ -507,8 +525,14 @@ def scrape_ontario_commemorative() -> Dict[str, Tuple[Optional[date], Optional[d
 
     except Exception as e:
         print(f"[ONTARIO] Error scraping commemorative days: {e}")
-
+    
+    # Debug output
+    print("\n[ONTARIO] All stored events:")
+    for name, dates in accommodations.items():
+        print(f"- '{name}': {dates}")
+        
     return accommodations
+
 
 def scrape_xavier_calendar() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
@@ -768,6 +792,7 @@ def fetch_from_calendarific(event_name: str, api_key: str) -> Tuple[Optional[dat
     
     return (None, None)
 
+
 def fetch_from_apininjas(event_name: str, api_key: str) -> Tuple[Optional[date], Optional[date]]:
     """
     Query the API Ninjas Holiday API to find dates for an event.
@@ -812,11 +837,8 @@ def fetch_from_apininjas(event_name: str, api_key: str) -> Tuple[Optional[date],
                         date_str = holiday.get("date")
                         if date_str:
                             parsed_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                            # Also check the type of holiday to prioritize major holidays
-                            holiday_type = holiday.get("type", "").lower()
-                            if "public" in holiday_type or "major" in holiday_type:
-                                return (parsed_date, parsed_date)
-                            return (parsed_date, parsed_date)  # Return even if not major holiday
+                            # For single-day events, return same date for start and end
+                            return (parsed_date, parsed_date)
                     except ValueError as e:
                         print(f"[API_NINJAS] Date parsing error: {e}")
                         continue
@@ -836,6 +858,7 @@ def strip_parentheses(text: str) -> str:
     Example: "Advent – Christianity [Ends December 24]" -> "Advent – Christianity"
     """
     return re.sub(r'\(.*?\)|\[.*?\]|\*+', '', text).strip()
+
 
 def scrape_the_interfaith_observer_calendar() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """
@@ -1049,7 +1072,7 @@ def update_remaining_events(remaining_events: List[Dict], api_keys: Dict[str, st
                     print(f"   ✗ Error updating database: {e}")
         
         time.sleep(1)  # Rate limiting
-    
+
     # Try API Ninjas for remaining events
     print("\nAttempting to update remaining events using API Ninjas...")
     events_for_apininjas = [e for e in remaining_events if e["_id"] not in calendarific_updated_events]
@@ -1136,9 +1159,12 @@ def update_event_dates(api_keys: Dict[str, str]):
         stats["total_events"] += 1
         db_raw_name = event.get("name", "").strip()
         alternate_names = event.get("alternate_names", [])
+        
+        # Normalize possible names
         possible_names = [strip_parentheses(db_raw_name).lower()] + [
             strip_parentheses(name).lower() for name in alternate_names
         ]
+        normalized_possible_names = [normalize_event_name(name) for name in possible_names]
 
         print(f"\nChecking DB event: '{db_raw_name}' (Possible names: {possible_names})")
 
@@ -1146,42 +1172,42 @@ def update_event_dates(api_keys: Dict[str, str]):
         source_url = None
 
         # Try sources in order of reliability
-        for name in possible_names:
+        for name in possible_names + normalized_possible_names:
             # Try York data first (most reliable)
             if name in york_dict:
                 start_dt, end_dt = york_dict[name]
                 source_url = YORK_URL
                 print(f"   Found in York data using name: '{name}'")
                 break
-            
+
             # Try Canada.ca data second
             elif name in canada_dict:
                 start_dt, end_dt = canada_dict[name]
                 source_url = CANADA_URL
                 print(f"   Found in Canada.ca data using name: '{name}'")
                 break
-            
+
             # Try Ontario.ca data third
             elif name in ontario_dict:
                 start_dt, end_dt = ontario_dict[name]
                 source_url = ONTARIO_URL
                 print(f"   Found in Ontario.ca data using name: '{name}'")
                 break
-            
+
             # Try Xavier data fourth
             elif name in xavier_dict:
                 start_dt, end_dt = xavier_dict[name]
                 source_url = XAVIER_URL
                 print(f"   Found in Xavier data using name: '{name}'")
                 break
-            
+
             # Try Interfaith Calendar fifth
             elif name in interfaith_dict:
                 start_dt, end_dt = interfaith_dict[name]
                 source_url = INTERFAITH_URL
                 print(f"   Found in Interfaith Calendar using name: '{name}'")
                 break
-            
+
             # Try The Interfaith Observer sixth
             elif name in interfaith_observer_dict:
                 start_dt, end_dt = interfaith_observer_dict[name]
@@ -1306,6 +1332,7 @@ def main():
     finally:
         client.close()
         print("Database connection closed")
+
 
 if __name__ == "__main__":
     main()

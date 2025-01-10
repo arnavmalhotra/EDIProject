@@ -1,9 +1,12 @@
 import os
 import time
+import random
+import logging
 from datetime import datetime
 import pytz
 from dateutil import parser
 import json
+from urllib.parse import quote
 import google.generativeai as genai
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -13,50 +16,147 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import re
+import unicodedata
+
+# =========================
+# Configuration and Setup
+# =========================
+
+# Setup Logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler("script_debug.log"),
+        logging.StreamHandler()
+    ]
+)
 
 # Load environment variables
 load_dotenv()
 
-# Initialize MongoDB connection
+# Validate Environment Variables
 MONGO_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
-client = MongoClient(MONGO_URI)
-db = client.events_db
-events_collection = db.events
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
-def setup_selenium_driver():
-    """Set up headless Chrome browser"""
+if not GEMINI_API_KEY:
+    logging.error("Missing Gemini API key in environment variables")
+    exit(1)
+
+# Initialize MongoDB connection
+try:
+    client = MongoClient(MONGO_URI)
+    db = client.events_db
+    events_collection = db.events
+    logging.info("Connected to MongoDB successfully.")
+except Exception as e:
+    logging.error(f"Failed to connect to MongoDB: {e}")
+    exit(1)
+
+# =========================
+# Selenium Driver Setup
+# =========================
+
+def setup_selenium_driver(use_proxy=False):
+    """Set up headless Chrome browser with optional proxy support"""
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless=new")  # Updated headless option
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+    chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                                'AppleWebKit/537.36 (KHTML, like Gecko) '
+                                'Chrome/120.0.0.0 Safari/537.36')
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_experimental_option('useAutomationExtension', False)
+
+    if use_proxy:
+        proxy_address = os.getenv('PROXY_ADDRESS')
+        if proxy_address:
+            chrome_options.add_argument(f'--proxy-server={proxy_address}')
+            logging.info(f"Using proxy server: {proxy_address}")
+        else:
+            logging.warning("Proxy address not set in environment variables.")
+
+    try:
+        driver = webdriver.Chrome(options=chrome_options)
+        # Additional settings to prevent detection
+        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+                Object.defineProperty(navigator, 'webdriver', {get: () => undefined})
+            """
+        })
+        logging.info("Selenium WebDriver initialized successfully.")
+        return driver
+    except Exception as e:
+        logging.error(f"Error initializing Selenium WebDriver: {e}")
+        exit(1)
+
+# =========================
+# Normalization Functions
+# =========================
+
+def normalize_event_name(name):
+    """
+    Normalize event names by:
+    - Trimming whitespace
+    - Converting to lowercase
+    - Removing special characters except spaces
+    - Normalizing Unicode characters
+    - Replacing known synonyms
+    """
+    if not name:
+        return ""
+
+    # Trim whitespace
+    name = name.strip()
     
-    return webdriver.Chrome(options=chrome_options)
+    # Convert to lowercase
+    name = name.lower()
+    
+    # Replace known synonyms
+    synonyms = {
+        "nye": "new year's eve",
+        "valentine's": "valentines day",
+        # Add more synonyms as needed
+    }
+    for key, value in synonyms.items():
+        name = name.replace(key, value)
+    
+    # Remove special characters except spaces
+    name = re.sub(r'[^a-z0-9\s]', '', name)
+    
+    # Normalize Unicode characters
+    name = unicodedata.normalize('NFKD', name).encode('ASCII', 'ignore').decode('utf-8')
+    
+    # Remove extra spaces
+    name = re.sub(r'\s+', ' ', name)
+    
+    return name
+
+# =========================
+# Search Functionality
+# =========================
 
 def search_event_with_selenium(driver, event_name, alternate_names):
     """Search for event dates using Google Search with improved accuracy"""
     try:
-        # Add main event name variations
-        search_terms = []
-        search_terms.append(f'"{event_name}"')  # Exact match
-        search_terms.append(event_name)  # Non-exact match for flexibility
+        # Construct search terms
+        search_terms = [f'"{event_name}"', event_name]
         
-        # Add permutations of the main name
         words = event_name.split()
         if len(words) > 2:
-            # Add combinations of adjacent words for better matching
             for i in range(len(words)-1):
                 search_terms.append(f'"{words[i]} {words[i+1]}"')
         
-        # Add alternate names if available
         if alternate_names:
             for alt_name in alternate_names[:2]:
-                search_terms.append(f'"{alt_name}"')
-                search_terms.append(alt_name)
+                search_terms.extend([f'"{alt_name}"', alt_name])
         
-        # Build search query with specific date-related terms
+        # Date-related terms
         date_terms = [
             "2025 date",
             "2025 calendar",
@@ -68,7 +168,7 @@ def search_event_with_selenium(driver, event_name, alternate_names):
             "2025"
         ]
         
-        # Add specific site searches for reliable sources
+        # Site restrictions
         site_terms = [
             'site:*.edu',
             'site:*.gov',
@@ -77,66 +177,94 @@ def search_event_with_selenium(driver, event_name, alternate_names):
             'site:officeholidays.com'
         ]
         
-        # Combine search terms with date terms and site restrictions
-        base_query = f"({' OR '.join(search_terms)}) ({' OR '.join(date_terms)})"
+        # Combine search terms
+        base_query = f"({' OR '.join(search_terms)}) AND ({' OR '.join(date_terms)})"
         site_query = f"({' OR '.join(site_terms)})"
-        search_query = f"{base_query} {site_query} -wikipedia -pinterest"
+        full_query = f"{base_query} {site_query} -wikipedia -pinterest"
         
-        url = f"https://www.google.com/search?q={search_query}"
+        # URL encode the search query
+        encoded_query = quote(full_query)
+        url = f"https://www.google.com/search?q={encoded_query}"
+        
+        logging.debug(f"Constructed Search URL: {url}")
+        
         driver.get(url)
-        time.sleep(2)  # Wait for page to load
         
-        # Wait for search results with increased timeout
+        # Randomized delay to mimic human behavior
+        delay = random.uniform(3, 6)
+        logging.debug(f"Sleeping for {delay:.2f} seconds to mimic human behavior.")
+        time.sleep(delay)
+        
+        # Capture screenshot for debugging
+        screenshot_path = f"screenshots/{event_name.replace(' ', '_')}_search.png"
+        os.makedirs(os.path.dirname(screenshot_path), exist_ok=True)
+        driver.save_screenshot(screenshot_path)
+        logging.debug(f"Search results screenshot saved to {screenshot_path}")
+        
+        # Wait for search results
         try:
-            WebDriverWait(driver, 15).until(
+            WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.ID, "search"))
             )
         except TimeoutException:
-            # If regular search results don't load, try to get any visible content
-            WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
+            logging.warning(f"Search results did not load in time for event: {event_name}")
+            return None
         
-        # Get all relevant text content
+        # Extract search results
         search_results = []
         
-        # Try to get featured snippet first (highest priority)
+        # Attempt to get featured snippet
         try:
-            featured = driver.find_element(By.CLASS_NAME, "kp-wholepage")
+            featured = driver.find_element(By.CSS_SELECTOR, "div.kp-wholepage")
             featured_text = featured.text
             search_results.append(f"FEATURED_SNIPPET: {featured_text}")
+            logging.debug("Featured snippet extracted.")
         except NoSuchElementException:
-            pass
+            logging.debug("No featured snippet found.")
         
-        # Get knowledge panel info (second priority)
+        # Attempt to get knowledge panel
         try:
-            knowledge_panel = driver.find_element(By.CLASS_NAME, "kp-blk")
+            knowledge_panel = driver.find_element(By.CSS_SELECTOR, "div.kp-blk")
             knowledge_text = knowledge_panel.text
             search_results.append(f"KNOWLEDGE_PANEL: {knowledge_text}")
+            logging.debug("Knowledge panel extracted.")
         except NoSuchElementException:
-            pass
+            logging.debug("No knowledge panel found.")
         
-        # Get main search results
-        results = driver.find_elements(By.CLASS_NAME, "g")
-        for idx, result in enumerate(results[:5]):  # Look at top 5 results
+        # Extract main search results
+        results = driver.find_elements(By.CSS_SELECTOR, "div.g")
+        for idx, result in enumerate(results[:5]):  # Top 5 results
             try:
-                title = result.find_element(By.TAG_NAME, "h3").text
-                snippet = result.find_element(By.CLASS_NAME, "VwiC3b").text
+                title_element = result.find_element(By.TAG_NAME, "h3")
+                snippet_element = result.find_element(By.CSS_SELECTOR, ".VwiC3b")
+                title = title_element.text
+                snippet = snippet_element.text
                 search_results.append(f"RESULT_{idx + 1}: {title} {snippet}")
+                logging.debug(f"Result {idx + 1} extracted.")
             except NoSuchElementException:
+                logging.debug(f"Result {idx + 1} has missing elements; skipping.")
                 continue
         
-        return "\n".join(search_results)
+        if not search_results:
+            logging.info(f"No search results found for event: {event_name}")
+            return None
         
+        combined_results = "\n".join(search_results)
+        logging.debug(f"Combined Search Results: {combined_results}")
+        return combined_results
+    
     except Exception as e:
-        print(f"Error searching for {event_name}: {str(e)}")
+        logging.error(f"Error during search for {event_name}: {e}")
         return None
+
+# =========================
+# Gemini API Integration
+# =========================
 
 def get_dates_from_gemini(event_name, search_text):
     """Extract dates using Gemini API with improved accuracy"""
     try:
         # Configure Gemini
-        GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel("gemini-1.5-flash")
 
@@ -171,41 +299,76 @@ def get_dates_from_gemini(event_name, search_text):
         Return ONLY the JSON object with the dates, no other text.
         """
 
+        logging.debug(f"Gemini Prompt for '{event_name}': {prompt}")
+
         response = model.generate_content(prompt)
         result = response.text.strip()
         
         # Clean up the response
         result = result.replace('```json', '').replace('```', '').strip()
         
+        logging.debug(f"Raw Gemini Response: {result}")
+        
         # Parse and validate the JSON response
         dates = json.loads(result)
         
         # Additional validation
-        if dates['start_date'] and dates['end_date']:
-            start = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
-            end = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
-            
-            # Validate date logic
-            if end < start:
-                print(f"Warning: End date {end} is before start date {start}")
-                return {"start_date": None, "end_date": None}
-                
-            # Validate year
-            if start.year != 2025 or end.year != 2025:
-                print(f"Warning: Dates not in 2025 (start: {start.year}, end: {end.year})")
-                return {"start_date": None, "end_date": None}
+        if dates.get('start_date') or dates.get('end_date'):
+            if dates.get('start_date') and dates.get('end_date'):
+                try:
+                    start = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
+                    end = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
+                    
+                    # Validate date logic
+                    if end < start:
+                        logging.warning(f"End date {end} is before start date {start} for event: {event_name}")
+                        return {"start_date": None, "end_date": None}
+                        
+                    # Validate year
+                    if start.year != 2025 or end.year != 2025:
+                        logging.warning(f"Dates not in 2025 (start: {start.year}, end: {end.year}) for event: {event_name}")
+                        return {"start_date": None, "end_date": None}
+                except Exception as parse_e:
+                    logging.error(f"Error parsing dates for event '{event_name}': {parse_e}")
+                    return {"start_date": None, "end_date": None}
+            elif dates.get('start_date') and not dates.get('end_date'):
+                try:
+                    start = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
+                    if start.year != 2025:
+                        logging.warning(f"Start date not in 2025 (start: {start.year}) for event: {event_name}")
+                        dates['start_date'] = None
+                except Exception as parse_e:
+                    logging.error(f"Error parsing start date for event '{event_name}': {parse_e}")
+                    dates['start_date'] = None
+            elif dates.get('end_date') and not dates.get('start_date'):
+                try:
+                    end = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
+                    if end.year != 2025:
+                        logging.warning(f"End date not in 2025 (end: {end.year}) for event: {event_name}")
+                        dates['end_date'] = None
+                except Exception as parse_e:
+                    logging.error(f"Error parsing end date for event '{event_name}': {parse_e}")
+                    dates['end_date'] = None
         
+        logging.debug(f"Extracted Dates for '{event_name}': {dates}")
         return dates
         
-    except Exception as e:
-        print(f"Error getting dates from Gemini for {event_name}: {str(e)}")
+    except json.JSONDecodeError:
+        logging.error(f"Failed to parse JSON from Gemini response for event: {event_name}")
         return {"start_date": None, "end_date": None}
+    except Exception as e:
+        logging.error(f"Error getting dates from Gemini for {event_name}: {e}")
+        return {"start_date": None, "end_date": None}
+
+# =========================
+# Update Functionality
+# =========================
 
 def update_missing_dates():
     """Update only events that are missing both start_date and end_date"""
-    print("\nFetching events missing dates...")
+    logging.info("Fetching events missing dates...")
     
-    # Find events missing both start_date and end_date
+    # Define the query to find events missing start_date or end_date
     missing_dates_query = {
         "$or": [
             {"start_date": {"$exists": False}},
@@ -215,11 +378,15 @@ def update_missing_dates():
         ]
     }
     
-    missing_events = list(events_collection.find(missing_dates_query))
-    print(f"Found {len(missing_events)} events missing dates")
+    try:
+        missing_events = list(events_collection.find(missing_dates_query))
+        logging.info(f"Found {len(missing_events)} events missing dates.")
+    except Exception as e:
+        logging.error(f"Error querying MongoDB for missing dates: {e}")
+        return
     
     if not missing_events:
-        print("No events need updating.")
+        logging.info("No events need updating.")
         return
     
     results = {
@@ -228,39 +395,47 @@ def update_missing_dates():
         "failed_attempts": 0
     }
     
-    # Setup Chrome driver
-    driver = setup_selenium_driver()
+    # Setup Chrome driver with optional proxy support
+    driver = setup_selenium_driver(use_proxy=bool(os.getenv('PROXY_ADDRESS')))
     
     try:
         for event in missing_events:
-            event_name = event.get("name", "").strip()
+            raw_event_name = event.get("name", "")
+            event_name = normalize_event_name(raw_event_name)
             alternate_names = event.get("alternate_names", [])
+            alternate_names = [normalize_event_name(name) for name in alternate_names]
             
-            print(f"\nProcessing: '{event_name}'")
+            if not event_name:
+                logging.warning(f"Event with ID {event.get('_id')} has no name after normalization. Skipping.")
+                results["failed_attempts"] += 1
+                continue
+            
+            logging.info(f"Processing: '{event_name}'")
             
             # Search Google using Selenium
             search_result = search_event_with_selenium(driver, event_name, alternate_names)
             if not search_result:
-                print(f"No search results found for {event_name}")
+                logging.info(f"No search results found for '{event_name}'.")
                 results["failed_attempts"] += 1
                 continue
             
             # Get dates from Gemini
             dates = get_dates_from_gemini(event_name, search_result)
             
-            if dates['start_date'] or dates['end_date']:
+            if dates.get('start_date') or dates.get('end_date'):
                 try:
                     update_dict = {
                         "last_updated": datetime.now(pytz.UTC)
                     }
                     
-                    if dates['start_date']:
+                    if dates.get('start_date'):
                         start_date = parser.parse(dates['start_date']).replace(tzinfo=pytz.UTC)
                         update_dict['start_date'] = start_date
-                    if dates['end_date']:
+                    if dates.get('end_date'):
                         end_date = parser.parse(dates['end_date']).replace(tzinfo=pytz.UTC)
                         update_dict['end_date'] = end_date
                     
+                    # Update the event in MongoDB
                     events_collection.update_one(
                         {"_id": event["_id"]},
                         {
@@ -269,48 +444,54 @@ def update_missing_dates():
                         }
                     )
                     
-                    print(f"✓ Updated: {dates['start_date']} to {dates['end_date']}")
+                    logging.info(f"✓ Updated '{event_name}': {dates['start_date']} to {dates['end_date']}")
                     results["successfully_updated"] += 1
                     
                 except Exception as e:
-                    print(f"✗ Error updating database: {e}")
+                    logging.error(f"Error updating database for '{event_name}': {e}")
                     results["failed_attempts"] += 1
             else:
-                print(f"No valid dates found for {event_name}")
+                logging.info(f"No valid dates found for '{event_name}'.")
                 results["failed_attempts"] += 1
             
-            time.sleep(2)  # Rate limiting
+            # Randomized delay to prevent detection
+            delay = random.uniform(2, 5)
+            logging.debug(f"Sleeping for {delay:.2f} seconds before next request.")
+            time.sleep(delay)
             
     finally:
         driver.quit()
+        logging.info("Selenium WebDriver closed.")
     
-    # Print final results
-    print("\n=== UPDATE RESULTS ===")
-    print(f"Total events processed: {results['total_attempted']}")
-    print(f"Successfully updated:   {results['successfully_updated']}")
-    print(f"Failed attempts:       {results['failed_attempts']}")
-    print(f"Success rate:          {(results['successfully_updated'] / results['total_attempted'] * 100):.1f}%")
+    # Log final results
+    success_rate = (results["successfully_updated"] / results["total_attempted"] * 100) if results["total_attempted"] else 0
+    logging.info("\n=== UPDATE RESULTS ===")
+    logging.info(f"Total events processed: {results['total_attempted']}")
+    logging.info(f"Successfully updated:   {results['successfully_updated']}")
+    logging.info(f"Failed attempts:       {results['failed_attempts']}")
+    logging.info(f"Success rate:          {success_rate:.1f}%")
     
     return results
+
+# =========================
+# Main Execution Function
+# =========================
 
 def main():
     """Main execution function"""
     try:
-        # Verify API keys
-        if not os.getenv('GEMINI_API_KEY'):
-            print("Error: Missing Gemini API key in environment variables")
-            return
-            
-        print("Starting date update process...")
+        logging.info("Starting date update process...")
         results = update_missing_dates()
-        print("\nUpdate process completed!")
-        
+        logging.info("Update process completed!")
     except Exception as e:
-        print(f"\nError during update process: {e}")
-        
+        logging.error(f"Error during update process: {e}")
     finally:
         client.close()
-        print("\nDatabase connection closed")
+        logging.info("Database connection closed.")
+
+# =========================
+# Entry Point
+# =========================
 
 if __name__ == "__main__":
     main()

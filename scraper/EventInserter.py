@@ -24,11 +24,11 @@ EVENTS_DATA = {
     "Buddhism": {
         "events": [
             "Asalha Puja", "Bodhi Day", "Festival of Higan-e", 
-            "Festival of Ksitigarbha (Jizo) Bodhisattva", "Full Moon Days", 
+            "Festival of Ksitigarbha", 
             "Magha Puja", "Mahāyāna New Year", 
-            "Nirvana Day", "Pavarana Day", "Saka New Year", 
-            "Spring Ohigan", "Theravāda New Year", "Vassa", 
-            "Vesak", "Wesak"
+            "Nirvana Day", "Pavarana", "Nyepi", 
+            "Spring Ohigan", "Theravada New Year", 
+            "Vesak",
         ],
     },
     "Christianity": {
@@ -46,8 +46,8 @@ EVENTS_DATA = {
         "events": [
             "Dassehra", "Diwali", "Ganesh Chaturthi", "Hanuman Jayanti", 
             "Holi", "Krishna Janmashtami", "Lohri", "Makar Sankranti", 
-            "Mahashivaratri", "Navaratri", "Navvarsha", "Raksha Bandhan", 
-            "Ramanavami", "Sri Krishna Jayanti", "Vasanta Panchami", 
+            "Mahashivaratri", "Navaratri", "Hindu New Year", "Raksha Bandhan", 
+            "Ramanavami", "Vasant Panchami", 
             
         ],
     },
@@ -63,14 +63,14 @@ EVENTS_DATA = {
         "events": [
             "Hanukkah", "Passover", "Purim", "Rosh Hashanah", 
             "Shavuot", "Shemini Atzeret", "Simchat Torah", 
-            "Sukkot", "Tisha B'av", "Tu BiShvat", "Yom Kippur"
+            "Sukkot", "Tisha B'av", "Tu B'Shevat", "Yom Kippur"
         ],
     },
     "Sikhism": {
         "events": [
-            "Bandi Chhor Divas", "Birth of Guru Har Rai", 
-            "Birth of Guru Nanak Dev Ji", "Birth date of Guru Gobind Singh Ji", 
-            "Hola Mohalla", "Installation of Sri Guru Granth Sahib Ji", 
+            "Bandi Chhor Divas", "Guru Har Rai Jayanti", 
+            "Guru Nanak Jayanti", "Guru Gobind Singh Ji Jayanti", 
+            "Hola Mohalla", 
             "Lohri", "Martyrdom of Guru Arjan Dev Sahib",
             "Martyrdom of Guru Tegh Bahadur Sahib", "Vaisakhi"
         ],
@@ -148,90 +148,139 @@ EVENTS_DATA = {
 
 ALTERNATE_NAMES = {
     # Bahá'í Faith
-    "Ridván Festival": ["The Most Great Festival", "King of Festivals", "Festival of Paradise"],
-    "Declaration of the Báb": ["Day of the Báb"],
-    "Ascension of Bahá'u'lláh": ["Day of Covenant"],
+    "Ridván Festival": ["The Most Great Festival", "King of Festivals", "Festival of Paradise", "Ridvan Festival", "ridvan festival", "ridvan"],
+    "Declaration of the Báb": ["Day of the Báb", "declaration of the bab", "Declaration", "declaration"],
+    "Ascension of Bahá'u'lláh": ["Day of Covenant", "ascension of bahaullah", "Ascension", "ascension"],
+    "Birth of the Báb": ["birth of the bab", "Birth", "birth"],
+    "Birth of Bahá'u'lláh": ["birth of bahaullah", "Birth", "birth"],
+    "Martyrdom of the Báb": ["martyrdom of the bab", "Martyrdom", "martyrdom"],
+    "Lucia Day":["Saint Lucy's Day, St. Lucy's day, Saint Lucys day, St. Lucys day"],
     
     # Buddhist
-    "Vesak": ["Buddha Day", "Buddha Purnima", "Buddha Jayanti", "Wesak", "Vesākha", "Buddha's Birthday"],
-    "Māgha Pūjā Day": ["Magha Puja", "Sangha Day", "Fourfold Assembly Day"],
-    "Full Moon Days": ["Uposatha", "Observance Days"],
+    "Vesak": ["Buddha Day", "Buddha Purnima", "Buddha Jayanti", "Wesak", "Vesākha", "Buddha's Birthday", "vesak"],
+    "Māgha Pūjā Day": ["Magha Puja", "Sangha Day", "Fourfold Assembly Day", "magha puja day", "magha puja"],
+    "Full Moon Days": ["Uposatha", "Observance Days", "full moon days", "full moon"],
+    "Bodhi Day": ["bodhi day", "bodhi"],
+    "Festival of Higan-e": ["Higan-e", "higan e", "higan"],
+    "Mahāyāna New Year": ["Mahayana New Year", "mahayana new year", "mahayana"],
+    "Nirvana Day": ["Parinirvana Day", "nirvana day", "nirvana"],
+    "Pavarana Day": ["pavarana day", "pavarana"],
+    "Saka New Year": ["Nyepi", "saka new year", "saka"],
+    "Vassa": ["Buddhist Lent", "vassa"],
     
     # Christianity
-    "Christmas": ["Christmas Day", "Christmas Eve", "Nativity of Jesus", "Nativity of the Lord", "Feast of the Nativity"],
-    "Easter": ["Easter Sunday", "Easter Day", "Resurrection Sunday", "Paschal Sunday", "Pascha"],
-    "Epiphany": ["Three Kings Day", "Dia de los Reyes", "Theophany", "Little Christmas"],
-    "Pentecost": ["Whitsunday", "Whit Sunday", "Sunday of the Holy Spirit"],
-    "Advent": ["Nativity Fast", "Little Lent", "Winter Lent"],
-    "Good Friday": ["Holy Friday", "Great Friday", "Black Friday"],
-    "Holy Thursday": ["Maundy Thursday", "Great Thursday", "Covenant Thursday"],
+    "Christmas": ["Christmas Day", "Christmas Eve", "Nativity of Jesus", "Nativity of the Lord", "Feast of the Nativity", "christmas"],
+    "Easter": ["Easter Sunday", "Easter Day", "Resurrection Sunday", "Paschal Sunday", "Pascha", "easter"],
+    "Epiphany": ["Three Kings Day", "Dia de los Reyes", "Theophany", "Little Christmas", "epiphany"],
+    "Pentecost": ["Whitsunday", "Whit Sunday", "Sunday of the Holy Spirit", "pentecost"],
+    "Advent": ["Nativity Fast", "Little Lent", "Winter Lent", "advent"],
+    "Good Friday": ["Holy Friday", "Great Friday", "Black Friday", "good friday"],
+    "Holy Thursday": ["Maundy Thursday", "Great Thursday", "Covenant Thursday", "holy thursday"],
+    "Ash Wednesday": ["ash wednesday"],
+    "Feast of the Nativity": ["Christmas", "feast of the nativity", "nativity"],
+    "Ascension": ["Ascension Day", "ascension day", "ascension"],
+    "Feast of Mary Mother of God": ["Solemnity of Mary", "feast of mary", "mary mother"],
+    "Feast of St. Basil": ["Saint Basil's Day", "feast of st basil", "st basil"],
+    "Feast Day of the Epiphany": ["Epiphany", "feast of epiphany", "epiphany"],
+    "Palm Sunday": ["palm sunday"],
+    "Shrove Tuesday": ["Pancake Tuesday", "Mardi Gras", "shrove tuesday", "shrove"],
+    "Lent": ["lent"],
     
     # Hindu
-    "Diwali": ["Deepavali", "Festival of Lights", "Deepawali", "Dipavali"],
-    "Mahashivaratri": ["Maha Shivaratri", "Great Night of Shiva", "Shivaratri"],
-    "Sri Krishna Jayanti": ["Janmashtami", "Krishna Janmashtami", "Gokulashtami", "Krishna Jayanti"],
-    "Ganesh Chaturthi": ["Vinayaka Chaturthi", "Ganeshotsav", "Vinayaka Chavithi"],
-    "Navaratri": ["Navratri", "Durga Puja", "Navratra", "Nine Nights"],
-    "Dassehra": ["Dussehra", "Vijayadashami", "Dasara", "Dashain"],
-    "Holi": ["Festival of Colors", "Spring Festival", "Phagwah"],
-    "Navvarsha":["Vikram New Year"],
-
+    "Diwali": ["Deepavali", "Festival of Lights", "Deepawali", "Dipavali", "diwali"],
+    "Mahashivaratri": ["Maha Shivaratri", "Great Night of Shiva", "Shivaratri", "mahashivaratri", "shivaratri"],
+    "Krishna Janmashtami": ["Janmashtami", "Gokulashtami", "Krishna Jayanti", "janmashtami", "krishna jayanti"],
+    "Ganesh Chaturthi": ["Vinayaka Chaturthi", "Ganeshotsav", "Vinayaka Chavithi", "ganesh chaturthi", "ganesh"],
+    "Navaratri": ["Navratri", "Durga Puja", "Navratra", "Nine Nights", "navaratri"],
+    "Dassehra": ["Dussehra", "Vijayadashami", "Dasara", "Dashain", "dassehra"],
+    "Holi": ["Festival of Colors", "Spring Festival", "Phagwah", "holi"],
+    "Makar Sankranti": ["Maghi", "Pongal", "makar sankranti", "sankranti"],
+    "Hanuman Jayanti": ["hanuman jayanti", "hanuman"],
+    "Lohri": ["lohri"],
+    "Navvarsha": ["Hindu New Year", "Vikram New Year", "Vikram Samvat New Year", "navvarsha"],
+    "Raksha Bandhan": ["Rakhi", "raksha bandhan", "rakhi"],
+    "Ramanavami": ["Ram Navami", "ramanavami", "ram navami"],
+    "Vasanta Panchami": ["Vasant Panchami", "Saraswati Puja", "vasanta panchami", "vasant"],
+    
     # Islamic
-    "Eid al-Fitr": ["ʻĪd al-Fiṭr", "Eid ul-Fitr", "Ramadan Eid", "Lesser Eid", "Sweet Eid"],
-    "Eid al-Adha": ["ʻĪd al-'Aḍḥá", "Eid ul-Adha", "Bakrid", "Greater Eid", "Sacrifice Feast"],
-    "Ramadan": ["Ramazan", "Ramzan", "Month of Fasting", "Month of Mercy"],
-    "Islamic New Year": ["Hijri New Year", "Arabic New Year", "Muharram", "Ras as-Sanah al-Hijriyah"],
-    "Āshūrā": ["Ashura", "Yawm Ashura", "Day of Ashura", "The Tenth"],
-    "Mawlid al-Nabīy": ["Mawlid", "Milad un Nabi", "Prophet's Birthday", "Eid al-Mawlid"],
-    "Laylat al-Qadr": ["Night of Power", "Night of Decree", "Night of Destiny"],
+    "Eid al-Fitr": ["ʻĪd al-Fiṭr", "Eid ul-Fitr", "Ramadan Eid", "Lesser Eid", "Sweet Eid", "eid al fitr", "eid"],
+    "Eid al-Adha": ["ʻĪd al-'Aḍḥá", "Eid ul-Adha", "Bakrid", "Greater Eid", "Sacrifice Feast", "eid al adha", "eid"],
+    "Ramadan": ["Ramazan", "Ramzan", "Month of Fasting", "Month of Mercy", "ramadan"],
+    "Islamic New Year": ["Hijri New Year", "Arabic New Year", "Muharram", "Ras as-Sanah al-Hijriyah", "islamic new year"],
+    "Āshūrā": ["Ashura", "Yawm Ashura", "Day of Ashura", "The Tenth", "ashura"],
+    "Mawlid al-Nabīy": ["Mawlid", "Milad un Nabi", "Prophet's Birthday", "Eid al-Mawlid", "mawlid al nabiy", "mawlid"],
+    "Laylat al-Qadr": ["Night of Power", "Night of Decree", "laylat al qadr", "laylat"],
+    "Laylat al-Mi'rāj": ["Night Journey", "laylat al miraj", "miraj"],
+    "Arbaeen": ["Chehlum", "arbaeen"],
+    "Day of Ḥajj": ["Day of Hajj", "day of hajj", "hajj"],
     
     # Jewish
-    "Passover": ["Pesach", "Festival of Unleavened Bread", "Pesah", "Feast of Liberation"],
-    "Rosh Hashanah": ["Jewish New Year", "Head of the Year", "Yom Teruah"],
-    "Yom Kippur": ["Day of Atonement", "Holiest Day of the Year"],
-    "Sukkot": ["Feast of Tabernacles", "Feast of Booths", "Succot", "Festival of Ingathering"],
-    "Shemini Atzeret": ["Eighth Day of Assembly", "Festival of the Eighth Day"],
-    "Simchat Torah": ["Rejoicing with the Torah", "Joy of the Torah"],
-    "Hanukkah": ["Chanukah", "Festival of Lights", "Feast of Dedication"],
-    "Shavuot": ["Feast of Weeks", "Pentecost", "Festival of First Fruits"],
-    "Tisha B'av": ["Ninth of Av", "The Ninth of Av", "Day of Destruction"],
+    "Passover": ["Pesach", "Festival of Unleavened Bread", "Pesah", "Feast of Liberation", "passover"],
+    "Rosh Hashanah": ["Jewish New Year", "Head of the Year", "Yom Teruah", "rosh hashanah"],
+    "Yom Kippur": ["Day of Atonement", "Holiest Day of the Year", "yom kippur"],
+    "Sukkot": ["Feast of Tabernacles", "Feast of Booths", "Succot", "Festival of Ingathering", "sukkot"],
+    "Shemini Atzeret": ["Eighth Day of Assembly", "Festival of the Eighth Day", "shemini atzeret"],
+    "Simchat Torah": ["Rejoicing with the Torah", "Joy of the Torah", "simchat torah"],
+    "Hanukkah": ["Chanukah", "Festival of Lights", "Feast of Dedication", "hanukkah"],
+    "Shavuot": ["Feast of Weeks", "Pentecost", "Festival of First Fruits", "shavuot"],
+    "Tisha B'av": ["Ninth of Av", "The Ninth of Av", "Day of Destruction", "tisha bav"],
+    "Purim": ["Feast of Lots", "purim"],
+    "Tu BiShvat": ["New Year of the Trees", "tu bishvat","Tu B'Shevat", "tu bshevat"],
     
     # Sikh
-    "Vaisakhi": ["Baisakhi", "Vaisakhdi", "Khalsa Day", "Sikh New Year"],
-    "Bandi Chhor Divas": ["Bandi Shor Divas", "Prison Release Day", "Day of Liberation"],
-    "Birth of Guru Nanak Dev Ji": ["Guru Nanak Gurpurab", "Guru Nanak's Prakash Utsav","Birth of Guru Nanak Dev Ji "],
-    "Martyrdom of Guru Tegh Bahadur Sahib": ["Shaheedi Guru Tegh Bahadur", "Martyrdom Day of Ninth Guru"],
-    "Martyrdom of Guru Arjan Dev Sahib": ["Shaheedi Guru Arjan Dev Ji", "Martyrdom Day of Fifth Guru"],
+    "Vaisakhi": ["Baisakhi", "Vaisakhdi", "Khalsa Day", "Sikh New Year", "vaisakhi"],
+    "Bandi Chhor Divas": ["Bandi Shor Divas", "Prison Release Day", "Day of Liberation", "bandi chhor divas"],
+    "Birth of Guru Nanak Dev Ji": ["Guru Nanak Gurpurab", "Guru Nanak's Prakash Utsav", "birth of guru nanak dev ji"],
+    "Birth of Guru Har Rai": ["birth of guru har rai"],
+    "Birth date of Guru Gobind Singh Ji": ["birth of guru gobind singh ji"],
+    "Hola Mohalla": ["Hola", "hola mohalla"],
+    "Installation of Sri Guru Granth Sahib Ji": ["installation of guru granth sahib"],
+    "Lohri": ["lohri"],
+    "Martyrdom of Guru Arjan Dev Sahib": ["martyrdom of guru arjan dev"],
+    "Martyrdom of Guru Tegh Bahadur Sahib": ["martyrdom of guru tegh bahadur"],
     
-    # Persian/Zoroastrian/Cultural
-    "Nowruz": ["Norooz", "Persian New Year", "Iranian New Year", "Spring Festival"],
-    "Jashne Sadeh": ["Jashn-e Sadeh", "Sadeh Festival", "Festival of Fire"],
-    "4shanbe Souri": ["Chaharshanbe Suri", "Festival of Fire", "Red Wednesday"],
-    "Lunar New Year": ["Chinese New Year", "Spring Festival", "Tết", "Seollal"],
-    "Mid-Autumn Festival": ["Moon Festival", "Mooncake Festival", "Zhongqiu Festival", "Chuseok"],
-    "Shogatsu/Gantan-sai": ["Japanese New Year", "Shōgatsu", "Oshōgatsu"],
-    "Yalda": ["Shab-e Yalda", "Yalda Night", "Night of Forty"],
-    "Kwanzaa": ["African American Heritage Week", "First Fruits"],
+    # Zoroastrianism
+    "Jashne Sadeh": ["Jashn-e Sadeh", "Festival of Fire", "jashne sadeh", "sadeh"],
+    
+    # Cultural
+    "Nowruz": ["Norooz", "Persian New Year", "Iranian New Year", "Spring Festival", "nowruz"],
+    "Lunar New Year": ["Chinese New Year", "Spring Festival", "Tết", "Seollal", "lunar new year"],
+    "Shogatsu/Gantan-sai": ["Japanese New Year", "shogatsu", "gantan sai"],
+    "4shanbe Souri": ["Chaharshanbe Suri", "Festival of Fire", "4shanbe souri"],
+    "Mid-Autumn Festival": ["Moon Festival", "Mooncake Festival", "mid autumn festival"],
+    "Kwanzaa": ["kwanzaa"],
+    "Pride Weekend": ["Pride Festival", "pride weekend", "pride"],
+    "St. Patrick's Day": ["Saint Patrick's Day", "st patricks day"],
+    "Yalda": ["Shab-e Yalda", "Yalda Night", "yalda"],
     
     # Month-Long Observances
-    "Pride Season": ["Pride Month", "LGBTQ+ Pride Month", "Gay Pride Month"],
-    "National Indigenous History Month": ["Aboriginal History Month", "First Peoples History Month"],
-    "Asian Heritage Month": ["Asian American and Pacific Islander Heritage Month", "AAPI Heritage Month"],
-    "Black History Month": ["African American History Month", "African Heritage Month"],
-    
-    # Week-Long Observances
-    "Veterans' Week": ["Remembrance Week", "Week of Remembrance"],
-    "16 Days of Activism Against Gender Violence": ["16 Days Campaign", "16 Days of Activism"],
+    "Pride Season": ["Pride Month", "LGBTQ+ Pride Month", "Gay Pride Month", "pride season", "pride"],
+    "National Indigenous History Month": ["Aboriginal History Month", "First Peoples History Month", "national indigenous history month", "indigenous history"],
+    "Asian Heritage Month": ["Asian American and Pacific Islander Heritage Month", "AAPI Heritage Month", "asian heritage month"],
+    "Black History Month": ["African American History Month", "African Heritage Month", "black history month"],
+    "Tamil Heritage Month": ["tamil heritage month", "tamil"],
+    "Jewish Heritage Month": ["jewish heritage month"],
+    "Filipino Heritage Month": ["filipino heritage month", "filipino"],
+    "Italian Heritage Month": ["italian heritage month", "italian"],
+    "German Heritage Month": ["german heritage month", "german"],
+    "Polish Heritage Month": ["polish heritage month", "polish"],
     
     # International/National Days
-    "International Mother Language Day": ["International Native Language Day"],
-    "International Day of the Girl Child": ["Day of the Girl", "International Day of Girls"],
-    "National Flag of Canada Day": ["Flag Day", "Canadian Flag Day"],
-    "Dutch Heritage Day": ["Netherlands Heritage Day", "Dutch Canadian Heritage Day"],
-    "National Indigenous Languages Day": ["Aboriginal Languages Day", "First Nations Languages Day"],
-    "National Day for Truth and Reconciliation": ["Orange Shirt Day", "Day for Truth and Reconciliation"],
-    "Family Day": ["Ontario Family Day", "Provincial Family Day", "Family Time"],
-    "Saint-Jean-Baptiste Day": ["Fête nationale du Québec", "St. John the Baptist Day", "Quebec's National Holiday"]
+    "National Day for Truth and Reconciliation": ["Orange Shirt Day", "Day for Truth and Reconciliation", "national day for truth and reconciliation"],
+    "National Indigenous Languages Day": ["Aboriginal Languages Day", "First Nations Languages Day", "national indigenous languages day"],
+    "International Holocaust Remembrance Day": ["Holocaust Remembrance Day", "international holocaust remembrance day"],
+    "International Day of the Girl Child": ["Day of the Girl", "international day of the girl"],
+    "International Mother Language Day": ["Mother Language Day", "mother language day"],
+    "International Women's Day": ["IWD", "womens day", "international womens day"],
+    
+    # Other Important Days
+    "Canada Day": ["Dominion Day", "canada day"],
+    "Commonwealth Day": ["commonwealth day"],
+    "Family Day": ["family day"],
+    "Remembrance Day": ["Armistice Day", "remembrance day"],
+    "Victoria Day": ["May Two-Four", "victoria day"],
+    "National Acadian Day": ["acadian day", "acadian"],
+    "Saint-Jean-Baptiste Day": ["St Jean Baptiste", "saint jean baptiste"]
 }
 
 def initialize_events():

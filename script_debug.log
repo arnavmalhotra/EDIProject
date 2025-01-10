@@ -1,0 +1,129 @@
+2025-01-10 11:40:15,370 [INFO] Connected to MongoDB successfully.
+2025-01-10 11:40:15,370 [INFO] Starting date update process...
+2025-01-10 11:40:15,371 [INFO] Fetching events missing dates...
+2025-01-10 11:40:15,373 [INFO] Found 38 events missing dates.
+2025-01-10 11:40:16,968 [INFO] Selenium WebDriver initialized successfully.
+2025-01-10 11:40:16,968 [INFO] Processing: 'Asalha Puja'
+2025-01-10 11:40:42,861 [WARNING] Search results did not load in time for event: Asalha Puja
+2025-01-10 11:40:42,862 [INFO] No search results found for 'Asalha Puja'.
+2025-01-10 11:40:42,862 [INFO] Processing: 'Festival of Ksitigarbha (Jizo) Bodhisattva'
+2025-01-10 11:41:07,092 [WARNING] Search results did not load in time for event: Festival of Ksitigarbha (Jizo) Bodhisattva
+2025-01-10 11:41:07,092 [INFO] No search results found for 'Festival of Ksitigarbha (Jizo) Bodhisattva'.
+2025-01-10 11:41:07,092 [INFO] Processing: 'Full Moon Days'
+2025-01-10 11:41:33,932 [WARNING] Search results did not load in time for event: Full Moon Days
+2025-01-10 11:41:33,932 [INFO] No search results found for 'Full Moon Days'.
+2025-01-10 11:41:33,932 [INFO] Processing: 'Magha Puja'
+2025-01-10 11:41:59,024 [WARNING] Search results did not load in time for event: Magha Puja
+2025-01-10 11:41:59,025 [INFO] No search results found for 'Magha Puja'.
+2025-01-10 11:41:59,025 [INFO] Processing: 'Nirvana Day'
+2025-01-10 11:42:25,635 [WARNING] Search results did not load in time for event: Nirvana Day
+2025-01-10 11:42:25,635 [INFO] No search results found for 'Nirvana Day'.
+2025-01-10 11:42:25,635 [INFO] Processing: 'Pavarana Day'
+2025-01-10 11:42:51,841 [WARNING] Search results did not load in time for event: Pavarana Day
+2025-01-10 11:42:51,841 [INFO] No search results found for 'Pavarana Day'.
+2025-01-10 11:42:51,841 [INFO] Processing: 'Saka New Year'
+2025-01-10 11:43:16,538 [WARNING] Search results did not load in time for event: Saka New Year
+2025-01-10 11:43:16,538 [INFO] No search results found for 'Saka New Year'.
+2025-01-10 11:43:16,538 [INFO] Processing: 'Spring Ohigan'
+2025-01-10 11:43:18,868 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)': /session/f6f3d8c83eda79c8f74e6379a509a9de
+2025-01-10 11:43:22,958 [INFO] Database connection closed.
+2025-01-10 11:47:41,720 [INFO] Connected to MongoDB successfully.
+2025-01-10 11:47:41,720 [INFO] Starting date update process...
+2025-01-10 11:47:41,720 [INFO] Fetching events missing dates...
+2025-01-10 11:47:41,748 [INFO] Found 38 events missing dates.
+2025-01-10 11:47:42,867 [INFO] Selenium WebDriver initialized successfully.
+2025-01-10 11:47:42,867 [INFO] Processing: 'Asalha Puja'
+2025-01-10 11:47:55,065 [INFO] Processing: 'Festival of Ksitigarbha (Jizo) Bodhisattva'
+2025-01-10 11:48:04,347 [INFO] No valid dates found for 'Festival of Ksitigarbha (Jizo) Bodhisattva'.
+2025-01-10 11:48:07,538 [INFO] Processing: 'Full Moon Days'
+2025-01-10 11:48:18,590 [INFO] Processing: 'Magha Puja'
+2025-01-10 11:48:30,539 [INFO] Processing: 'Nirvana Day'
+2025-01-10 11:48:42,561 [INFO] Processing: 'Pavarana Day'
+2025-01-10 11:48:51,077 [INFO] No valid dates found for 'Pavarana Day'.
+2025-01-10 11:48:55,221 [INFO] Processing: 'Saka New Year'
+2025-01-10 11:49:01,838 [INFO] No valid dates found for 'Saka New Year'.
+2025-01-10 11:49:03,856 [INFO] Processing: 'Spring Ohigan'
+2025-01-10 11:49:11,696 [INFO] No valid dates found for 'Spring Ohigan'.
+2025-01-10 11:49:25,080 [INFO] Processing: 'Vassa'
+2025-01-10 11:49:37,889 [INFO] Processing: 'Feast of St. Basil'
+2025-01-10 11:49:49,730 [INFO] Processing: 'Theophany'
+2025-01-10 11:50:01,766 [INFO] Processing: 'Hanuman Jayanti'
+2025-01-10 11:50:12,876 [INFO] Processing: 'Navvarsha'
+2025-01-10 11:50:19,504 [INFO] No valid dates found for 'Navvarsha'.
+2025-01-10 11:50:24,338 [INFO] Processing: 'Ramanavami'
+2025-01-10 11:50:34,866 [INFO] Processing: 'Sri Krishna Jayanti'
+2025-01-10 11:50:45,661 [INFO] Processing: 'Vasanta Panchami'
+2025-01-10 11:50:52,869 [INFO] No valid dates found for 'Vasanta Panchami'.
+2025-01-10 11:50:57,308 [INFO] Processing: 'Arbaeen'
+2025-01-10 11:51:05,592 [INFO] No valid dates found for 'Arbaeen'.
+2025-01-10 11:51:14,222 [INFO] Processing: 'Laylat al-Baraat'
+2025-01-10 11:51:22,407 [INFO] No valid dates found for 'Laylat al-Baraat'.
+2025-01-10 11:51:35,154 [INFO] Processing: 'Mawlid al-Nabi'
+2025-01-10 11:51:45,803 [INFO] Processing: 'Birth date of Guru Gobind Singh Ji'
+2025-01-10 11:51:51,858 [INFO] No valid dates found for 'Birth date of Guru Gobind Singh Ji'.
+2025-01-10 11:51:55,699 [INFO] Processing: 'Installation of Sri Guru Granth Sahib Ji'
+2025-01-10 11:52:04,028 [INFO] No valid dates found for 'Installation of Sri Guru Granth Sahib Ji'.
+2025-01-10 11:52:08,793 [INFO] Processing: '16 Days of Activism Against Gender Violence'
+2025-01-10 11:52:14,815 [INFO] No search results found for event: 16 Days of Activism Against Gender Violence
+2025-01-10 11:52:14,816 [INFO] No search results found for '16 Days of Activism Against Gender Violence'.
+2025-01-10 11:52:14,816 [INFO] Processing: 'Gender Equality Week'
+2025-01-10 11:52:27,161 [INFO] Processing: 'Mennonite Heritage Week'
+2025-01-10 11:52:34,782 [INFO] No valid dates found for 'Mennonite Heritage Week'.
+2025-01-10 11:52:38,838 [INFO] Processing: 'Public Service Pride Week'
+2025-01-10 11:52:46,149 [INFO] No valid dates found for 'Public Service Pride Week'.
+2025-01-10 11:52:49,630 [INFO] Processing: 'Veterans' Week'
+2025-01-10 11:53:02,518 [INFO] Processing: 'International Day for African and Afrodescendant Culture'
+2025-01-10 12:20:18,699 [INFO] Connected to MongoDB successfully.
+2025-01-10 12:20:18,699 [INFO] Starting date update process...
+2025-01-10 12:20:18,700 [INFO] Fetching events missing dates...
+2025-01-10 12:20:18,737 [INFO] Found 25 events missing dates.
+2025-01-10 12:20:20,118 [INFO] Selenium WebDriver initialized successfully.
+2025-01-10 12:20:20,118 [INFO] Processing: 'Festival of Ksitigarbha (Jizo) Bodhisattva'
+2025-01-10 12:20:29,337 [INFO] No valid dates found for 'Festival of Ksitigarbha (Jizo) Bodhisattva'.
+2025-01-10 12:20:32,864 [INFO] Processing: 'Pavarana Day'
+2025-01-10 12:20:40,090 [INFO] No valid dates found for 'Pavarana Day'.
+2025-01-10 12:20:42,966 [INFO] Processing: 'Saka New Year'
+2025-01-10 12:20:51,667 [INFO] No valid dates found for 'Saka New Year'.
+2025-01-10 12:20:54,472 [INFO] Processing: 'Spring Ohigan'
+2025-01-10 12:21:02,433 [INFO] No valid dates found for 'Spring Ohigan'.
+2025-01-10 12:21:18,130 [INFO] Processing: 'Navvarsha'
+2025-01-10 12:21:24,600 [INFO] No valid dates found for 'Navvarsha'.
+2025-01-10 12:21:27,008 [INFO] Processing: 'Vasanta Panchami'
+2025-01-10 12:21:34,640 [INFO] No valid dates found for 'Vasanta Panchami'.
+2025-01-10 12:21:38,823 [INFO] Processing: 'Arbaeen'
+2025-01-10 12:21:44,427 [INFO] No valid dates found for 'Arbaeen'.
+2025-01-10 12:21:52,746 [INFO] Processing: 'Laylat al-Baraat'
+2025-01-10 12:22:00,639 [INFO] No valid dates found for 'Laylat al-Baraat'.
+2025-01-10 12:22:14,219 [INFO] Processing: 'Birth date of Guru Gobind Singh Ji'
+2025-01-10 12:22:20,398 [INFO] No valid dates found for 'Birth date of Guru Gobind Singh Ji'.
+2025-01-10 12:22:24,050 [INFO] Processing: 'Installation of Sri Guru Granth Sahib Ji'
+2025-01-10 12:22:31,572 [INFO] No valid dates found for 'Installation of Sri Guru Granth Sahib Ji'.
+2025-01-10 12:22:35,672 [INFO] Processing: '16 Days of Activism Against Gender Violence'
+2025-01-10 12:22:42,521 [INFO] No search results found for event: 16 Days of Activism Against Gender Violence
+2025-01-10 12:22:42,521 [INFO] No search results found for '16 Days of Activism Against Gender Violence'.
+2025-01-10 12:22:42,522 [INFO] Processing: 'Mennonite Heritage Week'
+2025-01-10 12:22:51,114 [INFO] No valid dates found for 'Mennonite Heritage Week'.
+2025-01-10 12:22:54,592 [INFO] Processing: 'Public Service Pride Week'
+2025-01-10 12:23:02,526 [INFO] No valid dates found for 'Public Service Pride Week'.
+2025-01-10 12:23:07,298 [INFO] Processing: 'International Day for African and Afrodescendant Culture'
+2025-01-10 12:23:19,139 [INFO] Processing: 'Battle of Vimy Ridge Anniversary'
+2025-01-10 12:23:30,303 [INFO] Processing: 'National Child Day'
+2025-01-10 12:23:42,427 [INFO] Processing: 'National Day of Remembrance of Quebec City Mosque Attack'
+2025-01-10 12:23:54,103 [INFO] Processing: '4shanbe Souri'
+2025-01-10 12:23:59,776 [INFO] No search results found for event: 4shanbe Souri
+2025-01-10 12:23:59,776 [INFO] No search results found for '4shanbe Souri'.
+2025-01-10 12:23:59,776 [INFO] Processing: 'Le Réveillon de Noël'
+2025-01-10 12:24:07,106 [INFO] No valid dates found for 'Le Réveillon de Noël'.
+2025-01-10 12:24:09,334 [INFO] Processing: 'Lucia Day'
+2025-01-10 12:24:21,958 [INFO] Processing: 'Mid-Autumn Festival'
+2025-01-10 12:24:28,874 [INFO] No valid dates found for 'Mid-Autumn Festival'.
+2025-01-10 12:24:33,730 [INFO] Processing: 'Midsummer'
+2025-01-10 12:24:47,664 [INFO] Selenium WebDriver closed.
+2025-01-10 12:24:47,665 [INFO] 
+=== UPDATE RESULTS ===
+2025-01-10 12:24:47,666 [INFO] Total events processed: 25
+2025-01-10 12:24:47,667 [INFO] Successfully updated:   6
+2025-01-10 12:24:47,667 [INFO] Failed attempts:       19
+2025-01-10 12:24:47,667 [INFO] Success rate:          24.0%
+2025-01-10 12:24:47,668 [INFO] Update process completed!
+2025-01-10 12:24:47,671 [INFO] Database connection closed.

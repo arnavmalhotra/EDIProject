@@ -51,7 +51,7 @@ def find_events_without_additional_details():
 def main():
     try:
         find_events_without_date_fields()
-        find_events_without_additional_details()
+        #find_events_without_additional_details()
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:

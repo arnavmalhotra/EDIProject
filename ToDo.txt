@@ -1,3 +1,3 @@
-Automated image download and description generation
+Gemini scraping results need to be double checked  Mostly correct.
 
-Gemini scraping results need to be double checked
+Ensure all the images are correct and manually add images for incorrect and missing ones

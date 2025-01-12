@@ -1,0 +1,19 @@
+API keys required 
+- Scraper(place in a .env file in the folder) =
+MONGODB_URI=mongodb://localhost:27017/
+CALENDARIFIC_API_KEY
+GEMINI_API_KEY
+APININJAS_API_KEY
+
+frontend (.env file contents)=
+REACT_APP_API_URL=http://localhost:8080
+
+Description Generation (.env content)=
+GEMINI_API_KEY
+
+
+Emailer (.env content)=
+MONGODB_URI=mongodb://localhost:27017/
+GMAIL_ADDRESS=ediprojectcalendarapplication@gmail.com
+GMAIL_APP_PASSWORD= Generate app password using google.com
+setup a cronjob that runs on the first of every month

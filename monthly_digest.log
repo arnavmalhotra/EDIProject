@@ -1,0 +1,5 @@
+2025-02-12 11:49:43,014 - INFO - Monthly Event Mailer initialized successfully
+2025-02-12 11:49:43,015 - INFO - Fetching events between 2025-02-01 00:00:00+00:00 and 2025-03-01 00:00:00+00:00
+2025-02-12 11:49:43,018 - INFO - Found 10 events for February 2025
+2025-02-12 11:49:46,042 - INFO - Monthly digest sent successfully for February 2025
+2025-02-12 11:49:46,272 - INFO - Monthly digest process completed successfully

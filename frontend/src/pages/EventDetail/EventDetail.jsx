@@ -139,17 +139,11 @@ const EventDetail = () => {
 
             {event.additional_details && (
               <div className="event-section">
-                <h3>Additional Details</h3>
+                <h3></h3>
                 <p>{event.additional_details}</p>
               </div>
             )}
 
-            {event.alternate_names && event.alternate_names.length > 0 && (
-              <div className="event-section">
-                <h3>Also Known As</h3>
-                <p>{event.alternate_names.join(', ')}</p>
-              </div>
-            )}
 
             {event.source_urls && (
               <div className="event-section">

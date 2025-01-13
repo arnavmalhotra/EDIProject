@@ -93,3 +93,83 @@
 2025-01-12 19:24:23,510 - INFO - Found 25 events for January 2025
 2025-01-12 19:24:26,712 - INFO - Monthly digest sent successfully for January 2025
 2025-01-12 19:24:26,937 - INFO - Monthly digest process completed successfully
+2025-01-12 19:25:51,107 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:25:51,107 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:25:51,125 - INFO - Found 25 events for January 2025
+2025-01-12 19:25:54,624 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:25:54,850 - INFO - Monthly digest process completed successfully
+2025-01-12 19:27:25,125 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:27:25,125 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:27:25,144 - INFO - Found 25 events for January 2025
+2025-01-12 19:27:28,926 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:27:29,154 - INFO - Monthly digest process completed successfully
+2025-01-12 19:29:10,419 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:29:10,419 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:29:10,435 - INFO - Found 25 events for January 2025
+2025-01-12 19:29:13,933 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:29:14,158 - INFO - Monthly digest process completed successfully
+2025-01-12 19:29:47,030 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:29:47,031 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:29:47,047 - INFO - Found 25 events for January 2025
+2025-01-12 19:29:50,120 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:29:50,347 - INFO - Monthly digest process completed successfully
+2025-01-12 19:31:38,794 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:31:38,794 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:31:38,796 - INFO - Found 25 events for January 2025
+2025-01-12 19:31:41,943 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:31:42,172 - INFO - Monthly digest process completed successfully
+2025-01-12 19:32:09,498 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:32:09,498 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:32:09,500 - INFO - Found 25 events for January 2025
+2025-01-12 19:32:12,585 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:32:12,807 - INFO - Monthly digest process completed successfully
+2025-01-12 19:32:41,183 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:32:41,183 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:32:41,207 - INFO - Found 25 events for January 2025
+2025-01-12 19:32:44,391 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:32:44,623 - INFO - Monthly digest process completed successfully
+2025-01-12 19:33:23,801 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:33:23,802 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:33:23,819 - INFO - Found 25 events for January 2025
+2025-01-12 19:33:26,901 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:33:27,128 - INFO - Monthly digest process completed successfully
+2025-01-12 19:33:38,237 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:33:38,238 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:33:38,240 - INFO - Found 25 events for January 2025
+2025-01-12 19:33:41,449 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:33:41,677 - INFO - Monthly digest process completed successfully
+2025-01-12 19:36:22,146 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:36:22,146 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:36:22,148 - INFO - Found 25 events for January 2025
+2025-01-12 19:36:22,149 - ERROR - Error sending monthly digest: Invalid format string
+2025-01-12 19:36:22,149 - ERROR - Fatal error in monthly digest: Invalid format string
+2025-01-12 19:36:53,772 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:36:53,772 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:36:53,793 - INFO - Found 25 events for January 2025
+2025-01-12 19:36:56,848 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:36:57,073 - INFO - Monthly digest process completed successfully
+2025-01-12 19:38:22,677 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:38:22,677 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:38:22,679 - INFO - Found 25 events for January 2025
+2025-01-12 19:38:26,578 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:38:26,805 - INFO - Monthly digest process completed successfully
+2025-01-12 19:40:19,984 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:40:19,984 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:40:20,000 - INFO - Found 25 events for January 2025
+2025-01-12 19:40:23,063 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:40:23,290 - INFO - Monthly digest process completed successfully
+2025-01-12 19:40:44,103 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:40:44,103 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:40:44,120 - INFO - Found 25 events for January 2025
+2025-01-12 19:40:47,315 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:40:47,543 - INFO - Monthly digest process completed successfully
+2025-01-12 19:41:50,997 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:41:50,997 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:41:51,015 - INFO - Found 25 events for January 2025
+2025-01-12 19:41:54,054 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:41:54,279 - INFO - Monthly digest process completed successfully
+2025-01-12 19:43:03,112 - INFO - Monthly Event Mailer initialized successfully
+2025-01-12 19:43:03,112 - INFO - Fetching events between 2025-01-01 00:00:00+00:00 and 2025-02-01 00:00:00+00:00
+2025-01-12 19:43:03,115 - INFO - Found 25 events for January 2025
+2025-01-12 19:43:07,024 - INFO - Monthly digest sent successfully for January 2025
+2025-01-12 19:43:07,250 - INFO - Monthly digest process completed successfully

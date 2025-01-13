@@ -9,7 +9,6 @@ import pytz
 from typing import List, Dict
 import logging
 
-# Set up logging configuration remains the same...
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -21,15 +20,10 @@ logging.basicConfig(
 
 class MonthlyEventMailer:
     def __init__(self):
-        """Initialize EventMailer with MongoDB and Gmail configurations"""
         load_dotenv()
-        
-        # MongoDB setup
         self.mongo_client = MongoClient(os.getenv('MONGODB_URI', 'mongodb://localhost:27017/'))
         self.db = self.mongo_client.events_db
         self.events_collection = self.db.events
-        
-        # Gmail setup
         self.gmail_address = os.getenv('GMAIL_ADDRESS')
         self.gmail_app_password = os.getenv('GMAIL_APP_PASSWORD')
         
@@ -39,8 +33,6 @@ class MonthlyEventMailer:
         logging.info("Monthly Event Mailer initialized successfully")
 
     def get_current_month_events(self) -> List[Dict]:
-        """Fetch events for the current month from MongoDB."""
-        # Previous implementation remains the same...
         now = datetime.now(pytz.UTC)
         month_start = datetime(now.year, now.month, 1, 0, 0, 0, tzinfo=pytz.UTC)
         if now.month == 12:
@@ -65,83 +57,76 @@ class MonthlyEventMailer:
         return events
 
     def format_date(self, date_obj: datetime) -> str:
-        """Format datetime object to readable format."""
         try:
-            return date_obj.strftime('%B %d, %Y')
+            return date_obj.strftime('%B %d')
         except (ValueError, AttributeError):
             return 'Date TBD'
 
     def generate_html_template(self, events: List[Dict], current_date: datetime) -> str:
-        """Generate HTML email template with events in a block layout."""
         month_year = current_date.strftime('%B %Y')
         
-        # Separate events into regular and extended observances
         regular_events = []
         extended_events = []
         
         for event in events:
-            start_date = event['start_date']
-            end_date = event['end_date']
-            duration = (end_date - start_date).days
-            
+            duration = (event['end_date'] - event['start_date']).days
             if duration > 6:
                 extended_events.append(event)
             else:
                 regular_events.append(event)
-        
-        def format_date(date):
-            """Format date without leading zeros in day"""
-            month = date.strftime('%B')
-            day = str(date.day)
-            return f"{month} {day}"
 
         def create_event_blocks(events_list):
             rows_html = ''
             current_row = []
             
             for event in events_list:
-                # Format dates based on duration
                 start_date = event['start_date']
                 end_date = event['end_date']
                 
                 if start_date == end_date:
-                    date_display = format_date(start_date)
+                    date_display = self.format_date(start_date)
                 else:
-                    date_display = f"{format_date(start_date)} - {format_date(end_date)}"
+                    date_display = f"{self.format_date(start_date)} - {self.format_date(end_date)}"
                 
-                current_row.append(f'''
+                event_html = f'''
                     <td style="width: 25%; padding: 8px; vertical-align: top;">
                         <a href="http://localhost:3000/#/event/{event['_id']}" 
-                        style="text-decoration: none; color: white; display: block;">
-                            <div style="background-color: #4299e1; border-radius: 8px; padding: 20px; 
-                                    height: 120px; box-sizing: border-box;">
-                                <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; 
-                                        line-height: 1.4;">
-                                    {event['name']}
-                                </div>
-                                <div style="font-size: 14px; opacity: 0.9;">
-                                    {date_display}
-                                </div>
+                           style="text-decoration: none; color: white; display: block;">
+                            <div style="background-color: #4299e1; border-radius: 8px; min-height: 160px; 
+                                      box-sizing: border-box;">
+                                <table cellpadding="0" cellspacing="0" style="width: 100%; height: 160px;">
+                                    <tr>
+                                        <td style="padding: 24px 24px 8px 24px; vertical-align: top;">
+                                            <div style="font-size: 20px; font-weight: 500; line-height: 1.4;">
+                                                {event['name']}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0 24px 24px 24px; vertical-align: bottom; height: 1px;">
+                                            <div style="font-size: 16px;">
+                                                {date_display}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </a>
                     </td>
-                ''')
+                '''
+                current_row.append(event_html)
                 
-                # Add row to HTML when it reaches 4 blocks or it's the last event
                 if len(current_row) == 4:
                     rows_html += f"<tr>{''.join(current_row)}</tr>"
                     current_row = []
             
-            # Add any remaining blocks in the last row
             if current_row:
-                # Pad with empty cells if needed
                 while len(current_row) < 4:
                     current_row.append('<td style="width: 25%; padding: 8px;"></td>')
                 rows_html += f"<tr>{''.join(current_row)}</tr>"
             
             return rows_html
 
-        # Create the full HTML template
         template = f'''
             <!DOCTYPE html>
             <html>
@@ -167,7 +152,6 @@ class MonthlyEventMailer:
                 </div>
         '''
         
-        # Add regular observances if any exist
         if regular_events:
             template += f'''
                 <div style="margin-bottom: 40px;">
@@ -177,7 +161,6 @@ class MonthlyEventMailer:
                 </div>
             '''
         
-        # Add extended observances if any exist
         if extended_events:
             template += f'''
                 <div style="margin-bottom: 40px;">
@@ -190,11 +173,10 @@ class MonthlyEventMailer:
                 </div>
             '''
         
-        # Close the HTML template
         template += '''
                 <div style="text-align: center; color: #718096; font-size: 13px; 
-                        margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-                    Generated on {datetime.now(pytz.utc).strftime('%B %d, %Y')}
+                           margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                    York University Equity, Diversity and Inclusion Calendar Project
                 </div>
             </body>
             </html>
@@ -203,7 +185,6 @@ class MonthlyEventMailer:
         return template
 
     def send_monthly_digest(self, recipients: List[str]) -> None:
-        """Send the monthly digest email."""
         try:
             current_date = datetime.now(pytz.UTC)
             events = self.get_current_month_events()
@@ -212,17 +193,14 @@ class MonthlyEventMailer:
                 logging.info(f"No events found for {current_date.strftime('%B %Y')}")
                 return
             
-            # Create email
             msg = MIMEMultipart()
             msg['Subject'] = f'Monthly Events - {current_date.strftime("%B %Y")}'
             msg['From'] = self.gmail_address
             msg['To'] = ', '.join(recipients)
             
-            # Generate and attach HTML content
             html_content = self.generate_html_template(events, current_date)
             msg.attach(MIMEText(html_content, 'html'))
             
-            # Send email
             with smtplib.SMTP('smtp.gmail.com', 587) as server:
                 server.starttls()
                 server.login(self.gmail_address, self.gmail_app_password)

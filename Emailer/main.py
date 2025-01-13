@@ -9,7 +9,7 @@ import pytz
 from typing import List, Dict
 import logging
 
-# Set up logging
+# Set up logging configuration remains the same...
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -40,6 +40,7 @@ class MonthlyEventMailer:
 
     def get_current_month_events(self) -> List[Dict]:
         """Fetch events for the current month from MongoDB."""
+        # Previous implementation remains the same...
         now = datetime.now(pytz.UTC)
         month_start = datetime(now.year, now.month, 1, 0, 0, 0, tzinfo=pytz.UTC)
         if now.month == 12:
@@ -71,72 +72,135 @@ class MonthlyEventMailer:
             return 'Date TBD'
 
     def generate_html_template(self, events: List[Dict], current_date: datetime) -> str:
-        """Generate HTML email template with events."""
+        """Generate HTML email template with events in a block layout."""
         month_year = current_date.strftime('%B %Y')
         
-        events_html = ''
+        # Separate events into regular and extended observances
+        regular_events = []
+        extended_events = []
+        
         for event in events:
-            # Format dates
-            start_date = self.format_date(event['start_date'])
-            end_date = self.format_date(event['end_date'])
-            date_display = start_date if start_date == end_date else f"{start_date} - {end_date}"
+            start_date = event['start_date']
+            end_date = event['end_date']
+            duration = (end_date - start_date).days
             
-            events_html += f'''
-                <div style="margin-bottom: 24px; background: white; border-radius: 12px;
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 20px;">
-                    <div style="display: flex; justify-content: space-between; 
-                            align-items: center; margin-bottom: 8px;">
-                        <h2 style="margin: 0; font-size: 18px; color: #1a1a1a; 
-                                font-weight: 600; line-height: 1.3; flex: 1;">
-                            {event['name']}
-                        </h2>
-                        <div style="background: #f0f7ff; color: #0066cc;
-                                padding: 4px 12px; border-radius: 6px;
-                                font-size: 12px; font-weight: 500;
-                                margin-left: 12px; white-space: nowrap;">
-                            {event['category']}
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 13px; color: #666; margin-bottom: 10px;">
-                        {date_display}
-                    </div>
-                    
-                    <div style="font-size: 14px; line-height: 1.5; color: #444;">
-                        {event.get('concise_details', '')}
-                    </div>
-                </div>
-            '''
+            if duration > 6:
+                extended_events.append(event)
+            else:
+                regular_events.append(event)
+        
+        def format_date(date):
+            """Format date without leading zeros in day"""
+            month = date.strftime('%B')
+            day = str(date.day)
+            return f"{month} {day}"
 
-        return f'''
+        def create_event_blocks(events_list):
+            rows_html = ''
+            current_row = []
+            
+            for event in events_list:
+                # Format dates based on duration
+                start_date = event['start_date']
+                end_date = event['end_date']
+                
+                if start_date == end_date:
+                    date_display = format_date(start_date)
+                else:
+                    date_display = f"{format_date(start_date)} - {format_date(end_date)}"
+                
+                current_row.append(f'''
+                    <td style="width: 25%; padding: 8px; vertical-align: top;">
+                        <a href="http://localhost:3000/#/event/{event['_id']}" 
+                        style="text-decoration: none; color: white; display: block;">
+                            <div style="background-color: #4299e1; border-radius: 8px; padding: 20px; 
+                                    height: 120px; box-sizing: border-box;">
+                                <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px; 
+                                        line-height: 1.4;">
+                                    {event['name']}
+                                </div>
+                                <div style="font-size: 14px; opacity: 0.9;">
+                                    {date_display}
+                                </div>
+                            </div>
+                        </a>
+                    </td>
+                ''')
+                
+                # Add row to HTML when it reaches 4 blocks or it's the last event
+                if len(current_row) == 4:
+                    rows_html += f"<tr>{''.join(current_row)}</tr>"
+                    current_row = []
+            
+            # Add any remaining blocks in the last row
+            if current_row:
+                # Pad with empty cells if needed
+                while len(current_row) < 4:
+                    current_row.append('<td style="width: 25%; padding: 8px;"></td>')
+                rows_html += f"<tr>{''.join(current_row)}</tr>"
+            
+            return rows_html
+
+        # Create the full HTML template
+        template = f'''
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Monthly Events Digest - {month_year}</title>
             </head>
-            <body style="max-width: 680px; margin: 0 auto; padding: 24px;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 
-                    Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f7;">
+            <body style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+                        Roboto, Helvetica, Arial, sans-serif; background-color: #f7fafc;">
                 
-                <div style="text-align: center; margin-bottom: 32px;">
-                    <h1 style="margin: 0; color: #1a1a1a; font-size: 28px; font-weight: 700;">
-                        Cultural and Religious Events
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="margin: 0; color: #2d3748; font-size: 36px; font-weight: 700;">
+                        EDI Project Events Email
                     </h1>
-                    <div style="color: #666; font-size: 16px; margin-top: 8px;">
-                        {month_year}
-                    </div>
                 </div>
                 
-                {events_html}
-                
-                <div style="text-align: center; color: #666; font-size: 12px; 
-                        margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e5e5;">
+                <div style="text-align: left; margin-bottom: 24px;">
+                    <h2 style="margin: 0; color: #2d3748; font-size: 32px; font-weight: 700;">
+                        Observances
+                    </h2>
+                </div>
+        '''
+        
+        # Add regular observances if any exist
+        if regular_events:
+            template += f'''
+                <div style="margin-bottom: 40px;">
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
+                        {create_event_blocks(regular_events)}
+                    </table>
+                </div>
+            '''
+        
+        # Add extended observances if any exist
+        if extended_events:
+            template += f'''
+                <div style="margin-bottom: 40px;">
+                    <h2 style="color: #2d3748; font-size: 32px; margin: 40px 0 24px 0;">
+                        Extended Observances
+                    </h2>
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
+                        {create_event_blocks(extended_events)}
+                    </table>
+                </div>
+            '''
+        
+        # Close the HTML template
+        template += '''
+                <div style="text-align: center; color: #718096; font-size: 13px; 
+                        margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                     Generated on {datetime.now(pytz.utc).strftime('%B %d, %Y')}
                 </div>
             </body>
             </html>
         '''
+        
+        return template
 
     def send_monthly_digest(self, recipients: List[str]) -> None:
         """Send the monthly digest email."""
@@ -173,7 +237,7 @@ class MonthlyEventMailer:
 
 if __name__ == "__main__":
     try:
-        recipients = ["ediprojectcalendarapplication@gmail.com"]
+        recipients = ["arnav44malhotra@gmail.com"]
         mailer = MonthlyEventMailer()
         mailer.send_monthly_digest(recipients)
         logging.info("Monthly digest process completed successfully")

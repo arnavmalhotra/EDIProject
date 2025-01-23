@@ -203,9 +203,9 @@ def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
             pass
 
     # Pattern: "Begins at sunset on Mar 30, 2025 and ends the evening of Mar 31, 2025"
-sunset_pattern = re.compile(
+    sunset_pattern = re.compile(
     r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|at\s+nightfall\s+on\s+|on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4}))"
-)
+    )
     match = sunset_pattern.search(cleaned_text)
     if match:
         start_str, end_str = match.groups()

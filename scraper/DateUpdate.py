@@ -54,24 +54,25 @@ def normalize_event_name(name: str) -> str:
 
 def parse_month_day_year(date_str: str) -> Optional[date]:
     """
-    Attempt to parse a standard date like "Oct. 12, 2024" or "October 12, 2024".
-    Returns a date object (without time components) or None if parsing fails.
+    Attempt to parse a standard date with month names.
     """
-    possible_formats = [
-        "%b %d, %Y",    # e.g. "Oct 12, 2024"
-        "%B %d, %Y",    # e.g. "October 12, 2024"
+    # Clean the input string
+    cleaned_str = date_str.strip()
+    
+    # Try parsing with various formats
+    formats = [
+        "%B %d %Y",       # "March 1 2025"
+        "%b %d %Y",       # "Mar 1 2025"
+        "%B %d, %Y",      # "March 1, 2025"
+        "%b %d, %Y",      # "Mar 1, 2025"
     ]
     
-    # Remove periods from month abbreviations
-    cleaned_str = date_str.replace('.', '').strip()
-    
-    for fmt in possible_formats:
+    for fmt in formats:
         try:
-            parsed_date = datetime.strptime(cleaned_str, fmt).date()
-            return parsed_date
+            return datetime.strptime(cleaned_str, fmt).date()
         except ValueError:
             continue
-            
+    
     return None
 
 
@@ -155,67 +156,101 @@ def parse_nth_weekday_pattern(raw_text: str) -> Optional[Tuple[date, date]]:
 
 
 def parse_date_range(raw_text: str) -> Tuple[Optional[date], Optional[date]]:
-    """
-    Attempts to parse the date info from a string using multiple patterns.
-    Returns tuple of date objects (without time components).
-    """
-    # Remove periods from the text
-    cleaned_text = raw_text.replace('.', '').strip()
+   """
+   Attempts to parse the date info from a string using multiple patterns.
+   Returns tuple of date objects (without time components).
+   """
+   # Remove periods from the text
+   cleaned_text = raw_text.replace('.', '').strip()
 
-    # First try to parse simple single-day format (e.g. "Oct 12, 2024" or "October 12, 2024")
-    for fmt in ["%b %d, %Y", "%B %d, %Y"]:
-        try:
-            parsed_date = datetime.strptime(cleaned_text, fmt).date()
-            return (parsed_date, parsed_date)  # Single day event
-        except ValueError:
-            continue
+   # Pattern for Ramadan and similar sunset/nightfall events
+   sunset_pattern = re.compile(
+       r"[Bb]egins\s+at\s+sunset\s+([A-Za-z]+\s+\d{1,2},?\s*\d{4})\s+and\s+ends\s+at\s+nightfall\s+on\s+([A-Za-z]+\s+\d{1,2},?\s*\d{4})"
+   )
+   match = sunset_pattern.search(cleaned_text)
+   if match:
+       start_str, end_str = match.groups()
+       try:
+           start_dt = datetime.strptime(start_str.replace(',', ''), "%B %d %Y").date()
+           end_dt = datetime.strptime(end_str.replace(',', ''), "%B %d %Y").date()
+           return (start_dt, end_dt)
+       except ValueError:
+           pass
 
-    # Check for nth weekday patterns
-    nth_pattern_result = parse_nth_weekday_pattern(cleaned_text)
-    if nth_pattern_result:
-        return nth_pattern_result
+   # First try to parse simple single-day format (e.g. "Oct 12, 2024" or "October 12, 2024")
+   for fmt in ["%b %d, %Y", "%B %d, %Y"]:
+       try:
+           parsed_date = datetime.strptime(cleaned_text, fmt).date()
+           return (parsed_date, parsed_date)  # Single day event
+       except ValueError:
+           continue
 
-    # Pattern: "Begins ... on Mar 1, 2025 ... ends ... on Mar 30, 2025"
-    pattern_begins_ends = re.compile(
-        r"[Bb]egins.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4}).*ends.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4})"
-    )
-    match = pattern_begins_ends.search(cleaned_text)
-    if match:
-        start_str, end_str = match.groups()
-        start_dt = parse_month_day_year(start_str)
-        end_dt = parse_month_day_year(end_str)
-        if start_dt and end_dt:
-            return (start_dt, end_dt)
+   # Check for nth weekday patterns
+   nth_pattern_result = parse_nth_weekday_pattern(cleaned_text)
+   if nth_pattern_result:
+       return nth_pattern_result
 
-    # Pattern: "July 9, 2025" (simple date)
-    date_pattern = re.compile(r"([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})")
-    match = date_pattern.search(cleaned_text)
-    if match:
-        month_str, day_str, year_str = match.groups()
-        try:
-            month_num = {
-                'january': 1, 'february': 2, 'march': 3, 'april': 4,
-                'may': 5, 'june': 6, 'july': 7, 'august': 8,
-                'september': 9, 'october': 10, 'november': 11, 'december': 12
-            }[month_str.lower()]
-            return (date(int(year_str), month_num, int(day_str)), date(int(year_str), month_num, int(day_str)))
-        except (ValueError, KeyError):
-            pass
+   # Pattern: "Begins ... on Mar 1, 2025 ... ends ... on Mar 30, 2025"
+   pattern_begins_ends = re.compile(
+       r"[Bb]egins.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4}).*ends.*on\s+([A-Za-z]+\s+\d{1,2},\s*\d{4})"
+   )
+   match = pattern_begins_ends.search(cleaned_text)
+   if match:
+       start_str, end_str = match.groups()
+       start_dt = parse_month_day_year(start_str)
+       end_dt = parse_month_day_year(end_str)
+       if start_dt and end_dt:
+           return (start_dt, end_dt)
 
-    # Pattern: "Begins at sunset on Mar 30, 2025 and ends the evening of Mar 31, 2025"
-    sunset_pattern = re.compile(
-    r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|at\s+nightfall\s+on\s+|on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4}))"
-    )
-    match = sunset_pattern.search(cleaned_text)
-    if match:
-        start_str, end_str = match.groups()
-        start_dt = parse_month_day_year(start_str)
-        end_dt = parse_month_day_year(end_str)
-        if start_dt and end_dt:
-            return (start_dt, end_dt)
+   # Pattern: "July 9, 2025" (simple date)
+   date_pattern = re.compile(r"([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})")
+   match = date_pattern.search(cleaned_text)
+   if match:
+       month_str, day_str, year_str = match.groups()
+       try:
+           month_num = {
+               'january': 1, 'february': 2, 'march': 3, 'april': 4,
+               'may': 5, 'june': 6, 'july': 7, 'august': 8,
+               'september': 9, 'october': 10, 'november': 11, 'december': 12
+           }[month_str.lower()]
+           return (date(int(year_str), month_num, int(day_str)), date(int(year_str), month_num, int(day_str)))
+       except (ValueError, KeyError):
+           pass
 
-    return (None, None)
+   # Pattern: "Begins at sunset ... ends nightfall/evening"
+   religious_pattern = re.compile(
+       r"[Bb]egins\s+(?:at\s+sunset\s+)?(?:on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4})(?:\s+and\s+ends\s+(?:the\s+evening\s+of\s+|at\s+nightfall\s+on\s+|on\s+)?([A-Za-z]+\s+\d{1,2}(?:,\s*|\s+)\d{4}))",
+       re.DOTALL
+   )
+   match = religious_pattern.search(cleaned_text)
+   if match:
+       start_str, end_str = match.groups()
+       start_dt = parse_month_day_year(start_str)
+       end_dt = parse_month_day_year(end_str)
+       if start_dt and end_dt:
+           return (start_dt, end_dt)
 
+   # Pattern for month-long events
+   month_pattern = re.compile(r"([A-Za-z]+)\s+(\d{4})")
+   match = month_pattern.search(cleaned_text)
+   if match and "month" in cleaned_text.lower():
+       month_str, year_str = match.groups()
+       try:
+           month_num = {
+               'january': 1, 'february': 2, 'march': 3, 'april': 4,
+               'may': 5, 'june': 6, 'july': 7, 'august': 8,
+               'september': 9, 'october': 10, 'november': 11, 'december': 12
+           }[month_str.lower()]
+           start_date = date(int(year_str), month_num, 1)
+           if month_num == 12:
+               end_date = date(int(year_str) + 1, 1, 1) - timedelta(days=1)
+           else:
+               end_date = date(int(year_str), month_num + 1, 1) - timedelta(days=1)
+           return (start_date, end_date)
+       except (ValueError, KeyError):
+           pass
+
+   return (None, None)
 
 def scrape_york_accommodations() -> Dict[str, Tuple[Optional[date], Optional[date]]]:
     """

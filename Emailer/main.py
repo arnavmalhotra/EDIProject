@@ -89,22 +89,22 @@ class MonthlyEventMailer:
                     date_display = f"{self.format_date(start_date)} - {self.format_date(end_date)}"
                 
                 event_html = f'''
-                    <td style="width: 25%; padding: 8px; vertical-align: top;">
+                    <td style="width: 25%; padding: 6px; vertical-align: top;">
                         <a href="http://localhost:3000/#/event/{event['_id']}" 
-                           style="text-decoration: none; color: white; display: block;">
-                            <div style="background-color: #4299e1; border-radius: 8px; min-height: 160px; 
-                                      box-sizing: border-box;">
-                                <table cellpadding="0" cellspacing="0" style="width: 100%; height: 160px;">
+                        style="text-decoration: none; color: white; display: block;">
+                            <div style="background-color: #4299e1; border-radius: 6px; min-height: 120px; 
+                                    box-sizing: border-box;">
+                                <table cellpadding="0" cellspacing="0" style="width: 100%; height: 120px;">
                                     <tr>
-                                        <td style="padding: 24px 24px 8px 24px; vertical-align: top;">
-                                            <div style="font-size: 20px; font-weight: 500; line-height: 1.4;">
+                                        <td style="padding: 16px 16px 6px 16px; vertical-align: top;">
+                                            <div style="font-size: 16px; font-weight: 500; line-height: 1.3;">
                                                 {event['name']}
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 0 24px 24px 24px; vertical-align: bottom; height: 1px;">
-                                            <div style="font-size: 16px;">
+                                        <td style="padding: 0 16px 16px 16px; vertical-align: bottom; height: 1px;">
+                                            <div style="font-size: 14px;">
                                                 {date_display}
                                             </div>
                                         </td>
@@ -122,11 +122,12 @@ class MonthlyEventMailer:
             
             if current_row:
                 while len(current_row) < 4:
-                    current_row.append('<td style="width: 25%; padding: 8px;"></td>')
+                    current_row.append('<td style="width: 25%; padding: 6px;"></td>')
                 rows_html += f"<tr>{''.join(current_row)}</tr>"
             
             return rows_html
 
+        # Rest of the template code remains the same
         template = f'''
             <!DOCTYPE html>
             <html>
@@ -175,7 +176,7 @@ class MonthlyEventMailer:
         
         template += '''
                 <div style="text-align: center; color: #718096; font-size: 13px; 
-                           margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                        margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                     York University Equity, Diversity and Inclusion Calendar Project
                 </div>
             </body>
@@ -183,7 +184,6 @@ class MonthlyEventMailer:
         '''
         
         return template
-
     def send_monthly_digest(self, recipients: List[str]) -> None:
         try:
             current_date = datetime.now(pytz.UTC)
@@ -215,7 +215,7 @@ class MonthlyEventMailer:
 
 if __name__ == "__main__":
     try:
-        recipients = ["arnav44malhotra@gmail.com"]
+        recipients = ["vashistp@yorku.ca","arnav196@my.yorku.ca"]
         mailer = MonthlyEventMailer()
         mailer.send_monthly_digest(recipients)
         logging.info("Monthly digest process completed successfully")

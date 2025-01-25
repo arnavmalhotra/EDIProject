@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import pytz
 from typing import List, Dict
 import logging
+from itertools import groupby
 
 logging.basicConfig(
     level=logging.INFO,
@@ -65,15 +66,53 @@ class MonthlyEventMailer:
     def generate_html_template(self, events: List[Dict], current_date: datetime) -> str:
         month_year = current_date.strftime('%B %Y')
         
-        regular_events = []
-        extended_events = []
-        
-        for event in events:
-            duration = (event['end_date'] - event['start_date']).days
-            if duration > 6:
-                extended_events.append(event)
-            else:
-                regular_events.append(event)
+        all_events = events
+
+        # Group events by category
+        def group_events_by_category(events_list):
+            # Define category order
+            category_order = [
+                'Religious Observances',
+                'Cultural Observances', 
+                'National Days',
+                'International Days',
+                'Month Long Observances'
+            ]
+            
+            # Create category order lookup 
+            category_order = [
+                'Religious Observances',
+                'Cultural Observances', 
+                'National Days',
+                'International Days',
+                'Month Long Observances'
+            ]
+            
+            # Sort events and group them
+            grouped_events = {}
+            for event in events_list:
+                category = event.get('category', '')
+                if category not in grouped_events:
+                    grouped_events[category] = []
+                grouped_events[category].append(event)
+            
+            # Create ordered dictionary based on defined order
+            ordered_events = {}
+            for category in category_order:
+                if category in grouped_events:
+                    ordered_events[category] = sorted(grouped_events[category], key=lambda x: x.get('start_date'))
+                    
+            # Add any remaining categories not in the predefined order
+            for category, events in grouped_events.items():
+                if category not in category_order and category:
+                    ordered_events[category] = sorted(events, key=lambda x: x.get('start_date'))
+            
+            # Add any remaining categories at the end
+            for category, events in grouped_events.items():
+                if category not in category_order:
+                    ordered_events[category] = events
+                    
+            return ordered_events
 
         def create_event_blocks(events_list):
             rows_html = ''
@@ -90,10 +129,10 @@ class MonthlyEventMailer:
                 
                 event_html = f'''
                     <td style="width: 25%; padding: 6px; vertical-align: top;">
-                        <a href="http://localhost:3000/#/event/{event['_id']}" 
-                        style="text-decoration: none; color: white; display: block;">
+                        <a href="https://dedi.eecs.yorku.ca/#/event/{event['_id']}" 
+                           style="text-decoration: none; color: white; display: block;">
                             <div style="background-color: #4299e1; border-radius: 6px; min-height: 120px; 
-                                    box-sizing: border-box;">
+                                      box-sizing: border-box;">
                                 <table cellpadding="0" cellspacing="0" style="width: 100%; height: 120px;">
                                     <tr>
                                         <td style="padding: 16px 16px 6px 16px; vertical-align: top;">
@@ -127,7 +166,6 @@ class MonthlyEventMailer:
             
             return rows_html
 
-        # Rest of the template code remains the same
         template = f'''
             <!DOCTYPE html>
             <html>
@@ -145,38 +183,32 @@ class MonthlyEventMailer:
                         EDI Project Events Email
                     </h1>
                 </div>
-                
+        '''
+        
+        template += '''
                 <div style="text-align: left; margin-bottom: 24px;">
                     <h2 style="margin: 0; color: #2d3748; font-size: 32px; font-weight: 700;">
                         Observances
                     </h2>
                 </div>
-        '''
-        
-        if regular_events:
-            template += f'''
-                <div style="margin-bottom: 40px;">
-                    <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
-                        {create_event_blocks(regular_events)}
-                    </table>
-                </div>
             '''
-        
-        if extended_events:
+            
+        grouped_events = group_events_by_category(all_events)
+        for category, events in grouped_events.items():
             template += f'''
-                <div style="margin-bottom: 40px;">
-                    <h2 style="color: #2d3748; font-size: 32px; margin: 40px 0 24px 0;">
-                        Extended Observances
-                    </h2>
+                <div style="margin-bottom: 32px;">
+                    <h3 style="color: #4a5568; font-size: 24px; margin: 16px 0;">
+                        {category}
+                    </h3>
                     <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
-                        {create_event_blocks(extended_events)}
+                        {create_event_blocks(events)}
                     </table>
                 </div>
             '''
         
         template += '''
                 <div style="text-align: center; color: #718096; font-size: 13px; 
-                        margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                           margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
                     York University Equity, Diversity and Inclusion Calendar Project
                 </div>
             </body>
@@ -184,6 +216,7 @@ class MonthlyEventMailer:
         '''
         
         return template
+
     def send_monthly_digest(self, recipients: List[str]) -> None:
         try:
             current_date = datetime.now(pytz.UTC)
@@ -215,7 +248,7 @@ class MonthlyEventMailer:
 
 if __name__ == "__main__":
     try:
-        recipients = ["vashistp@yorku.ca","arnav196@my.yorku.ca"]
+        recipients = ["arnav44malhotra@gmail.com"]
         mailer = MonthlyEventMailer()
         mailer.send_monthly_digest(recipients)
         logging.info("Monthly digest process completed successfully")
